@@ -28,7 +28,10 @@ $(document).ready(function(){
         if(investType=="ngo"){window.location.href="ngo.html"}
         if(investType=="prestartup"){window.location.href="prestartup.html"}
         if(investType=="startup"){window.location.href="startup.html"}
-        if(investType=="smb"){window.location.href="smb.html"}
         if(investType==""){alert("Choose an option")}
+    });
+
+    $('.login').click(function(){
+        window.location.href = 'login.html';
     });
 });
