@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	<meta charset="utf-8">
@@ -12,27 +12,31 @@
 	<script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
 	<script type="text/javascript" src="js/main.js" defer></script>
 
+<style type="text/css">
+	.main_hero{
+		background-image:url(images/svg/ngo.svg)
+	}
+	div{
+		position: relative;
+	}
+</style>
+
 </head>
 
 <body>
 
 	<div class="container-fluid">
-		<div class="col-sm-12" style="height:580px; background-image:url(images/svg/hero1.svg);
-		background-size: cover;background-repeat:no-repeat">
-			<div class="row mx-auto" style="height:80px; border-radius:40px; width:74%; position:fixed; top:0;
-			left:14%; z-index: 50; border:2px solid #fff; background-color:#0e34a0; color:#fff; line-height: 80px;">
+		<div class="col-sm-12">
+			<div class="row mx-auto nav_bar">
 				<div class="col-4">
 					<input class="form-control form-control-sm my-3 ms-2" type="search" placeholder="Search" values="">
 				</div>
 				<div class="col-5 col3">
 					<ul>
-						<li><a href='' target="_blank">Investors</a>&emsp;&emsp;&nbsp;</li>
+						<li><a href='invest.html' target="_blank">Investors</a>&emsp;&emsp;&nbsp;</li>
 						<li><a href="startup.html" target="_blank">Startup</a>&emsp;&emsp;&nbsp;</li>
 						<li><a href="prestartup.html" target="_blank">Pre-Startup</a>&emsp;&emsp;</li>
 						<li><a href="ngo.html" target="_blank">NGO</a></li>
-						<ul>
-							<li></li>
-						</ul>
 					</ul>
 				</div>
 
@@ -41,7 +45,7 @@
 
 
 			</div>
-			<div class="my-5 mx-auto" style="width:35%; position:relative; top:50px; right:5%">
+			<div class="my-5 mx-auto headercase" style="width:35%; position:relative; top:45px; right:6%">
 				<h1 class="hero_title1">
 					Dear NGO...</h1>
 				<h1 class="hero_title2">Are You Pitch-Ready&quest;</h1>
@@ -51,7 +55,7 @@
 					service that is currently unavailable elsewhere in the market, or that the founders
 					feel they can supply in a better way to disrupt the current market.
 				</p>
-				<div class='ms-5' style="width:auto; position:inherit; right: 8%;">
+				<div class='ms-5 btncase'>
 					<button class="btn btn-outline-primary btn-lg me-2 px-5 ctabtn_outline signup">Sign Up</button>
 					<button class="btn btn-primary btn-lg mx-2 px-3 _ctabtn login">Login</button>
 				</div>
@@ -60,28 +64,27 @@
 	</div>
 
 
-	<div class="row my-3" style="position:relative;">
-		<div class="col-sm-12 my-3">
-			<p class="mt-2" style="font-size:xx-small; font-weight: 200; color:#99AA38">HOW IT WORKS</p>
-			<h1 style="color:#0E34A0">Start Accepting Donations </h1>
-			<p>Make it easy for donors to support your nonprofit&apos;s work by having a secure, up-to-date,
+	<div class="row my-3">
+		<div class="col-sm-12 my-3 mx-auto">
+			<p class="mt-2 ms-4 desc">HOW IT WORKS</p>
+			<h1 class="ms-3 title">Start Accepting Donations </h1>
+			<p class="ms-3">Make it easy for donors to support your nonprofit&apos;s work by having a secure, up-to-date,
 				and on-brand donation page on Funds.
 			</p>
 		</div>
 		<div class="col-md-3 mb-5 mx-auto photobox">
-			<img class="my-3 mb-5 img-thumbnail photobx" src="images/new_ideas.png">
-			<h5 style="color:#0A210F; font-size:smaller">Register your business or NGO on Funds,
-				provide all required documents &#38; and start pitching</h5>
+			<img class="my-3 mb-5 img-thumbnail photobx" src="images/ngo1.png" alt="box1">
+			<h5>Set up a brand donation profile for your NGO on Funds, with supporting documents.</h5>
 		</div>
 		<div class="col-md-3 mb-5 mx-auto text-center mx-auto photobox">
-			<img class="my-3 mb-5 img-thumbnail photobx" src="images/startup2.png">
-			<h5 style="color:#0A210F; font-size:smaller">We verify and publish entries that are in
-				sync with what investors are looking for
+			<img class="my-3 mb-5 img-thumbnail photobx"  height="40%" src="images/pre2.png" alt="box2">
+			<h5>We verify and publish entries that are in
+				sync with what donors are looking for
 			</h5>
 		</div>
 		<div class="col-md-3 mb-5 mx-auto photobox">
-			<img class="my-3 mb-5 photobx img-thumbnail" src="images/startup3.png">
-			<h5 style="color:#0A210F; font-size:smaller"></h5>
+			<img class="my-3 mb-5 photobx img-thumbnail" src="images/ngo3.png" alt="box3">
+			<h5></h5>
 		</div>
 	</div>
 
@@ -96,18 +99,7 @@
 
 
 	</div>
-	<div class="row mx-auto my-5">
-		<div class="col-md-12">
-			Get started
-		</div>
-		<div class="col-md-5" style="border:2px solid#99AA38; height:6ovh">
-
-		</div>
-		<div class="col-md-5" style="border:2px solid black; height:60vh">
-
-		</div>
-
-	</div>
+	
 
 
 
@@ -132,7 +124,16 @@
 
 
 
-
+	<div class="footer text-center">
+		<ul class="mt-4">
+			<li><a href="privacy-policy.html">Privacy Policy</a></li>&emsp; &emsp; &nbsp;
+		<li><a href="terms-and-condition.html">Terms of Use</a></li>&emsp; &emsp; &nbsp;
+		<li><a href="site-requirement.html">Site Requirements</a></li>&emsp; &emsp; &nbsp;
+		<li><a href="https://www.yemi.dev/">Designed By Yemi</a></li>
+		</ul>
+	</ul>
+	<p class="mb-2">Funds Africa&copy; &emsp;&#45;&emsp;All Rights Reserved.</p>
+</div>
 
 
 
