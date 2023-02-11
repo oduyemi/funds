@@ -1,0 +1,36 @@
+{%extends '/admin/template.html' %}
+
+{%block content%}
+<div class="container px-4 py-5 ">
+    <div class="row" align="center">
+        <div class="party">
+          <h1>
+            Admin Add Party
+        </h1>
+        <div class="col-md-5 ">
+            <form method="post" action="" novalidate>
+                <div class="txt_field">
+                    <input type="text" name="partyname" placeholder="partyname" class="form-control" required>
+                    <span></span>
+                    <label></label>
+                </div>
+
+                <div class="txt_field">
+                      <input type="text" name="shortcode" placeholder="partycode" class="form-control" required>
+                      <span></span>
+                      <label></label>
+
+                </div>
+                    <div class="txt_field">
+                      <input type="text" name="contact" placeholder="partycontact" class="form-control" required>
+                      <span></span>
+                      <label></label>
+                    </div>
+                <input type="submit" value="Add">
+                <hr>
+              </form>
+        </div>
+        </div>
+      </div>
+</div>
+{%endblock%}

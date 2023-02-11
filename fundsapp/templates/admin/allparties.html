@@ -1,0 +1,30 @@
+{% extends "admin/index.html" %}
+{% block party%}
+<div class="row py-4">
+    <div class="col-8 bg-white rounded mx-auto pt-3 pb-4">
+        <table class="table table-bordered mt-3">
+            <thead>
+              <tr>
+                <th scope="col">S/N</th>
+                <th scope="col">PARTY</th>
+                <th scope="col">CODE</th>
+                <th scope="col">CONTACT</th>
+                <th scope="col">ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for p in data: %}
+              <tr>
+                <td>{{ loop.index}}</td>
+                <td>{{p.party_name}}</td>
+                <td>{{ p.party_shortcode}}</td>
+                <td>{{p.party_contact }}</td>
+                <td><a href="#"><i class="fa-regular fa-pen-to-square text-warning"></i>Edit</a></td>
+              </tr>
+              {% endfor%}
+            </tbody>
+          </table>
+    </div>
+<div>
+
+{% endblock %}

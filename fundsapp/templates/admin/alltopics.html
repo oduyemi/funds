@@ -1,0 +1,53 @@
+{% extends 'admin/template.html'%}
+
+
+{%block content%}
+<div class="container-fluid px-4">
+    <div class="row g-3 my-2" style="color: #008753;">
+        <div class="col-md-12">
+            <div class="p-3 bg-white shadow-sm justify-content-around align-items-center rounded">
+                <div>
+                    {% with messages=get_flashed_messages()%}
+                {%if messages %}
+                {% for m in messages %}
+                <div class="alert alert-delete">{{m}}</div>
+                {% endfor %}
+                {% endif %}
+                {%endwith%}
+                    <table class="table table-striped">
+                        <tr>
+                            <th>S/N</th>
+                            <th>Title</th>
+                            <th>User</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+
+                        <tbody>
+                            {% for t in topics %}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td>{{t.topic_title[0:100]}}</td>
+                                <td>{{t.userdeets.user_fullname}}</td>
+                                <td>{% if t.topic_status == '1': %}
+                                    <span class="badge bg-success">Approved</span>
+                                    {% else %}
+                                    <span class="badge bg-warning">Pending</span>
+                                    {%endif%}
+                                </td>
+                                <td> <a href="{{url_for('delete_post',id=t.topic_id)}}" class="btn btn-danger" onclick="return confirm('Do you really want to delete?')"> <i class="fa fa-trash"></i>Delete</a>
+                                    
+                                <a href="{{url_for('edit_topic',id=t.topic_id)}}" class="btn btn-primary"> <i class="fa fa-edit"></i> Edit</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+{%endblock%}

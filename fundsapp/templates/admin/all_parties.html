@@ -1,0 +1,35 @@
+{% extends 'admin/template.html' %}
+
+
+{%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" align="right"><a class="btn btn-dark" href="{{url_for('parties')}}">Add Party</a></div>
+        <div class="col">
+            <table class="table table-stripped bg-light text-success">
+                <thead>
+                <tr>
+                    <th> S/N </th>
+                    <th> Party </th>
+                    <th> Code </th>
+                    <th> Contact </th>
+                    <th> Action </th>
+                </tr>
+            </thead>
+                <tbody>
+                    {% for p in data %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{ p.party_name}}</td>
+                        <td>{{ p.party_shortcode}}</td>
+                        <td>{{p.party_contact}}</td>
+                        <td><a href="">Edit</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

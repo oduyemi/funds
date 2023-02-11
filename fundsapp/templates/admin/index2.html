@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link href="fontawesome/css/all.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" defer src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <title>Bootstrap 5 Responsive Admin Dashboard</title>
+</head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+        
+        <div class="bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom" style="color: #008753;">
+                <img src="images/42c92cb8-fc29-42c7-b1e2-38971e84f946-removebg-preview.png" alt="">
+                MEMBER
+            </div>
+
+            <div class="list-group list-group-flush my-3">
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active">
+                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
+
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fa-solid fa-file"></i> Contents</a>
+
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fa-sharp fa-solid fa-eye"></i> Visits</a>
+
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fa-solid fa-thumbs-up"></i> Likes</a>
+
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fa-sharp fa-solid fa-comments"></i> Comments</a>
+
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fa-solid fa-share-from-square"></i> Shares</a>
+
+                <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
+                    <i class="fa-sharp fa-solid fa-power-off"></i> Logout</a>
+            </div>
+        </div>
+
+
+       
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
+                    <h2 class="fs-2 m-0" style="color: #008753;">Dashboard</h2>
+                </div>
+            </nav>
+
+            <div class="container-fluid px-4">
+                <div class="row g-3 my-2" style="color: #008753;">
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">50,500</h3>
+                                <p class="fs-5">Visits</p>
+                            </div>
+                            <i class="fa-sharp fa-solid fa-eye fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">50,120</h3>
+                                <p class="fs-5"> Total Likes</p>
+                            </div>
+                            <i class="fa-solid fa-thumbs-up fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">49,950</h3>
+                                <p class="fs-5">Comments</p>
+                            </div>
+                            <i class="fa-sharp fa-solid fa-comments fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">50,050</h3>
+                                <p class="fs-5">Total Share</p>
+                            </div>
+                            <i class="fa-solid fa-share-from-square fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row my-5">
+                    <h3 class="fs-4 mb-3" style="color: #008753;">Members</h3>
+                    <div class="col">
+                        <table class="table bg-white rounded shadow-sm  table-hover">
+                            <thead>
+                                <tr style="background-color: #008753;">
+                                    <th scope="col" width="50">S/N</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Party</th>
+                                    <th scope="col">Date Joined</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Bola Tinubu</td>
+                                    <td>tinubu@gmail.com</td>
+                                    <td>APC</td>
+                                    <td>2023-01-23</td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Kashim Shettima</td>
+                                    <td>shettima@gmail.com</td>
+                                    <td>APC</td>
+                                    <td>2023-01-23</td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Peter Obi</td>
+                                    <td>peterobi@gmail.com</td>
+                                    <td>LP</td>
+                                    <td>2023-01-25</td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Yusuf Ahmed</td>
+                                    <td>yusuf@gmail.com</td>
+                                    <td>LP</td>
+                                    <td>2023-01-25</td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Atiku Abubakar</td>
+                                    <td>atiku@gmail.com</td>
+                                    <td>PDP</td>
+                                    <td>2023-02-02</td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">8</th>
+                                    <td>Ifeanyi Okowa</td>
+                                    <td>okowa@gmail.com</td>
+                                    <td>PDP</td>
+                                    <td>2023-02-02</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    </div>
+
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var el = document.getElementById("wrapper");
+        var toggleButton = document.getElementById("menu-toggle");
+
+        toggleButton.onclick = function () {
+            el.classList.toggle("toggled");
+        };
+    </script>
+</body>
+
+</html>

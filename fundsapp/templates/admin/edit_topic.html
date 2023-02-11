@@ -1,0 +1,42 @@
+{% extends 'admin/template.html'%}
+
+
+{%block content%}
+<div class="container-fluid px-4">
+    <div class="row g-3 my-2" style="color: #008753;">
+        <div class="col-md-12">
+            <div class="p-3 bg-white shadow-sm justify-content-around align-items-center rounded">
+                <div>
+                    {% with messages=get_flashed_messages()%}
+                {%if messages %}
+                {% for m in messages %}
+                <div class="alert alert-delete">{{m}}</div>
+                {% endfor %}
+                {% endif %}
+                {%endwith%}
+                <article>
+                    <p>Topic Content:{{topicdeets.topic_title}}</p>
+                    <p>User:{{topicdeets.userdeets.user_fullname}}</p>
+                    <p>Date:{{topicdeets.topic_date}}</p>
+
+                    <form action="/admin/update_topic" method="post">
+                        <p>
+                            <input type="hidden" name="topicid" value="{{topicdeets.topic_id}}">
+                            <select name="status" >
+                                <option value="1">Publish</option>
+                                <option value="0">Unpublish</option>
+                            </select>
+                        </p>
+                        <p><button class="btn btn-success">Submit</button></p>
+                    </form>
+
+                </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+{%endblock%}
