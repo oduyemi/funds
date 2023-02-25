@@ -1,0 +1,20 @@
+{% extends 'home.html' %}
+{% block pagetitle %}<title>Funds - Pre-Start Up</title> {% endblock %}
+{% block content %}
+<div class="row flex-lg-row-reverse align-items-center g-5 py-5" >
+	<div class="col-10 col-sm-8 col-lg-6">
+	  <img src="{{ url_for('static',filename='images/pre.jpg')}}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+	</div>
+	<div class="col-lg-6">
+	  <h1 class="display-5 fw-bold lh-1 mb-3">Is Your Business Scalable?</h1>
+	  <p class="lead">What stage are you in? The development stage is where your idea
+		gets serious. You are building your next big thing and the business model.
+		This business model will need to support you in delivering that big thing. </p>
+	  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+		<button type="button" class="btn btn-primary px-4 me-md-2 prestartupdashboard">Go To Dashboard</button>
+		<a href="" class="btn btn-outline-primary px-4">How It Works</a>
+	  </div>
+	</div>
+  </div>
+
+{% endblock %}

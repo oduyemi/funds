@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block pagetitle %}<title>Funds Signup</title>{% endblock %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css') }}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" type="text/css">
+    <script src="{{url_for('static', filename='js/jquery-3.6.1.min.js') }}"  type="text/javascript"></script>
+    <script type="text/javascript" language="javascript" src="{{url_for('static', filename='js/script.js') }}" defer></script>
+    <script src="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" defer type="text/javascript"></script>
+    
+    {% block spbtn %}
+    <style>
+        .card{
+          width:350px;
+          height:400px;
+          perspective:1500px;
+          position: relative;
+          right:5%
+        }
+        input[type=text],
+        input[type=password],
+        input[type=email]{
+          width: 90%;
+          height:40px;
+          padding: 10px;
+          margin: 10px 96px;
+          box-sizing: border-box;
+          color: #000;
+          background-color: #F5EE9E;
+          outline: none;
+          border-radius: 4px;
+        }
+ 
+        .spbtn{
+          position: relative;
+          right: 30px;
+          bottom:10%;
+          width: 82%;
+          padding: 7px;
+          color: #fff;
+          background: #10349A;
+          text-align: center;
+          font-size: 18px;
+          border-radius: 4px;
+          outline: none;
+          border: none;
+          cursor: pointer;
+          transition: .3s;
+        }
+
+        .spbtn:hover{
+          background-color: #0d2a77;
+        }
+      </style>
+      {% endblock %}
+</head>
+<body>
+    <div class="container-fluid form_box">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+              {{ message }}
+          {% endfor %}
+        {% endif %}
+
+      {% endwith %}
+
+        {% block flashed %} {% endblock %}
+        <div class="card spcard">
+          {% block form_fields %}
+    <div class="dressing"> {% block formtitle %}
+      <h1 class="text-center">
+        Sign Up
+    </h1>{% endblock %}
+      <form method="post" action="" novalidate>
+       
+        <div class="txt_field">
+          <input type="email" name="email" placeholder="Enter your email address" required>
+          <span></span>
+        </div>
+
+        <div class="txt_field">
+          <input type="password" name="password" placeholder="Create password" required>
+          <span></span>
+        </div>
+
+        <div class="txt_field">
+            <input type="password" name="password" placeholder="Confirm password" required>
+            <span></span>
+          </div>
+          {% endblock %}
+       
+      </form>
+    </div>
+
+
+
+</body>
+<script>
+  $(document).ready(function(){
+    $(".spbtn").click();
+    alert("I was clicked");
+</script>
+
+</html>

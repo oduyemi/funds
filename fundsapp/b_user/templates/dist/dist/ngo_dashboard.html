@@ -1,0 +1,59 @@
+{% extends 'dashboardlayout.html' %}
+
+{% block dashboard_menu%}
+<div class="box ngodashboard">
+    <p>67<br><span>NGOs</span></p>
+    <i class="fa fa-users box-icon"></i>
+</div>
+</div>
+
+<div class="col-div-3">
+<div class="box startupdashboard">
+    <p>88<br><span>Startups</span></p>
+    <i class="fa fa-list box-icon"></i>
+</div>
+</div>
+
+<div class="col-div-3">
+<div class="box prestartupdashboard">
+    <p>99<br><span>Pre Startups</span></p>
+    <i class="fa fa-shopping-bag box-icon"></i>
+</div>
+</div>
+
+<div class="col-div-3">
+<div class="box funded">
+    <p>78<br><span>Funded</span></p>
+    <i class="fa fa-tasks box-icon"></i>
+</div>
+</div>
+
+<div class="clearfix"></div>
+{% endblock%}
+
+{% block title %}
+<p>Vetted Startups <span>View All</span></p>
+{% endblock %}
+
+{% block side_content_title %}
+<p>&emsp; Seeking Funds <span>View All</span></p>
+{% endblock %}
+
+
+{% block side_menu %}
+<a href="#" class="icon_a"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp; Dashboard</a>
+<a href="#" class="icon_a"><i class="fa fa-users icons"></i>&nbsp;&nbsp; NGO List</a>
+<a href="#" class="icon_a"><i class="fa fa-list icons"></i>&nbsp;&nbsp; Directors</a>
+<a href="#" class="icon_a"><i class="fa fa-tasks icons"></i>&nbsp;&nbsp; NGO Pitches</a>
+<a href="#" class="icon_a"><i class="fa fa-users icons"></i>&nbsp;&nbsp; Accounts</a>
+<a href="#" class="icon_a"><i class="fa fa-list-alt icons"></i>&nbsp;&nbsp; In Review</a>
+{% endblock %}
+
+
+{% block customJs %}
+<script type="text/javascript" src="{{url_for('static', filename='js/main.js') }}"></script>
+<script>
+
+
+</script>
+{% endblock %}

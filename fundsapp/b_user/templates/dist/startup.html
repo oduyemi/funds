@@ -1,0 +1,21 @@
+{% extends 'home.html' %}
+{% block pagetitle %}<title>Funds - Start Up</title> {% endblock %}
+{% block content %}
+<div class="row flex-lg-row-reverse align-items-center g-5 py-5" >
+	<div class="col-10 col-sm-8 col-lg-6">
+	  <img src="{{ url_for('static',filename='images/startup.jpg')}}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+	</div>
+	<div class="col-lg-6">
+	  <h1 class="display-5 fw-bold lh-1 mb-3">Are You Pitch-Ready?</h1>
+	  <p class="lead">A startup is a company in its early phases of development that
+		offers a product or service that is currently unavailable elsewhere in the
+		market, or that the founders feel they can supply in a better way to disrupt
+		the current market. </p>
+	  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+		<button type="button" class="btn btn-primary px-4 me-md-2 satrtupdashboard">Go To Dashboard</button>
+		<a href="" class="btn btn-outline-primary px-4">How It Works</a>
+	  </div>
+	</div>
+  </div>
+
+{% endblock %}

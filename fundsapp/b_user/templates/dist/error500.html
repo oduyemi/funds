@@ -1,0 +1,16 @@
+{% extends 'home.html' %}
+{% block pagetitle %}<title>Server Error - Funds</title>{% endblock %}
+{% block content %}
+<div class="row flex-lg-row-reverse align-items-center g-5 py-5" >
+	<div class="col-10 col-sm-8 col-lg-6">
+	  <img src="{{ url_for('static',filename='images/404.svg')}}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+	</div>
+	<div class="col-lg-6">
+	  <h1 class="display-5 fw-bold lh-1 mb-3" style="color:#0E34A0">Oops!</h1>
+	  <p class="lead">Looks like it's broken. While we go down this rabbit hole. Please go out and enjoy the sunshine<br>
+        <span style="color: #16302B">If you continue to see this error,
+            please contact <span style="color:#0E34A0">support@funds.com </span></span> </p> 
+	</div>
+  </div>
+
+{% endblock %}

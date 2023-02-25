@@ -1,0 +1,156 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0e34a0;
+  overflow: hidden;
+}
+
+.clearfix {
+  clear: both;
+}
+
+.logo {
+  margin: 0;
+  margin-left: 28px;
+  font-size: 36px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+.logo span {
+  color: #f86624;
+}
+
+.sidenav {
+  height: 100px;
+  width: 300px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #018E42;
+  overflow: hidden;
+  transition: 0.5s;
+  padding-top: 30px;
+}
+
+.sidenav a {
+  padding: 15px 8px 15px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #018E42;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+  background-color: #0e34a0;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+  margin-left: 300px;
+}
+
+.head {
+  padding: 20px;
+}
+
+.col-div-6 {
+  width: 50px;
+  float: left;
+}
+
+.profile {
+  display: inline-block;
+  float: right;
+  width: 160px;
+}
+
+.pro-img {
+  float: left;
+  width: 40px;
+  margin-top: 5px;
+}
+
+.profile p {
+  color: #fff;
+  font-weight: 500;
+  margin-left: 55px;
+  margin-top: 10px;
+  font-size: 13.5px;
+}
+
+.profile p span {
+  font-weight: 400;
+  font-size: 12px;
+  display: block;
+  color: #0e34a0;
+}
+
+.nav {
+  display: none;
+}
+
+.col-div-3 {
+  width: 25%;
+  float: left;
+}
+
+.box {
+  width: 85%;
+  height: 100px;
+  background-color: #C19B5B;
+  margin-left: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.box p {
+  font-size: 35px;
+  color: #fff;
+  font-weight: bold;
+  line-height: 20px;
+  padding-left: 10px;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+.box p span {
+  font-size: 20px;
+  font-weight: 400;
+  color: #0e34a0;
+}
+
+.box-icon {
+  font-size: 40px;
+  float: right;
+  margin-top: 35px !important;
+  color: #fff;
+  padding-right: 10px;
+}
+
+.col-div-8 {
+  width: 70%;
+  float: left;
+}
+
+.col-div-4 {
+  width: 30%;
+  float: left;
+}
+
+.content_box {
+  padding: 20px;
+}
+
+.content_box p {
+  width: 0;
+  font-size: 20px;
+  color: #018E42;
+}
+
+/*# sourceMappingURL=dashboard.css.map */

@@ -23,11 +23,19 @@ $(document).ready(function(){
            $("#ctabtn_ctd").show();
         }
     });
+
+    $("#invest_type").click(function(){
+        var invest=$("#invest_type").children("option:selected").val();
+        if(invest=="invest"){
+           $("#invest_type").hide();
+           window.location.href="/invest"
+        }
+    });
     $("#ctabtn_ctd").click(function(){
         var investType=$("#invest_group").children("option:selected").val();
-        if(investType=="ngo"){window.location.href="/home"}
-        if(investType=="prestartup"){window.location.href="/home"}
-        if(investType=="startup"){window.location.href="/home"}
+        if(investType=="ngo"){window.location.href="/ngo"}
+        if(investType=="prestartup"){window.location.href="/prestartup"}
+        if(investType=="startup"){window.location.href="/startup"}
         if(investType=="invest"){window.location.href="/invest"}
         if(investType==""){alert("Choose an option")}
     });
@@ -39,6 +47,9 @@ $(document).ready(function(){
     $('.signup').click(function(){
         window.location.href = '/signup';
     });
+
+
+
 
     $(".nav").click(function(){
       $(".mySidenav").css("width", "70px");
@@ -64,8 +75,32 @@ $(document).ready(function(){
           $(".nav2").css("display", "none");
     });
 
-    $('.b_dashboard').click(function(){
-        window.location.href = '/dashboard';
+    $('.ngodashboard').click(function(){
+        window.location.href = '/ngo/dashboard';
     });
+
+    $('.startupdashboard').click(function(){
+        window.location.href = '/startup/dashboard';
+    });
+
+    $('.prestartupdashboard').click(function(){
+        window.location.href = '/prestartup/dashboard';
+    });
+
+    $('.funded').click(function(){
+        window.location.href = '/funded';
+    });
+
+    $('.i_dashboard').click(function(){
+        window.location.href = '/invest/dashboard';
+    });
+
+    $('.a_dashboard').click(function(){
+        window.location.href = '/admin/dashboard';
+    });
+
+    $(".base").click(function(){
+           window.location.href="/"
+        });
 
 });

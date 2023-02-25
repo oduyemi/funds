@@ -1,0 +1,34 @@
+{% extends 'dashboardlayout.html' %}
+
+{% block title %}
+<p>Vetted Startups <span>View All</span></p>
+{% endblock %}
+
+{% block side_content_title %}
+<p>&emsp; Seeking Capital <span>View All</span></p>
+
+{% endblock %}
+
+{% block profile %}
+
+
+{% endblock%}
+
+
+{% block side_menu %}
+<a href="#" class="icon_a"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp; Dashboard</a>
+<a href="#" class="icon_a"><i class="fa fa-users icons"></i>&nbsp;&nbsp; NGO List</a>
+<a href="#" class="icon_a"><i class="fa fa-list icons"></i>&nbsp;&nbsp; Directors</a>
+<a href="#" class="icon_a"><i class="fa fa-tasks icons"></i>&nbsp;&nbsp; NGO Pitches</a>
+<a href="#" class="icon_a"><i class="fa fa-users icons"></i>&nbsp;&nbsp; Accounts</a>
+<a href="#" class="icon_a"><i class="fa fa-list-alt icons"></i>&nbsp;&nbsp; In Review</a>
+{% endblock %}
+
+
+{% block customJs %}
+<script type="text/javascript" src="{{url_for('static', filename='js/main.js') }}"></script>
+<script>
+
+
+</script>
+{% endblock %}
