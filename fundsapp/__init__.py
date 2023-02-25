@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import jsonify, render_template, request
 from flask_wtf import FlaskForm
+from flask_wtf.csrf import CSRFProtect
 from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from fundsapp.admin import adminobj
 from fundsapp.b_user import b_userobj
@@ -16,9 +17,7 @@ def create_app():
     starter.config.from_pyfile("config.py")
     from fundsapp.models import db
     db.init_app(starter) # NOT db
-    # login_manager = LoginManager()
-    # login_manager.init_app(app=starter)
-    # login_manager.login_view = "/login"
+    csrf = CSRFProtect(starter)
     @starter.errorhandler(404)
     def page_not_found(e):
         return render_template("error404.html"), 404

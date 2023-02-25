@@ -129,80 +129,6 @@ class RegistrationForm(FlaskForm):
 
 
 
-#         --  FORM AUTHENTICATION  --  THESE ARE THE USER FORM ROUTES AND AUTHENITCATION
-@b_userobj.route('/signup', methods = ["GET", "POST"], strict_slashes = False)
-def signup():
-    form = SignupForm()
-    if request.method == "GET":
-        return render_template('signup.html', title="Sign Up", form = form)
-    else:
-        fname = form.fname.data
-        lname = form.lname.data
-        email = form.email.data
-        password=form.password.data
-        hashedpwd = generate_password_hash(password)
-    if fname !='' and lname != "" and email !='' and password !='':
-        new_user=B_user(b_user_fname = fname, b_user_lname = lname, b_user_email = email,
-        b_user_password = hashedpwd)
-        db.session.add(new_user)
-        db.session.commit()
-        userid=new_user.b_user_id
-        session['user']=userid
-        flash(f"Account created for {form.fname.data}! Please proceed to LOGIN ", "success")
-        return redirect(url_for('fbuser.login'))
-    else:
-        flash('You must fill the form correctly to signup', "danger")
-        return redirect(url_for('fbuser.signup'))
-
-
-
-@b_userobj.route('/login', methods = (["GET", "POST"]), strict_slashes = False)
-def login():
-    session.permanent = True
-    form = LoginForm()
-    email = form.email.data
-    if request.method=='GET':
-        return render_template('login.html', title="Login", form=form)
-    else:
-        #retrieve the form data
-        email=request.form.get('email')
-        pwd=request.form.get('pwd')
-        #run a query to know if the username exists on the database 
-        deets = db.session.query(B_user).filter(B_user.b_user_email==email).first() 
-        if deets !=None:
-            pwd_indb = deets.b_user_password
-            chk = check_password_hash(pwd_indb, pwd)
-            if chk:
-                #log in the person
-                id = deets.b_user_id
-                session['user'] = id
-                return redirect(url_for('fbuser.dashboard'))
-            else:
-                flash('Invalid password')
-                return redirect(url_for('fbuser.login'))
-        else:
-            return redirect(url_for('fbuser.login'))
-
-
-
-@b_userobj.route("/register", methods = ("GET", "POST"), strict_slashes = False)
-def register():
-    return render_template("register.html")
-
-
-
-@b_userobj.route('/signout', methods = ("GET", "POST"), strict_slashes = False)
-#@login_required
-def signout():
-    #logout_user()
-    if session.get("user") != None:
-        session.pop("user",None)
-    return redirect(url_for("fbuser.login"))    
-
-
-
-
-
 #         --  USERS: SESSION[USER] --  THESE ARE THE USER ROUTES
 @b_userobj.route('/', methods = (["GET", "POST"]), strict_slashes = False)
 def indexpage():
@@ -290,6 +216,88 @@ def prestartup():
 @b_userobj.route('/startup', methods = ("GET", "POST"), strict_slashes = False)
 def startup():
     return render_template('startup.html')
+
+
+
+
+
+
+
+#         --  FORM AUTHENTICATION  --  THESE ARE THE USER FORM ROUTES AND AUTHENITCATION
+@b_userobj.route('/signup', methods = ["GET", "POST"], strict_slashes = False)
+def signup():
+    form = SignupForm()
+    if request.method == "GET":
+        return render_template('signup.html', title="Sign Up", form = form)
+    else:
+        fname = form.fname.data
+        lname = form.lname.data
+        email = form.email.data
+        password=form.password.data
+        hashedpwd = generate_password_hash(password)
+    if fname !='' and lname != "" and email !='' and password !='':
+        new_user=B_user(b_user_fname = fname, b_user_lname = lname, b_user_email = email,
+        b_user_password = hashedpwd)
+        db.session.add(new_user)
+        db.session.commit()
+        userid=new_user.b_user_id
+        session['user']=userid
+        flash(f"Account created for {form.fname.data}! Please proceed to LOGIN ", "success")
+        return redirect(url_for('fbuser.login'))
+    else:
+        flash('You must fill the form correctly to signup', "danger")
+        return redirect(url_for('fbuser.signup'))
+
+
+
+@b_userobj.route('/login', methods = (["GET", "POST"]), strict_slashes = False)
+def login():
+    session.permanent = True
+    form = LoginForm()
+    if request.method=='GET':
+        return render_template('login.html', title="Login", form=form)
+    else:
+        if form.validate_on_submit:
+            email = form.email.data
+            password = form.password.data
+            hashed = generate_password_hash(password)
+            if email !="" and password !="":
+                user = db.session.query(B_user).filter(B_user.b_user_email==email).first() 
+                if user !=None:
+                    pwd =user.b_user_password
+                    chk = check_password_hash(pwd, password)
+                    if chk:
+                        userid = user.b_user_id
+                        session['user'] = userid
+                        db.session.add(user)
+                        db.session.commit() 
+                        return redirect(url_for('fbuser.startupdashboard'))
+                    else:
+                        flash('Invalid password')
+                        return redirect(url_for('fbuser.login'))
+            else:
+                flash("You must complete all fields")
+                return redirect(url_for("fbuser.signup"))
+
+
+
+
+@b_userobj.route("/register", methods = ("GET", "POST"), strict_slashes = False)
+def register():
+    return render_template("register.html")
+
+
+
+@b_userobj.route('/signout', methods = ("GET", "POST"), strict_slashes = False)
+#@login_required
+def signout():
+    #logout_user()
+    if session.get("user") != None:
+        session.pop("user",None)
+    return redirect(url_for("fbuser.login"))    
+
+
+
 
 
 

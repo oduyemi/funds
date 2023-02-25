@@ -7,10 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>startup</title>
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css') }}"/>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap/css/bootstrap.css') }}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='assests/css/bootstrap/css/bootstrap.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animate.min.css') }}"/>
     <link rel="stylesheet" href="{{url_for('static', filename='fontawesome/css/all.css') }}"/>
-    <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.6.1.min.js') }}" defer></script>
+   
     
 
     <style type="text/css">
@@ -30,7 +30,7 @@
             background-color: #0A210F !important;
             color: #B9E3C6 !important;
           }
-        .location{
+        .d_dd{
             position: relative;
             left:30%;
             top:0%;
@@ -84,7 +84,7 @@
 </head>
 
 <body>
-    <div class="mySidernav sidenav">
+    <div class="mySidenav sidenav">
         <img src="../static/images/logo/logo_white.png" alt="site logo" class="logo"/>
         {% block side_menu %}
         <a href="#" class="icon_a"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp;Dashboard</a>
@@ -151,14 +151,16 @@
                 <div class="content_box">{% block title %}
                    <p id="topic">Top Selling Projects <span>View All</span></p>{% endblock%}
                    <br>
-                   {% block table %}
+                    {% block pre_table%}
                    <div class="location">
-                    <select name="startuplocation" id="startuplocation">
+                    <select name="startuplocation d_dd">
                         <option value="">- Choose Location -</option>
-                        <option value="raise_fund">Raise Funds</option>
-                        <option value="invest">Invest</option>
+                        <option value=""></option>
+                        <option value=""></option>
                     </select>
                 </div>
+                {% endblock %}
+                   {% block table %}
                    <table class"table table-responsive table-striped">
                        <tr>
                             <th>Company</th>
@@ -227,6 +229,7 @@
 
     <!--  - Custom JS  -->
     {% block customJs %}
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.6.1.min.js') }}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='js/main.js') }}"></script>
     {% endblock %}
 </body>

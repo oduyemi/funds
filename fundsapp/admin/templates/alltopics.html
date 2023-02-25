@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap/css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+    <link href="fontawesome/css/all.css" rel="stylesheet" type="text/css">
+    
+    <link rel="stylesheet" href="{{url_for('static',filename='assets/dist/js/bootstrap.bundle.min.js')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/admin.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='fontawesome/css/all.css')}}">
+    <script type="text/javascript" defer src="{{url_for('static',filename='bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+        
+        <div class="bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom" style="color: #008753;">
+                <img src="images/42c92cb8-fc29-42c7-b1e2-38971e84f946-removebg-preview.png" alt="">
+                <!-- Using the username saved in the session -->
+                MEMBER
+            </div>
+
+           {% include "admin/menu.html"%}
+          
+        </div>
+
+
+       
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
+                    <h2 class="fs-2 m-0" style="color: #008753;">Dashboard</h2>
+                </div>
+            </nav>
+
+            <div class="container-fluid">
+                <div class="row g-3 my-2" style="color: #008753;">
+                    <div class="col-md-12">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th width="10%">S/N</th>
+                                        <th width="45%">Title</th>
+                                        <th width="20%">User</th>
+                                        <th width="20%">Status</th>
+                                        <th width="25%">Action</th>
+                                    </tr>
+                                    {%for t in alltopics %}
+                                    <tr>
+                                        <td>{{loop.index}}</td>
+                                        <td>{{t.topic_title[0:100]}}...</td>
+                                        <td>{{t.userdeets.user_fullname}}</td>
+                                        <td>
+                                            {% if t.topic_status == '1'%}
+                                            <span class="badge bg-success">Approved</span>{%else%}
+                                            <span class="badge bg-secondary">Pending</span>{%endif%}
+                                        </td>
+                                        <td>
+                                            <a href="{{url_for('delete_post',id=t.topic_id)}}" class="btn btn-danger" onclick="return confirm('Do you really want to delete?')"><i class="fa fa-trash"></i>Delete</a>&nbsp;&nbsp;
+                                            <a href="{{url_for('edit_topic',id=t.topic_id)}}" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                               
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+    
+   
+
+    <script src="{{url_for('static',filename='bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script>
+        var el = document.getElementById("wrapper");
+        var toggleButton = document.getElementById("menu-toggle");
+
+        toggleButton.onclick = function () {
+            el.classList.toggle("toggled");
+        };
+    </script>
+</body>
+
+</html>

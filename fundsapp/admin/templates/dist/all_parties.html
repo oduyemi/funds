@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link href="fontawesome/css/all.css" rel="stylesheet" type="text/css">
+    
+    <link rel="stylesheet" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='assets/dist/js/bootstrap.bundle.min.js')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='fontawesome/css/all.css')}}">
+    <script type="text/javascript" defer src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+        
+        <div class="bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom" style="color: #008753;">
+                <img src="images/42c92cb8-fc29-42c7-b1e2-38971e84f946-removebg-preview.png" alt="">
+                <!-- Using the username saved in the session -->
+                MEMBER
+            </div>
+
+            <div class="list-group list-group-flush my-3">
+                <a href="/admin/dashboard" class="list-group-item list-group-item-action bg-transparent second-text active">
+                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
+
+                   
+                    <a href="/admin/party" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                        <i class="fa-solid fa-file"></i>  Add Parties</a>
+    
+                    <a href="/admin/parties" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                        <i class="fa-sharp fa-solid fa-eye"></i> View Parties</a>
+
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fa-sharp fa-solid fa-comments"></i> Comments</a>
+
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fa-solid fa-share-from-square"></i> Shares</a>
+
+                <a href="/admin/logout" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
+                    <i class="fa-sharp fa-solid fa-power-off"></i> Logout</a>
+            </div>
+        </div>
+
+
+       
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
+                    <h2 class="fs-2 m-0" style="color: #008753;">Dashboard</h2>
+                </div>
+            </nav>
+        </div>
+
+            <div class="container-fluid px-4">
+                <div class="row g-3 my-2" style="color: #008753;">
+                    <div class="col-md-12">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>S/N</th>
+                                <th>Party</th>
+                                <th>Code</th>
+                                <th>Contact</th>
+                                <th>Action</th>
+                            </tr>
+                            <!-- adding the data from the database to our page  -->
+                            {% for p in data %}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td>{{ p.party_name }}</td>
+                                <td>{{ p.party_shortcode }}</td>
+                                <td>{{ p.party_contact }}</td>
+                                <td>Edit</td>
+                            </tr>
+                            {% endfor %}
+                        </table>      
+                    </div>
+                </div>
+            </div>            
+    </div>
+    
+    
+   
+
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var el = document.getElementById("wrapper");
+        var toggleButton = document.getElementById("menu-toggle");
+
+        toggleButton.onclick = function () {
+            el.classList.toggle("toggled");
+        };
+    </script>
+</body>
+
+</html>

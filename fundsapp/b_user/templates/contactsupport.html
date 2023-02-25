@@ -1,0 +1,108 @@
+{% extends "home.html"%}
+{% block content %}
+   <div class="content mt-5 p-4 bg-light">
+
+    <div class="row g-5">
+    <div class="col-md-8">
+      <h3 class="pb-4 mb-4 fst-italic border-bottom">
+        Contact Us
+      </h3>
+      {% with m=get_flashed_messages() %}
+        {% if m: %}
+          {% for msg in m %}
+            {{msg|safe}}
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      <form action="" method="post" novalidate>        
+
+        {{ contact.csrf_token }} 
+        <!-- create a hidden token to protect the route -->
+        {{ contact.hidden_tag() }}
+        <!-- both do the same thing -->
+        <div class="mb-3 form-group row">
+        {{contact.confirm_email.label}}
+        {{contact.confirm_email}}
+        {{contact.confirm_email.errors}}
+        </div>
+
+        <div class="mb-3 form-group row">
+          {{contact.screenshot}}
+          {{contact.screenshot.errors}}
+        </div>
+        <div class="mb-3 form-group row">
+          <div class="col-md-3">
+            {{contact.email.label}}
+          </div>
+          <div class="col-md-5">
+          {{contact.email(class_='form-control form-control-lg')}}
+          </div>
+            {% if contact.email.errors %}
+            {% for email_error in contact.email.errors %}
+            <div class="col-md-4 alert alert-danger">
+              {{ email_error}}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="mb-3 form-group row">
+          <div class="col-md-3">
+            {{contact.message.label}}
+          </div>
+          <div class="col-md-5">
+            {{contact.message(class_='form-control form-control-lg')}}
+          </div>
+          {% if contact.message.errors %}
+          {% for email_error in contact.message.errors %}
+          <div class="col-md-4 alert alert-danger">
+            {{ email_error}}
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <div class="row mb-3 form-group">
+          {{contact.submit(class_='btn btn-primary btn-lg')}}
+        </div>
+      </form>
+
+      <!-- <div>
+        <table class="table">
+          <tr>
+            <th>S/N</th>
+            <th>Email</th>
+            <th>Message</th>
+          </tr>
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </div> -->
+      
+<!-- Flashed Messages  -->
+     
+<!-- End Flash  -->
+
+     
+ 
+
+    </div>
+
+    <div class="col-md-4">
+      <div class="position-sticky" style="top: 2rem;">
+       
+
+        
+
+       
+      </div>
+    </div>
+  </div>
+
+
+
+   </div>
+{% endblock %}
+ 

@@ -94,10 +94,10 @@ $(document).ready(function () {
   $('.funded').click(function () {
     window.location.href = '/funded';
   });
-  $('.i_dashboard').click(function () {
+  $('.investdashboard').click(function () {
     window.location.href = '/invest/dashboard';
   });
-  $('.a_dashboard').click(function () {
+  $('.admindashboard').click(function () {
     window.location.href = '/admin/dashboard';
   });
   $(".base").click(function () {
