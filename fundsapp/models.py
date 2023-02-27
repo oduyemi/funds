@@ -15,6 +15,7 @@ class Business(db.Model):
     lga_id = db.Column(db.Integer(),db.ForeignKey('lga.lga_id'))
     state_id = db.Column(db.Integer(),db.ForeignKey('state.state_id'))
     business_email  = db.Column(db.String(100), nullable=False, unique=True)
+    business_phone_number = db.Column(db.String(20),nullable=False)
     business_website = db.Column(db.String(150), nullable=True) 
     business_rcnumber = db.Column(db.String(60), nullable=True)
     business_reg_file = db.Column(db.String(60), nullable=True)
@@ -24,6 +25,7 @@ class Business(db.Model):
     business_details = db.Column(db.Text(), nullable=False)
     business_additional = db.Column(db.Text(), nullable=True)
     business_pitch = db.Column(db.Text(), nullable=False)
+    business_plan = db.Column(db.String(120), nullable=False)
     business_img1 = db.Column(db.String(120),nullable=False)
     business_img2 = db.Column(db.String(120),nullable=False)
     business_img3 = db.Column(db.String(120),nullable=False)
@@ -36,7 +38,7 @@ class B_user(db.Model, UserMixin):
     b_user_business  = db.Column(db.Integer(),db.ForeignKey('business.business_id'))
     b_user_fname = db.Column(db.String(20))
     b_user_lname = db.Column(db.String(20))
-    b_user_email= db.Column(db.String(20), unique=True,)
+    b_user_email= db.Column(db.String(20), unique=True)
     b_user_password= db.Column(db.Text(50))
     b_user_pic = db.Column(db.String(120))
 
@@ -142,7 +144,7 @@ class State(db.Model):
     state_name = db.Column(db.String(100), nullable=False)
 
 
-class lga(db.Model):
+class Lga(db.Model):
     lga_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     lga_name = db.Column(db.String(100), nullable=False)
     lga_stateid  = db.Column(db.Integer(),db.ForeignKey('state.state_id'))

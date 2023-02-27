@@ -15,6 +15,7 @@ Flask==2.2.2
 Flask-Bcrypt==1.0.1
 Flask-HTTPAuth==4.7.0
 Flask-Login==0.6.2
+Flask-MySQLdb==1.0.1
 Flask-SQLAlchemy==3.0.3
 Flask-WTF==1.1.1
 greenlet==2.0.2
@@ -26,6 +27,7 @@ Jinja2==3.1.2
 lockfile==0.12.2
 MarkupSafe==2.1.2
 mysql-connector==2.2.9
+mysqlclient==2.1.1
 Pillow==9.4.0
 python-daemon==2.2.4
 requests==2.22.0

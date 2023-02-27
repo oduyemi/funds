@@ -93,7 +93,9 @@ p {
 
 input[type=text],
 input[type=password],
-input[type=email] {
+input[type=email],
+input[type=number],
+textarea, select {
   width: 95;
   height: 40px;
   padding: 15px;
@@ -107,7 +109,10 @@ input[type=email] {
 
 input[type=text]::placeholder,
 input[type=password]::placeholder,
-input[type=email]::placeholder {
+input[type=email]::placeholder
+input[type=file]::placeholder,
+input[type=number]::placeholder,
+select::placeholder {
   color: #721817;
 }
 

@@ -101,6 +101,9 @@ $(document).ready(function(){
 
     $(".base").click(function(){
            window.location.href="/"
-        });
+    });
+
+  
+    
 
 });
