@@ -22,8 +22,6 @@ class Business(db.Model):
     business_tin = db.Column(db.String(60), nullable=True)
     business_tin_file = db.Column(db.String(60), nullable=True)
     business_desc = db.Column(db.Text(), nullable=False)
-    business_details = db.Column(db.Text(), nullable=False)
-    business_additional = db.Column(db.Text(), nullable=True)
     business_pitch = db.Column(db.Text(), nullable=False)
     business_plan = db.Column(db.String(120), nullable=False)
     business_img1 = db.Column(db.String(120),nullable=False)

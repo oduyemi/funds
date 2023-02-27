@@ -4,115 +4,346 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block pagetitle %}<title>Funds Signup</title>{% endblock %}
+    {% block pagetitle %}<title>Registration - Funds</title>{% endblock %}
     <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}"/>
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css') }}"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" integrity="sha512-ARJR74swou2y0Q2V9k0GbzQ/5vJ2RBSoCWokg4zkfM29Fb3vZEQyv0iWBMW/yvKgyHSR/7D64pFMmU8nYmbRkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js') }}" defer type="text/javascript"></script>
-    <style>
-        .card{
-          width:600px;
-          height:700px;
-          perspective:1000px;
-          position: absolute !important;
-          right: 30%;
-          top:5% !important;
-          margin:0 !important;
-          padding:0 !important;
-          background-color: #018E42 !important;
-        }
-     
- 
-        .spbtn{
-          position: relative;
-        
-          padding: 7px;
-          color: #fff;
-          background: #10349A;
-          text-align: center;
-          font-size: 18px;
-          border-radius: 4px;
-          outline: none;
-          border: none;
-          cursor: pointer;
-          transition: .3s;
-        }
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" type="text/css">
+    
+<style>
+  body{
+    background:rgb(1, 142, 66);
+  }
+  .spbtn{
+    position: relative !important;
+    right: 40% !important;
+    top:30% !important;
+    width: 60%;
+  }
 
-        .spbtn:hover{
-          background-color: #0d2a77;
-        }
+  .card{
+    width:500px;
+    height:auto;
+    perspective:1500px;
+    position: relative;
+    right:-32%;
+  }
+  input[type=text],
+  input[type=password],
+  input[type=email],
+  input[type=file],
+  textarea,
+  select{
+    width: 90%;
+    height:40px;
+    padding: 10px;
+    margin: 10px 96px;
+    box-sizing: border-box;
+    color: #000;
+    background-color: #F5EE9E;
+    outline: none;
+    border-radius: 4px;
+    position: relative;
+    right: -7%
+  }
+  select{
+    position: relative !important;
+    right: -5% !important;
+  }
+  label{
+    position: relative;
+    right: -24%;
+    font-weight: 600 !important;
+    color: #10349A !important;
+    font-size:12px !important;
+  }
+  .spbtn{
+    position: relative !important;
+    left: 24% !important;
+    width: 50%;
+    padding: 7px;
+    color: #fff;
+    background: #10349A;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 4px;
+    outline: none;
+    border-radius: none;
+    cursor: pointer;
+    transition: .3s;
+  }
+  
 
-    </style>
+
+</style>
 </head>
 <body>
-    <div class="container-fluid" bg-color="#018E42">
-      {{ form.csrf_token }}
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
-              {{ message }}
-          {% endfor %}
-        {% endif %}
-
-      {% endwith %}
+  <div>
         <div class="card spcard">
+    <div class="dressing"> 
       <h1 class="text-center">Registration Form</h1>
-        <form class="form-control form" action="" method="post">
-            <input class="form-control" type="text" placeholder="Business name" value="" name="businessname" id="businessname">
-            <input class="form-control" type="email" placeholder="Business Email Address" value="" name="businessmail" id="businessmail">
-            <input class="form-control" type="text" placeholder="website" value="" name="website" id="website">
-            <input class="form-control" type="number" placeholder="Phone Number" value="" name="phone_number" id="phone_number">
-            <label for="message">Address<br>
-            <textarea type="textarea" name="address;" rows="6px" cols="60px" id="address"></textarea><br><br>
-            <select class="form-control" name="state" id="state" data-live-search="true">
-                <option value="/">- Select State-</option>
-                  {% for row in state %}
-                  <option value="{{row.state_id}}">{{ row.state_name}}<option>
-                  {% endfor %}
-            </select>
-            <select class="form-control" name="lga" id="lga">
-                <option value="/">- Choose Local Government Area-</option>
-                {% for row in lga %}
-                <option value="{{row.state_id}}">{{ row.lga_name}}<option>
+      <form method="post" action="" novalidate>
+      <form method="post" action="{{ url_for('fbuser.register')}}">
+        {{ form.hidden_tag() }} 
+        
+        <div class="txt_field form-group">
+
+          {% if form.bname.errors %}
+            {{ form.bname (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.bname.errors %}
+                <span>{{ error }}</span>
                 {% endfor %}
-            </select>
-            <input class="form-control" type="text" placeholder="RC Number/BN Number" value="" name="regnumber" id="regnumber">
-            <label for="taxfile">Upload evidence of business registration<br>
-            <input class="form-control" type="file" name="regfile" id="regfile">
-            <input class="form-control" type="text" placeholder="Tax Identification Number" value="" name="tin" id="tin">
-            <label for="taxfile">Upload your Tax certificate or any evidence of Tax registration<br>
-            <input class="form-control" type="file" id="taxfile" name="tax">
-            <label for="business_desc">What is your business about?<br>
-            <textarea type="textarea" name="business_desc" rows="6px" cols="60px" id="business_desc"></textarea><br><br>
-            <select class="form-control" name="lga" id="lga">
-              <option value="/" id="type">- Choose Business Type -</option>
-              {% for row in type %}
-                  <option value="{{row.type_id}}">{{ row.type}}</option>
-              {% endfor %}
-          </select>
-            <label for="business_details">Give details of how your will scale with a specific time frame<br>
-            <textarea type="textarea" name="business_details" rows="6px" cols="60px" id="business_details"></textarea><br><br>
-            <label for="pitch">Pitch to an investor<br>
-            <textarea type="textarea" name="pitch" rows="6px" cols="60px" id="pitch"></textarea><br><br>
-            <label for="plan">Upload your business plan<br>
-            <input class="form-control" type="file" id="bplan" name="plan" id="plan">
-            <label for="additional">Additional Details<br>
-            <textarea type="textarea" name="additional" rows="6px" cols="60px" id="additional"></textarea><br><br>
-            <label for="taxfile">Upload 3 images that best represents your business<br>
-              <input class="form-control" type="file" id="pic1" name="b_img1" id="img1">
-              <input class="form-control" type="file" id="pic2" name="b_img2" id="img2">
-              <input class="form-control" type="file" id="pic3" name="b_img3" id="img3"><br>
-            <div id="form-bt"><button class="button" type="submit">Submit</button></div><br><br>
-        </form>
+              </div>
+          {% else %}
+            {{ form.bname }}
+          {% endif %}
 
+        </div>
+
+        <div class="txt_field form-group">
+
+          {% if form.phone.errors %}
+            {{ form.phone (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.phone.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+            {{ form.phone }}
+          {% endif %}
+          
+        </div>
+        
+        <div class="txt_field form-group">
+
+          {% if form.email.errors %}
+            {{ form.email (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+            {{ form.email }}
+          {% endif %}
+          
+        </div>
+
+        <div class="txt_field form-group">
+
+          {% if form.website.errors %}
+            {{ form.website (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.website.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+            {{ form.website }}
+          {% endif %}
+          
+        </div>
+            
+        <div class="txt_field form-group">
+          {% if form.address.errors %}
+            {{ form.address (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.website.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+            {{ form.address }}
+          {% endif %}
          
+          
+        </div>
+        <div class="txt_field form-group">
+          <select class="form-control" id="state">
+            <option value="">     -     Choose State     -</option>
+            {% for row in state %}
+            <option id="stateInput" value="{{row.state_id}}">{{ row.state_name}}<option>
+            {% endfor %}
+            <option>{{ form.state }}</option>
+          </select>
+          
+        </div>
+        <div class="txt_field form-group">
+          <select class="form-control" id="lga">
+            <option value="">     -     Local Government Area     - </option>
+              {% for row in lgas %}
+                  <option id="lgaInput" value="{{row.lga_stateid}}">{{ row.lga_name }}<option>
+            
+            {% endfor %}
+            <option>{{ form.lga }}</option>
+          </select>
+        </div>
+
+        <div class="txt_field form-group">
+          <select class="form-control" id="type">
+            <option value="">   -   Business Type   -  </option>
+            {% for row in type %}
+            <option value="{{row.type_id}}">{{ row.type}}<option>
+            {% endfor %}
+            <option>{{ form.btype }}</option>
+          </select>
+        </div>
+        
+        <div class="txt_field form-group">
+          <label class="form-control">What is your business about?</label>
+          {% if form.b_desc.errors %}
+            {{ form.b_desc.errors (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.b_desc.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+            {{ form.b_desc }}
+          {% endif %}
+        </div>
+
+        <div class="txt_field form-group">
+          {% if form.regnumber.errors %}
+            {{ form.regnumber}} (class="is_invalid") 
+              <div class="invalid-feedback">
+                {% for error in form.regnumber.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+            {{ form.regnumber }}
+          {% endif %}
+          
+        </div>
+
+  
+
+        <div class="txt_field form-group">
+
+          {% if form.regfile.errors %}
+            {{ form.regfile (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.regfile.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+              <label class="form-control">Upload evidence of your business registration</label>
+            {{ form.regfile}}  
+          {% endif %}
+        </div>
+
+        <div class="txt_field form-group">
+          {% if form.tin.errors %}
+            {{ form.tin (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.tin.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+            {{ form.tin }}
+          {% endif %}
+          
+        </div>
+
+        <div class="txt_field form-group">
+          {% if form.taxfile.errors %}
+            {{ form.taxfile (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.taxfile.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+          <label class="form-control">Upload your tax certificate or any evidence of tax payment</label>
+            {{ form.taxfile}}
+          {% endif %}
+        </div>
+        <div class="txt_field form-group">
+
+          {% if form.taxfile.errors %}
+            {{ form.planfile (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.planfile.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+              <label class="form-control">Upload your business plan</label>
+            {{ form.planfile}}
+          {% endif %}
+        </div>
+
+ <label class="form-control">Upload 3 images that best represents your business</label>
+        <div class="txt_field form-group">
+          {% if form.img1.errors %}
+            {{ form.img1 (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.img1.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}  
+            {{ form.img1 }}
+          {% endif %}
+        </div>
+
+        <div class="txt_field form-group">
+          {% if form.img2.errors %}
+            {{ form.img2 (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.img2.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+            {{ form.img2}}
+          {% endif %}
+        </div>
+
+        <div class="txt_field form-group">
+          {% if form.img3.errors %}
+            {{ form.img3 (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.img3.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+            {{ form.img3 }}
+          {% endif %}
+        </div>
+
+        <div class="form-group text-center">
+          {{ form.submit (class="spbtn") }}
+        </div>
+      </form>
+    </div></div>
     </div>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" integrity="sha512-ARJR74swou2y0Q2V9k0GbzQ/5vJ2RBSoCWokg4zkfM29Fb3vZEQyv0iWBMW/yvKgyHSR/7D64pFMmU8nYmbRkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="{{url_for('static', filename='js/jquery.min.js') }}"</script>
-    <script type="text/javascript" src="{{url_for('static', filename='js/glm-ajax.js') }}"></script>
-    <script type="text/javascript" language="javascript" src="{{url_for('static', filename='js/main.js') }}" defer></script>
 
-</body>
 
-</html>
+    <script src="{{url_for('static', filename='js/jquery.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript" language="javascript" src="{{url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" type="text/javascript"></script>
+    <script>
+      $(document).ready(function(){
+        $("#state").change(function(){
+            var stateid = $(this).val()
+            $.ajax({
+                type:"GET",
+                url:"/load_lga/"+stateid,
+                success:function(rsp){
+                    $("#mylga").html(rsp)
+                }
+            })
+        })
+    })
+
+    </script>
+    </body>
+
+
+
