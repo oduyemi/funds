@@ -103,7 +103,7 @@ def home():
     fname = db.session.query(B_user).filter(B_user.b_user_fname).first()
     lname = db.session.query(B_user).filter(B_user.b_user_lname).first()
     email = db.session.query(B_user).filter(B_user.b_user_email).first()
-    return render_template("home.html", dp = dp, fname =fname, lname = fname, email=email, title = "Homepage - Funds App")
+    return render_template("home.html", dp = dp, fname =fname, lname = lname, email=email, title = "Homepage - Funds App")
 
 
 

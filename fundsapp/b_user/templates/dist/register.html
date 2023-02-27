@@ -112,40 +112,7 @@
   <script src="{{url_for('static', filename='js/jquery.min.js') }}"</script>
     <script type="text/javascript" src="{{url_for('static', filename='js/glm-ajax.js') }}"></script>
     <script type="text/javascript" language="javascript" src="{{url_for('static', filename='js/main.js') }}" defer></script>
-<script>
-  $(document).ready(function(){
-    $("#state").selectpicker;
-    $("#lga").selectpicker;
 
-    function load_data(type, state_id){
-      $.ajax({
-        url:"/load_lga",
-        method:"POST",
-        data: { type: type, state_id: state_id },
-        dataType: "json",
-        success: function(data){ alert(state_id)
-          var html = "";
-            for (var count = 0; count < data.length; count++){
-              html +- `<option value= + ${data[count].id} ${data[count].name} + <option>`
-            }
-          if (type == "lgadata"){
-            $("#state").html(html);
-            $("#state").selectpicker("refresh");
-          }else{
-            $("#lga").html(html);
-            $("#lga").selectpicker("refresh");
-          }
-
-        },
-      })
-    }
-    $(document).on("change", "#state", function(){
-      var state_id = $("#state").val();
-      $("load_lga").load("lgadata", state_id)
-    })
-  })
-
-</script>
 </body>
 
 </html>
