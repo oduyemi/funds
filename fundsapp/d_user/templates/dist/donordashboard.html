@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        {% block pagetitle %}<title>Donataion - Funds</title>{% endblock %}
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css') }}"/>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap/css/bootstrap.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animate.min.css') }}"/>
+        <link rel="stylesheet" href="{{url_for('static', filename='fontawesome/css/all.css') }}"/>
+        <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.6.1.min.js') }}" defer></script>
+        <script type="text/javascript" src="{{url_for('static', filename='js/main.js') }}" defer></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+
+        <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+            }
+        }
+        .comment{
+            color: blue;
+            font-family: cursive;
+        }
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        #i_support{
+          float:right;
+        }
+        </style>
+
+  </head>
+  <body>
+   
+    <nav class="navbar navbar-expand-md fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="{{ url_for('static',filename='images/logo/sitelogo.png')}}" height="70" class="logo">
+        </a>
+    </nav>
+       
+<main>
+
+<div class="container col-xxl-8 px-4 py-5" >
+{% if session.get('businessloggedin') !=None %}
+<header class="p-3 mb-3 border-bottom">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+       
+        <ul class="member nav text-black col-12 col-lg-auto me-lg-auto mb-2 justify-content-start mb-md-0">
+          <li><a href="{{url_for('duser.donatedashboard')}}" class="nav-link px-2 " style="color:#FF5714">Dashboard</a></li>
+          <li><a href="#" class="nav-link px-2 link-dark">Conversations</a></li>
+          <li><a href="#" class="nav-link px-2 link-dark">Shop</a></li>
+        
+        </ul>
+
+         
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            {% if deets: %}
+              {% if deets.user_pix != None%}
+                 <img src="{{url_for('static',filename='uploads/'+deets.user_pix)}}" alt="mdo" width="32" height="32" class="rounded-circle">
+                 {% else %}
+                 <img src="" alt="mdo" width="32" height="32" class="rounded-circle">
+              {% endif %}
+
+            {% else %}
+            <img src="{{url_for('static',filename='images/h2.jpg')}}" alt="mdo" width="32" height="32" class="rounded-circle">
+            {% endif %}
+          </a>
+          <ul class="dropdown-menu text-small">
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><a class="dropdown-item" href="#">Profile picture</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{ url_for("duser.donatesignout")}}">Sign out</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</header>
+{%endif%}
+
+{% block content %}
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5" >
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="{{ url_for('static',filename='images/invest.jpg')}}" class="d-block mx-lg-auto img-fluid" alt="Header Hero" width="700" height="500" loading="lazy">
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold lh-1 mb-3">Nigeria Welcomes her 5th President</h1>
+        <p class="lead">Party members can start the preparation for the swaering in ceremony of the Democratically elected President on May 29th, 2023. <br> The two-day event will see visitors from all across the nation in the smart city of Abuja. </p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <button type="button" class="btn btn-primary px-4 me-md-2 i_dashboard">Go To Dashboard</button>
+          <a href="{{url_for('duser.donatelogin')}}" class="btn btn-outline-primary px-4">How It Works</a>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
+  </div>
+
+{% block more_content %}
+<!--The home page can populate this for other contents like partner hotel-->
+{% endblock more_content %}
+  
+<!-- FOOTER -->
+<div class="footer text-center">
+    <ul class="mt-4">
+        <li><a href="/">Privacy Policy</a></li>&emsp; &emsp; &nbsp;
+        <li><a href="/">Terms of Use</a></li>&emsp; &emsp; &nbsp;
+        <li><a href="/">Site Requirements</a></li>&emsp; &emsp; &nbsp;
+        <li><a href="/">Designed By Yemi</a></li>
+    </ul>
+    </ul>
+    <p class="mb-2">Funds Africa&copy; &emsp;&#45;&emsp;All Rights Reserved.</p>
+</div>
+
+
+</main>
+
+{% block customjs %}
+
+{% endblock %}
+
+</div>
+
+
+
+    <script src="{{url_for('static',filename='assets/dist/js/bootstrap.bundle.min.js')}}"></script>
+  </body>
+</html>

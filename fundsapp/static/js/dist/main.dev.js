@@ -103,5 +103,22 @@ $(document).ready(function () {
   $(".base").click(function () {
     window.location.href = "/";
   });
+  $('#state').change(function () {
+    var stateid = $("#state").val();
+    output = {
+      "state_id": stateid
+    };
+    $.ajax({
+      type: "GET",
+      url: "/load_lga/" + stateid,
+      data: output,
+      success: function success(rsp) {
+        $("#lgas").innerHTML = rsp;
+      },
+      cache: false,
+      processData: false,
+      contentType: false
+    });
+  });
 });
 //# sourceMappingURL=main.dev.js.map

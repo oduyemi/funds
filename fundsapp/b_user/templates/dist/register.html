@@ -11,7 +11,7 @@
     
 <style>
   body{
-    background:rgb(1, 142, 66);
+    background-color: #0e34a0;
   }
   .spbtn{
     position: relative !important;
@@ -81,9 +81,9 @@
         <div class="card spcard">
     <div class="dressing"> 
       <h1 class="text-center">Registration Form</h1>
-      <form method="post" action="" novalidate>
+      <form method="post" action="" novalidate id="reg">
       <form method="post" action="{{ url_for('fbuser.register')}}">
-        {{ form.hidden_tag() }} 
+        <input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token()}}">
         
         <div class="txt_field form-group">
 
@@ -162,33 +162,26 @@
         <div class="txt_field form-group">
           <select class="form-control" id="state">
             <option value="">     -     Choose State     -</option>
-            {% for row in state %}
-            <option id="stateInput" value="{{row.state_id}}">{{ row.state_name}}<option>
-            {% endfor %}
-            <option>{{ form.state }}</option>
+            {% for row in states %}
+            <option value="{{row.state_id}}">{{row.state_name}}</option>
+              {% endfor %}
+            <option>{{ form.state }}</option> 
           </select>
           
         </div>
-        <div class="txt_field form-group">
-          <select class="form-control" id="lga">
-            <option value="">     -     Local Government Area     - </option>
-              {% for row in lgas %}
-                  <option id="lgaInput" value="{{row.lga_stateid}}">{{ row.lga_name }}<option>
-            
-            {% endfor %}
-            <option>{{ form.lga }}</option>
-          </select>
-        </div>
+        <div class="txt_field form-group" id="lga"></div>
 
         <div class="txt_field form-group">
           <select class="form-control" id="type">
             <option value="">   -   Business Type   -  </option>
             {% for row in type %}
-            <option value="{{row.type_id}}">{{ row.type}}<option>
+            <option value="{{row.type_id}}">{{ row.type}}</option>
             {% endfor %}
             <option>{{ form.btype }}</option>
           </select>
         </div>
+
+         
         
         <div class="txt_field form-group">
           <label class="form-control">What is your business about?</label>
@@ -206,7 +199,7 @@
 
         <div class="txt_field form-group">
           {% if form.regnumber.errors %}
-            {{ form.regnumber}} (class="is_invalid") 
+            {{ form.regnumber (class="is_invalid") }}
               <div class="invalid-feedback">
                 {% for error in form.regnumber.errors %}
                 <span>{{ error }}</span>
@@ -277,6 +270,22 @@
           {% endif %}
         </div>
 
+        <div class="txt_field form-group">
+
+          {% if form.pitch.errors %}
+            {{ form.pitch (class="is_invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.pitch.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+          {% else %}
+          <label class="form-control">Pitch to an investor</label>
+            {{ form.pitch }}
+          {% endif %}
+          
+        </div>
+
  <label class="form-control">Upload 3 images that best represents your business</label>
         <div class="txt_field form-group">
           {% if form.img1.errors %}
@@ -325,22 +334,49 @@
     </div>
 
 
-    <script src="{{url_for('static', filename='js/jquery.min.js') }}" type="text/javascript"></script>
-    <script type="text/javascript" language="javascript" src="{{url_for('static', filename='js/script.js') }}"></script>
     <script src="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" type="text/javascript"></script>
+    <script src="{{url_for('static', filename='js/jquery.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript" language="javascript" src="{{url_for('static', filename='js/main.js') }}"></script>
+    
     <script>
-      $(document).ready(function(){
-        $("#state").change(function(){
-            var stateid = $(this).val()
-            $.ajax({
-                type:"GET",
-                url:"/load_lga/"+stateid,
-                success:function(rsp){
-                    $("#mylga").html(rsp)
-                }
-            })
-        })
-    })
+/*document.getElementById("state").addEventListener("change", load_lga())
+  var stateid = (this).value();
+
+
+function load_lga(){
+  var xhr = XMLHttpRequest();
+
+  xhr.open("GET", "/load_lga", true);
+
+  xhr.onload = function(){
+    if (this.status == 200){
+        var lgas = JSON.parse(this.responseText);
+    output +=  `<select class="form-control">
+      <option 
+    </select>`
+    alert()
+  }
+}
+}*/
+
+$(document).ready(function(){
+  $('#state').change(function(){
+      var stateid = $(this).val()
+      var csrf = "{{csrf_token}}"
+      $.ajax({
+          url:"/load_lga/"+stateid,
+          
+          type:"GET",
+          success:function(rsp){
+              $('#lga').html(rsp)
+          },
+          error:function(err){
+              console.log(err)
+          }
+      })
+  })
+})
+  
 
     </script>
     </body>

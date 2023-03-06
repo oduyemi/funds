@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funds Login</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css') }}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" type="text/css">
+    <script src="{{url_for('static', filename='js/jquery-3.6.1.min.js') }}"  type="text/javascript"></script>
+    <script type="text/javascript" language="javascript" src="{{url_for('static', filename='js/script.js') }}" defer></script>
+    <script src="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" defer type="text/javascript"></script>
+</head>
+<body>
+    <div class="container-fluid form_box">
+        <div class="card">
+                    <input type="checkbox" id="chk" aria-hidden="true" name="">
+                    <div class="content">
+                        <div class="front">
+                            <div class="inner">
+                                <h2 class="mt-3">Log in</h2>
+                                <p>Enter your email and password</p>
+                                <input type="email" name="email" placeholder="Enter your email" class="mt-5">
+                                <input type="password" name="pwd" placeholder="Enter your password" class="mt-3">
+                                <label for="chk" aria-hidden="true">Forgot Password?</label>
+                                <button type="submit">Login</button>
+                            </div>
+                            <div class="formlink">
+                                <span class="ms-5">Not Registered? <a href={{url_for("duser.donatesignup")}}>Sign up here</a></span>
+                                </div>
+                        </div>
+                        <div class="back">
+                            <div class="inner">
+                                <h2 class="mt-4 mb-3">Reset Password</h2>
+                                <p>Fill in the appropriate details to reset your password</p>
+                                <input type="email" name="email" placeholder="Enter your email address" class="mt-5">                                
+                                <input type="password" name="pwd" placeholder="Enter your password" class="mt-3">
+                                <label for="chk" aria-hidden="true">Back to Log-in</label>
+                                <button type="submit">Reset Password</button>
+                            </div>
+                            <div class="formlink">
+                                <span class="ms-5">Not Registered? <a href={{url_for("duser.donatesignup")}}>Sign Up here</a></span>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

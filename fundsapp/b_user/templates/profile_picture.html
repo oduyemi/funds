@@ -1,0 +1,16 @@
+{% extends "home.html"%}
+  
+{% block content %}
+<div class="content" style="background-color: white;padding:1.5em">
+  <h3>Update Your Profile Picture</h3>
+
+  <form method="post" enctype="multipart/form-data">
+    <div class="form-group row">
+        <label for="" class="col-md-2">Select File</label>
+        <input type="file" name="pix" class="col-md-6">
+        <input type="submit" value="Upload" class="btn btn-warning col-md-4">
+    </div>
+  </form>
+ </div>
+ 
+{% endblock %}

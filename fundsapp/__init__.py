@@ -6,6 +6,8 @@ from flask_login import login_user, LoginManager, login_required, logout_user, c
 from fundsapp.admin import adminobj
 from fundsapp.b_user import b_userobj
 from fundsapp.i_user import i_userobj
+from fundsapp.d_user import d_userobj
+from fundsapp.models import db, B_user
 from fundsapp.api import apiobj
 
 
@@ -20,7 +22,10 @@ def create_app():
     csrf = CSRFProtect(starter)
     @starter.errorhandler(404)
     def page_not_found(e):
-        return render_template("error404.html"), 404
+        fname = db.session.query(B_user).filter(B_user.b_user_fname).first()
+        lname = db.session.query(B_user).filter(B_user.b_user_lname).first()
+        email = db.session.query(B_user).filter(B_user.b_user_email).first()
+        return render_template("error404.html", fname=fname, lname=lname, email=email), 404
 
     @starter.errorhandler(500)
     def internal_server_error(e):
@@ -35,6 +40,7 @@ def create_app():
     starter.register_blueprint(adminobj)
     starter.register_blueprint(b_userobj)
     starter.register_blueprint(i_userobj)
+    starter.register_blueprint(d_userobj)
     starter.register_blueprint(apiobj)
     return starter
 

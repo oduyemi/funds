@@ -1,14 +1,14 @@
 import os, random, string
 from flask import Flask, render_template, redirect, url_for, request, flash, session, abort, jsonify
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileField,TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileField,TextAreaField, SelectField
 from wtforms.validators import DataRequired, length, ValidationError, Regexp, EqualTo, Email
 from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from sqlalchemy.sql import text
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.exceptions import HTTPException
 
-from fundsapp.models import B_user, db, Lga, State, Industry, Business_type
+from fundsapp.models import B_user, db, Lga, State, Industry, Business_type, Business
 
 from . import b_userobj
 
@@ -131,16 +131,22 @@ class RegistrationForm(FlaskForm):
             length(min=1, max=120, message = "Please provide a valid address")],
         render_kw={"placeholder": "Enter your Address"})
     
-    state = StringField("state",
+    state = SelectField("state",
         validators=[
             DataRequired()]),
     
-    lga = StringField("lga",
+    lga = SelectField("lga",
         validators=[
-            DataRequired()])
+            DataRequired()]),
     
-    btype = FileField("btype")
-    
+    btype = SelectField("btype",
+            validators=[
+            DataRequired()]),
+
+    b_industry = SelectField("b_industry",
+        validators=[
+            DataRequired()]),       
+
     regnumber = StringField("regnumber",
     validators=[
         DataRequired(),
@@ -323,20 +329,46 @@ def login():
 @b_userobj.route("/register", methods = ("GET", "POST"), strict_slashes = False)
 def register():
     form = RegistrationForm()
-    state = db.session.query(State).order_by(State.state_id).all()
+    states = db.session.query(State).order_by(State.state_id).all()
     type = db.session.query(Business_type).order_by(Business_type.type_id).all()
-    specific_lga = db.session.query(Lga).join(State).filter(State.state_id == Lga.lga_stateid)
-    lgas = db.session.query(Lga).order_by(Lga.lga_stateid).all()
-    if session.get("user") != None:
-        if form.validate_on_submit():
-            email = request.form.get('email')
-            msg = request.form.get('message')
-            #insert into database and send the feedback to AJAX/Javascript
-            return f"{email} and {msg}"
-        
-        return render_template("register.html", form = form, state = state, type=type, lgas=lgas, specific_lga=specific_lga)
+    industries = db.session.query(Business).order_by(Business.business_industryid).all()
+    bname = form.bname.data
+    phone = form.phone.data
+    email = form.email.data
+    website=form.website.data
+    address = form.website.data
+    #state = request.form.get("state")
+    #lga = request.form.get("lga")
+    btype = request.form.get("btype")
+    bindustry = request.form.get("b_industry")
+    regnumber = form.regnumber.data
+    tin = form.tin.data
+    taxfile = form.taxfile.data
+    b_desc = form.b_desc.data
+    pitch = form.pitch.data
+    planfile = form.planfile.data
+    img1 = form.img1.data
+    img2 = form.img2.data
+    img3 = form.img3.data
+    lga = db.session.query(Lga).order_by(Lga.lga_stateid).all()
+    if request.method == "GET":
+        return render_template("register.html", form = form, states = states, type=type, lga=lga, industries=industries)
     else:
-        return redirect(url_for("fbuser.login"))
+        if session.get("user") != None:
+            if form.validate_on_submit:
+                if bname =='' and phone == "" and email =='' and website =='' and address == "" and btype == "" and regnumber =='' and tin =='' and taxfile == "" and b_desc =='' and pitch =='' and planfile == "" and img1 =='' and img2 =='' and img3 == "" and bindustry == "":
+                    flash("Please fill all fields")
+                    return redirect(url_for("fbuser.register"))    
+                    
+                else:  
+                    new_business=Business(business_name = bname, business_type = btype, business_email = email, business_phone_number =phone, business_website=website, business_address=address, business_rcnumber=regnumber, business_tin=tin, business_tin_file=taxfile, business_desc=b_desc,business_pitch=pitch, business_plan=planfile, business_img1=img1,business_img2=img2,business_img3=img3)
+                    db.session.add(new_business)
+                    db.session.commit()
+                    flash("Successfully Registered")
+                    return redirect(url_for("fbuser.profile"))
+        
+        else:
+            return redirect(url_for("fbuser.login"))
 
 
 
@@ -439,18 +471,38 @@ def startup():
 
 
 
+@b_userobj.route('/business/account/<id>', methods = ("GET", "POST"), strict_slashes = False)
+def b_account(id):
+    business_deets= Business.query.get_or_404(id)
+    return render_template("b_account.html", business_deets=business_deets)
+
+
+
+
+
 
 
 #         --  DROPDOWNS  --  THESE ARE JSON REQUESTS HANDLED TO POPULATE DROPDOWN MENUS
 @b_userobj.route("/load_lga/<stateid>")
 def load_lga(stateid):
     lgas = db.session.query(Lga).filter(Lga.lga_stateid==stateid).all()
-    data2send = "<select class='form-control border-success'>"
+    data2send = "<select class='form-select border-success'>"
     for s in lgas:
         data2send = data2send+"<option>"+s.lga_name +"</option>"
+    
     data2send = data2send + "</select>"
-    # stateid = request.args.get("stateid")
+
     return data2send
+# def load_lga(stateid):
+#     #state = request.args.get("stateid")
+#     lgaList = db.session.query(Lga).filter(Lga.lga_stateid==stateid).all()
+#     data2send = "<select class='form-control border-success'>"
+#     for s in lgaList:
+#         data2send= data2send + "<option>"+s.lga_name +"</option>"
+#     data2send = data2send + f"<option value={s.lga_id}"> +s.lga_name + "</option>"
+#     rsp = data2send + "</select>"
+#     # stateid = request.args.get("stateid")
+#     return rsp
 
 
 
@@ -488,11 +540,14 @@ def profile():
 
 @b_userobj.route('/profile/picture', methods=["POST","GET"])
 def profile_picture():
-    if session.get('user') ==None:
+    fname = request.form.get('fname')
+    lname = request.form.get('lname')
+    email = request.form.get('email')
+    if session.get('user') == None:
         return redirect(url_for('fbuser.login'))
     else:
         if request.method == 'GET':
-            return render_template('profile_picture.html')
+            return render_template('profile_picture.html', fname=fname, lname=lname, email=email)
         else:
             #retrieve the file
             file = request.files['pix']
@@ -504,7 +559,7 @@ def profile_picture():
                 name,ext = os.path.splitext(filename) 
                 if ext.lower() in allowed: 
                     newname = generate_name()+ext
-                    file.save("memberapp/static/uploads/"+newname) 
+                    file.save("fundsapp/static/uploads/"+newname) 
                     # user = db.session.query(User).get(id)
                     # user.user_pix = newname
                     db.session.commit()
@@ -523,6 +578,18 @@ def donate():
 @b_userobj.route('/dashboard/donation', strict_slashes = False)
 def dashboard_donation():
     return render_template('donation.html')
+
+
+
+@b_userobj.route("/privacy-policy", strict_slashes = False)
+def policy():
+    return render_template("privacy-policy.html")    
+
+
+
+@b_userobj.route("/terms", strict_slashes = False)
+def terms():
+    return render_template("terms.html")    
 
 
 

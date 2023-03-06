@@ -8,25 +8,25 @@ db=SQLAlchemy()
 
 class Business(db.Model): 
     business_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    business_name = db.Column(db.String(50), nullable=False) 
+    business_name = db.Column(db.String(50), nullable=True) 
     business_type = db.Column(db.Integer(),db.ForeignKey('business_type.type_id'))
-    business_industry = db.Column(db.Integer(),db.ForeignKey('industry.industry_id'))
-    business_address = db.Column(db.String(255), nullable=False)
-    lga_id = db.Column(db.Integer(),db.ForeignKey('lga.lga_id'))
-    state_id = db.Column(db.Integer(),db.ForeignKey('state.state_id'))
-    business_email  = db.Column(db.String(100), nullable=False, unique=True)
-    business_phone_number = db.Column(db.String(20),nullable=False)
+    business_industryid = db.Column(db.Integer(),db.ForeignKey('industry.industry_id'))
+    business_address = db.Column(db.String(255), nullable=True)
+    business_lga_id = db.Column(db.Integer(),db.ForeignKey('lga.lga_id'))
+    business_state_id = db.Column(db.Integer(),db.ForeignKey('state.state_id'))
+    business_email  = db.Column(db.String(100), unique=True)
+    business_phone_number = db.Column(db.String(20),nullable=True)
     business_website = db.Column(db.String(150), nullable=True) 
     business_rcnumber = db.Column(db.String(60), nullable=True)
     business_reg_file = db.Column(db.String(60), nullable=True)
     business_tin = db.Column(db.String(60), nullable=True)
     business_tin_file = db.Column(db.String(60), nullable=True)
-    business_desc = db.Column(db.Text(), nullable=False)
-    business_pitch = db.Column(db.Text(), nullable=False)
-    business_plan = db.Column(db.String(120), nullable=False)
-    business_img1 = db.Column(db.String(120),nullable=False)
-    business_img2 = db.Column(db.String(120),nullable=False)
-    business_img3 = db.Column(db.String(120),nullable=False)
+    business_desc = db.Column(db.Text())
+    business_pitch = db.Column(db.Text())
+    business_plan = db.Column(db.String(120))
+    business_img1 = db.Column(db.String(120))
+    business_img2 = db.Column(db.String(120))
+    business_img3 = db.Column(db.String(120))
     business_status_id = db.Column(db.Integer(),db.ForeignKey('business_status.status_id'))
     business_datereg = db.Column(db.DateTime(), default=datetime.utcnow()) 
 
@@ -39,6 +39,15 @@ class B_user(db.Model, UserMixin):
     b_user_email= db.Column(db.String(20), unique=True)
     b_user_password= db.Column(db.Text(50))
     b_user_pic = db.Column(db.String(120))
+
+
+class I_user(db.Model, UserMixin): 
+    i_user_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
+    i_user_investment  = db.Column(db.Integer(),db.ForeignKey('investor.investor_id'))
+    i_user_fname = db.Column(db.String(20))
+    i_user_lname = db.Column(db.String(20))
+    i_user_email= db.Column(db.String(20), unique=True)
+    i_user_password= db.Column(db.Text(50))
 
 class Investor(db.Model): 
     investor_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
@@ -64,6 +73,15 @@ class Donor(db.Model):
     lga_id = db.Column(db.Integer(),db.ForeignKey('lga.lga_id'))
     state_id = db.Column(db.Integer(),db.ForeignKey('state.state_id'))
     donor_password= db.Column(db.Text(50), nullable=False)
+
+
+class D_user(db.Model, UserMixin): 
+    d_user_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
+    d_user_investment  = db.Column(db.Integer(),db.ForeignKey('donor.donor_id'))
+    d_user_fname = db.Column(db.String(20))
+    d_user_lname = db.Column(db.String(20))
+    d_user_email= db.Column(db.String(20), unique=True)
+    d_user_password= db.Column(db.Text(50))
 
 class Donor_donation(db.Model): 
         donor_donation_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)

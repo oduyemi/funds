@@ -9,7 +9,7 @@ from werkzeug.exceptions import HTTPException
 from fundsapp.models import db, Industry, investment_option,I_user
 
 
-from . import i_userobj
+from . import d_userobj
 
 
 
@@ -19,7 +19,7 @@ from . import i_userobj
 
 
 #  --  VALIDATION CLASSES  --  THESE ARE THE CLASSES FOR USER VALIDATION
-class InvestSignupForm(FlaskForm):
+class DonorSignupForm(FlaskForm):
     fname = StringField("fname",
         validators=[
             DataRequired(),
@@ -59,13 +59,13 @@ class InvestSignupForm(FlaskForm):
     submit = SubmitField("Sign Up")
     
     def validate_email(self, email):
-        b_user =I_user.query.filter_by(i_user_email = email.data).first()
-        if i_user:
+        d_user =I_user.query.filter_by(i_user_email = email.data).first()
+        if d_user:
             raise ValidationError("That email already have an account. Please choose a different one.")
 
 
 
-class InvestLoginForm(FlaskForm):
+class DonorLoginForm(FlaskForm):
     email = StringField("email",
         validators=
             [DataRequired(),
@@ -89,22 +89,21 @@ class InvestLoginForm(FlaskForm):
 
 
 
-#         --  INVESTORS: SESSION[I_USER] --  THESE ARE THE INVESTOR ROUTES
-@i_userobj.route("/", methods = (["GET", "POST"]), strict_slashes = False)
-def invest_home():
-    dp = db.session.query(I_user).filter(I_user.i_user_pic).first()
+#         --  DONORS: SESSION[D_USER] --  THESE ARE THE INVESTOR ROUTES
+@d_userobj.route("/", methods = (["GET", "POST"]), strict_slashes = False)
+def donatehome():
     fname = db.session.query(I_user).filter(I_user.i_user_fname).first()
     lname = db.session.query(I_user).filter(I_user.i_user_lname).first()
     email = db.session.query(I_user).filter(I_user.i_user_email).first()
-    return render_template("investhome.html", dp = dp, fname =fname, lname = lname, email=email, title = "Homepage - Funds Investment")
+    return render_template("donorhome.html", fname =fname, lname = lname, email=email, title = "Homepage - Funds Donation")
 
 
 
-@i_userobj.route('/signup', methods = ["GET", "POST"], strict_slashes = False)
-def invest_signup():
-    form = InvestSignupForm()
+@d_userobj.route('/signup', methods = ["GET", "POST"], strict_slashes = False)
+def donatesignup():
+    form = DonorSignupForm()
     if request.method == "GET":
-        return render_template('investsignup.html', title="Sign Up", form = form)
+        return render_template('donorsignup.html', title="Sign Up", form = form)
     else:
         fname = form.fname.data
         lname = form.lname.data
@@ -112,56 +111,55 @@ def invest_signup():
         password=form.password.data
         hashedpwd = generate_password_hash(password)
     if fname !='' and lname != "" and email !='' and password !='':
-        new_investor=I_user(i_user_fname = fname, i_user_lname = lname, i_user_email = email,
-        i_user_password = hashedpwd)
-        db.session.add(new_investor)
+        new_donor=I_user(i_user_fname = fname, i_user_lname = lname, i_user_email = email,
+        d_user_password = hashedpwd)
+        db.session.add(new_donor)
         db.session.commit()
-        userid=new_investor.i_user_id
-        session['i_user']=userid
+        userid=new_donor.d_user_id
+        session['d_user']=userid
         flash(f"Account created for {form.fname.data}! Please proceed to LOGIN ", "success")
-        return redirect(url_for('iuser.login'))
+        return redirect(url_for('duser.donatelogin'))
     else:
         flash('You must fill the form correctly to signup', "danger")
-        return redirect(url_for('iuser.signup'))
+        return redirect(url_for('duser.donatesignup'))
 
 
-@i_userobj.route('/login', methods = (["GET", "POST"]), strict_slashes = False)
-def invest_login():
+@d_userobj.route('/login', methods = (["GET", "POST"]), strict_slashes = False)
+def donatelogin():
     session.permanent = True
-    form = InvestLoginForm()
+    form = DonorLoginForm()
     if request.method=='GET':
-        return render_template('investlogin.html', title="Login", form=form)
+        return render_template('donorlogin.html', title="Login", form=form)
     else:
         if form.validate_on_submit:
             email = form.email.data
             password = form.password.data
             hashed = generate_password_hash(password)
             if email !="" and password !="":
-                investor = db.session.query(I_user).filter(I_user.i_user_email==email).first() 
-                if investor !=None:
-                    pwd =investor.i_user_password
+                donor = db.session.query(I_user).filter(I_user.i_user_email==email).first() 
+                if donor !=None:
+                    pwd =donor.d_user_password
                     chk = check_password_hash(pwd, password)
                     if chk:
-                        userid = investor.i_user_id
-                        session['i_user'] = userid
-                        db.session.add(investor)
+                        userid = donor.i_user_id
+                        session['d_user'] = userid
+                        db.session.add(donor)
                         db.session.commit() 
-                        return redirect(url_for('iuser.investmentdashboard'))
+                        return redirect(url_for('duser.donationdashboard'))
                     else:
                         flash('Invalid password')
-                        return redirect(url_for('iuser.login'))
+                        return redirect(url_for('duser.donatelogin'))
             else:
                 flash("You must complete all fields")
-                return redirect(url_for("iuser.signup"))
+                return redirect(url_for("duser.donatesignup"))
 
 
 
-@i_userobj.route('/signout', methods = ("GET", "POST"), strict_slashes = False)
-def invest_signout():
-    #logout_user()
-    if session.get("i_user") == None:
-        session.pop("i_user", None)
-    return redirect(url_for("iuser.login"))  
+@d_userobj.route('/signout', methods = ("GET", "POST"), strict_slashes = False)
+def donatesignout():
+    if session.get("d_user") == None:
+        session.pop("d_user", None)
+    return redirect(url_for("duser.donatelogin"))  
 
 
 
@@ -173,24 +171,24 @@ def invest_signout():
 
 
 #         --  DASHBOARDS  --  THESE ARE THE INVESTMENT DASHBOARD ROUTES
-@i_userobj.route('/dashboardlayout', methods = ("GET", "POST"), strict_slashes = False)
-def invest_dashboardlayout():
+@d_userobj.route('/dashboardlayout', methods = ("GET", "POST"), strict_slashes = False)
+def donatedashboardlayout():
     fname = db.session.query(I_user).filter(I_user.i_user_fname).first()
     lname = db.session.query(I_user).filter(I_user.i_user_lname).first()
     email = db.session.query(I_user).filter(I_user.i_user_email).first()
-    return render_template("investdashboardlayout.html", fname = fname, lname = lname, email = email,  title = "Dashboard - Funds Investment App")
+    return render_template("donordashboardlayout.html", fname = fname, lname = lname, email = email,  title = "Dashboard - Funds Donation App")
     
 
 
-@i_userobj.route('/dashboard', methods = ("GET", "POST"), strict_slashes = False)
-def investmentdashboard():
-    if session.get("i_user") != None:
+@d_userobj.route('/dashboard', methods = ("GET", "POST"), strict_slashes = False)
+def donationdashboard():
+    if session.get("d_user") != None:
         fname = db.session.query(I_user).filter(I_user.i_user_fname).first()
         lname = db.session.query(I_user).filter(I_user.i_user_lname).first()
         email = db.session.query(I_user).filter(I_user.i_user_email).first()
         query = (f"SELECT * FROM state ORDER BY state_id")
         result = db.session.execute(text(query))
         state = result.fetchall()
-        return render_template("investdashboard.html", fname =fname, lname = lname, email=email, state = state,  title = "Dashboard - Funds Investment App")
+        return render_template("donordashboard.html", fname =fname, lname = lname, email=email, state = state,  title = "Dashboard - Funds Donation App")
     else:
-        return redirect(url_for("iuser.investlogin"))
+        return redirect(url_for("duser.donatelogin"))
