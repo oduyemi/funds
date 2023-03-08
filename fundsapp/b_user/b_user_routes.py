@@ -1,4 +1,4 @@
-import os, random, string
+import os, random, string, requests,json
 from flask import Flask, render_template, redirect, url_for, request, flash, session, abort, jsonify
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileField,TextAreaField, SelectField
@@ -228,13 +228,13 @@ def indexpage():
 
 
 
-@b_userobj.route("/home", methods = ("GET", "POST"), strict_slashes = False)
+"""@b_userobj.route("/home", methods = ("GET", "POST"), strict_slashes = False)
 def home():
     dp = db.session.query(B_user).filter(B_user.b_user_pic).first()
     fname = db.session.query(B_user).filter(B_user.b_user_fname).first()
     lname = db.session.query(B_user).filter(B_user.b_user_lname).first()
     email = db.session.query(B_user).filter(B_user.b_user_email).first()
-    return render_template("home.html", dp = dp, fname =fname, lname = lname, email=email, title = "Homepage - Funds App")
+    return render_template("home.html", dp = dp, fname =fname, lname = lname, email=email, title = "Homepage - Funds App")"""
 
 
 
@@ -267,11 +267,11 @@ def home():
 
 
 #         --  FORM AUTHENTICATION  --  THESE ARE THE USER FORM ROUTES AND AUTHENITCATION
-@b_userobj.route('/signup', methods = ["GET", "POST"], strict_slashes = False)
-def signup():
+@b_userobj.route('/startup/signup', methods = ["GET", "POST"], strict_slashes = False)
+def startup_signup():
     form = SignupForm()
     if request.method == "GET":
-        return render_template('signup.html', title="Sign Up", form = form)
+        return render_template('startup_signup.html', title="Sign Up", form = form)
     else:
         fname = form.fname.data
         lname = form.lname.data
@@ -286,19 +286,65 @@ def signup():
         userid=new_user.b_user_id
         session['user']=userid
         flash(f"Account created for {form.fname.data}! Please proceed to LOGIN ", "success")
-        return redirect(url_for('fbuser.login'))
+        return redirect(url_for('fbuser.startup_login'))
     else:
         flash('You must fill the form correctly to signup', "danger")
-        return redirect(url_for('fbuser.signup'))
+        return redirect(url_for('fbuser.startup_signup'))
 
 
+@b_userobj.route('/prestartup/signup', methods = ["GET", "POST"], strict_slashes = False)
+def prestartup_signup():
+    form = SignupForm()
+    if request.method == "GET":
+        return render_template('prestarup_signup.html', title="Sign Up", form = form)
+    else:
+        fname = form.fname.data
+        lname = form.lname.data
+        email = form.email.data
+        password=form.password.data
+        hashedpwd = generate_password_hash(password)
+    if fname !='' and lname != "" and email !='' and password !='':
+        new_user=B_user(b_user_fname = fname, b_user_lname = lname, b_user_email = email,
+        b_user_password = hashedpwd)
+        db.session.add(new_user)
+        db.session.commit()
+        userid=new_user.b_user_id
+        session['user']=userid
+        flash(f"Account created for {form.fname.data}! Please proceed to LOGIN ", "success")
+        return redirect(url_for('fbuser.prestartup_login'))
+    else:
+        flash('You must fill the form correctly to signup', "danger")
+        return redirect(url_for('fbuser.prestartup_signup'))
 
-@b_userobj.route('/login', methods = (["GET", "POST"]), strict_slashes = False)
-def login():
-    session.permanent = True
+@b_userobj.route('/ngo/signup', methods = ["GET", "POST"], strict_slashes = False)
+def ngo_signup():
+    form = SignupForm()
+    if request.method == "GET":
+        return render_template('ngo_signup.html', title="Sign Up", form = form)
+    else:
+        fname = form.fname.data
+        lname = form.lname.data
+        email = form.email.data
+        password=form.password.data
+        hashedpwd = generate_password_hash(password)
+    if fname !='' and lname != "" and email !='' and password !='':
+        new_user=B_user(b_user_fname = fname, b_user_lname = lname, b_user_email = email,
+        b_user_password = hashedpwd)
+        db.session.add(new_user)
+        db.session.commit()
+        userid=new_user.b_user_id
+        session['user']=userid
+        flash(f"Account created for {form.fname.data}! Please proceed to LOGIN ", "success")
+        return redirect(url_for('fbuser.ngo_login'))
+    else:
+        flash('You must fill the form correctly to signup', "danger")
+        return redirect(url_for('fbuser.ngo_signup'))
+
+@b_userobj.route('/startup/login', methods = (["GET", "POST"]), strict_slashes = False)
+def startup_login():
     form = LoginForm()
     if request.method=='GET':
-        return render_template('login.html', title="Login", form=form)
+        return render_template('startup_login.html', title="Login", form=form)
     else:
         if form.validate_on_submit:
             email = form.email.data
@@ -316,14 +362,70 @@ def login():
                         db.session.commit() 
                         return redirect(url_for('fbuser.startupdashboard'))
                     else:
-                        flash('Invalid password')
-                        return redirect(url_for('fbuser.login'))
+                        flash('Invalid email or password')
+                        return redirect(url_for('fbuser.startup_login'))
             else:
                 flash("You must complete all fields")
-                return redirect(url_for("fbuser.signup"))
+                return redirect(url_for("fbuser.startup_signup"))
 
 
 
+@b_userobj.route('/ngo/login', methods = (["GET", "POST"]), strict_slashes = False)
+def ngo_login():
+    form = LoginForm()
+    if request.method=='GET':
+        return render_template('ngo_login.html', title="Login", form=form)
+    else:
+        if form.validate_on_submit:
+            email = form.email.data
+            password = form.password.data
+            hashed = generate_password_hash(password)
+            if email !="" and password !="":
+                user = db.session.query(B_user).filter(B_user.b_user_email==email).first() 
+                if user !=None:
+                    pwd =user.b_user_password
+                    chk = check_password_hash(pwd, password)
+                    if chk:
+                        userid = user.b_user_id
+                        session['user'] = userid
+                        db.session.add(user)
+                        db.session.commit() 
+                        return redirect(url_for('fbuser.ngodashboard'))
+                    else:
+                        flash('Invalid email or password')
+                        return redirect(url_for('fbuser.ngo_login'))
+            else:
+                flash("You must complete all fields")
+                return redirect(url_for("fbuser.ngo_signup"))
+
+
+@b_userobj.route('/prestartup/login', methods = (["GET", "POST"]), strict_slashes = False)
+def prestartup_login():
+    form = LoginForm()
+    if request.method=='GET':
+        return render_template('prestartup_login.html', title="Login", form=form)
+    else:
+        if form.validate_on_submit:
+            email = form.email.data
+            password = form.password.data
+            hashed = generate_password_hash(password)
+            if email !="" and password !="":
+                user = db.session.query(B_user).filter(B_user.b_user_email==email).first() 
+                if user !=None:
+                    pwd =user.b_user_password
+                    chk = check_password_hash(pwd, password)
+                    if chk:
+                        userid = user.b_user_id
+                        session['user'] = userid
+                        db.session.add(user)
+                        db.session.commit() 
+                        return redirect(url_for('fbuser.prestartupdashboard'))
+                    else:
+                        flash('Invalid email or password')
+                        return redirect(url_for('fbuser.prestartup_login'))
+            else:
+                flash("You must complete all fields")
+                return redirect(url_for("fbuser.prestartup_signup"))
     
 
 @b_userobj.route("/register", methods = ("GET", "POST"), strict_slashes = False)
@@ -334,22 +436,22 @@ def register():
     industries = db.session.query(Business).order_by(Business.business_industryid).all()
     bname = form.bname.data
     phone = form.phone.data
-    email = form.email.data
-    website=form.website.data
-    address = form.website.data
-    #state = request.form.get("state")
-    #lga = request.form.get("lga")
+    email = request.form.get("email")
+    website=request.form.get("website")
+    address = request.form.get("address")
+    state = request.form.get("state")
+    lga = request.form.get("lga")
     btype = request.form.get("btype")
     bindustry = request.form.get("b_industry")
-    regnumber = form.regnumber.data
-    tin = form.tin.data
-    taxfile = form.taxfile.data
-    b_desc = form.b_desc.data
-    pitch = form.pitch.data
-    planfile = form.planfile.data
-    img1 = form.img1.data
-    img2 = form.img2.data
-    img3 = form.img3.data
+    regnumber = request.form.get("regnumber")
+    tin = request.form.get("tin")
+    taxfile = request.files("taxfile")
+    b_desc = request.form.get("b_desc")
+    pitch = request.form.get("pitch")
+    planfile = request.files("planfile")
+    img1 = request.files("img1")
+    img2 = request.files("img2")
+    img3 = request.files("img3")
     lga = db.session.query(Lga).order_by(Lga.lga_stateid).all()
     if request.method == "GET":
         return render_template("register.html", form = form, states = states, type=type, lga=lga, industries=industries)
@@ -361,37 +463,37 @@ def register():
                     return redirect(url_for("fbuser.register"))    
                     
                 else:  
-                    new_business=Business(business_name = bname, business_type = btype, business_email = email, business_phone_number =phone, business_website=website, business_address=address, business_rcnumber=regnumber, business_tin=tin, business_tin_file=taxfile, business_desc=b_desc,business_pitch=pitch, business_plan=planfile, business_img1=img1,business_img2=img2,business_img3=img3)
+                    new_business=Business(business_name = bname, business_type = btype, business_email = email, Business_type=btype, business_state_id=state, business_lga_id=lga, business_phone_number =phone, business_website=website, business_address=address, business_rcnumber=regnumber, business_tin=tin, business_tin_file=taxfile, business_desc=b_desc,business_pitch=pitch, business_plan=planfile, business_industryid=bindustry, business_img1=img1,business_img2=img2,business_img3=img3, business_status_id=1)
                     db.session.add(new_business)
                     db.session.commit()
                     flash("Successfully Registered")
                     return redirect(url_for("fbuser.profile"))
         
         else:
-            return redirect(url_for("fbuser.login"))
+            return redirect(url_for("fbuser.indexpage"))
 
 
 
 @b_userobj.route('/signout', methods = ("GET", "POST"), strict_slashes = False)
 def signout():
     #logout_user()
-    if session.get("user") == None:
+    if session.get("user") != None:
         session.pop("user", None)
-    return redirect(url_for("fbuser.login"))  
+    return redirect(url_for("fbuser.indexpage"))  
 
 
 
 
 
 #         --  DASHBOARDS  --  THESE ARE THE USER DASHBOARD ROUTES
-@b_userobj.route('/dashboardlayout', methods = ("GET", "POST"), strict_slashes = False)
+'''@b_userobj.route('/dashboardlayout', methods = ("GET", "POST"), strict_slashes = False)
 def dashboardlayout():
     dp = db.session.query(B_user).filter(B_user.b_user_pic).first()
     fname = db.session.query(B_user).filter(B_user.b_user_fname).first()
     lname = db.session.query(B_user).join(State).filter(B_user.b_user_lname, State.state_id).first()
     email = db.session.query(B_user).filter(B_user.b_user_email).first()
     return render_template("ngo_dashboard.html", dp = dp, fname = fname, lname = lname, email = email,  title = "Dashboard - Funds App")
-    
+    '''
 
 
 @b_userobj.route('/ngo/dashboard', methods = ("GET", "POST"), strict_slashes = False)
@@ -400,13 +502,14 @@ def ngodashboard():
         dp = db.session.query(B_user).filter(B_user.b_user_pic).first()
         fname = db.session.query(B_user).filter(B_user.b_user_fname).first()
         lname = db.session.query(B_user).filter(B_user.b_user_lname).first()
+        location = db.session.query(State).order_by(State.state_id).all()
         email = db.session.query(B_user).filter(B_user.b_user_email).first()
         query = (f"SELECT * FROM state ORDER BY state_id")
         result = db.session.execute(text(query))
         state = result.fetchall()
-        return render_template("ngo_dashboard.html", dp = dp, fname =fname, lname = lname, email=email, state = state,  title = "Dashboard - Funds App")
+        return render_template("ngo_dashboard.html", dp = dp, fname =fname, lname = lname, email=email, location=location, title = "Dashboard - Funds App")
     else:
-        return redirect(url_for("fbuser.login"))
+        return redirect(url_for("fbuser.ngo_login"))
 
 
 
@@ -420,7 +523,7 @@ def startupdashboard():
         industry = db.session.query(Industry).order_by(Industry.industry_id).all()
         return render_template("startup_dashboard.html", dp = dp, fname =fname, lname = lname, email=email, industry = industry, title = "Dashboard - Funds App")
     else:
-        return redirect(url_for("fbuser.login"))
+        return redirect(url_for("fbuser.startup_login"))
 
 
 
@@ -434,7 +537,7 @@ def prestartupdashboard():
         industry = db.session.query(Industry).order_by(Industry.industry_id).all()
         return render_template("prestartup_dashboard.html", dp = dp, fname =fname, lname = lname, email=email, industry = industry, title = "Dashboard - Funds App")
     else:
-        return redirect(url_for("fbuser.login"))
+        return redirect(url_for("fbuser.prestartup_login"))
 
 
 
@@ -493,18 +596,35 @@ def load_lga(stateid):
     data2send = data2send + "</select>"
 
     return data2send
-# def load_lga(stateid):
-#     #state = request.args.get("stateid")
-#     lgaList = db.session.query(Lga).filter(Lga.lga_stateid==stateid).all()
-#     data2send = "<select class='form-control border-success'>"
-#     for s in lgaList:
-#         data2send= data2send + "<option>"+s.lga_name +"</option>"
-#     data2send = data2send + f"<option value={s.lga_id}"> +s.lga_name + "</option>"
-#     rsp = data2send + "</select>"
-#     # stateid = request.args.get("stateid")
-#     return rsp
 
-
+@b_userobj.route("/loadngo")
+def load_ngo():
+    ngoorg= (f"SELECT business_name FROM business where business_status_id=2 and business_type=2")
+    ngo_place = (f"SELECT state from business where business_status_id=2 and business_type=2 ORDER_BY business_state_id")
+    ngo_person = (f"SELECT b_user_fame b_user_lname from business order_by business_userid where business_status_id=2 and business_type=2")
+    data = [ngoorg, ngo_person, ngo_place]
+    return jsonify(data)
+    # return {
+    #     "info1": ["Erekere Tours", "Ayodele Awoyemi", "Lagos"],
+    #     "info2": ["WeMove Logistics", "Joy Garba", "Kaduna"]
+    # }
+    # ngo_name = db.session.query(Business).filter(Business.business_name).where(Business.business_status_id==2, Business.business_type==1).order_by(Business.business_id).all()
+    # #ngo_place = db.session.query(Business).filter(Business.business_state_id).where(Business.business_status_id==2, Business.business_type==1).order_by(Business.business_id).all()
+    # url= "/ngo/dashboard"
+    # data = {"n_name": "ngo_name"}
+    # headers = {"Accept" : "application/json"}
+    # output2 = requests.post(url, data = data, headers = headers)
+    # return json.dumps(output2)
+    # ngo_name = db.session.query(Business).filter(Business.business_name).where(Business.business_status_id==2, Business.business_type==1).order_by(Business.business_id).all()
+    # ngo_place = db.session.query(Business).filter(Business.business_state_id).where(Business.business_status_id==2, Business.business_type==1).order_by(Business.business_id).all()
+    # ngo_person = db.session.query(Business).filter(Business.business_userid).where(Business.business_status_id==2, Business.business_type==1).order_by(Business.business_id).all()
+    # n_info = {
+    # "n_name": "ngo_name",
+    # "n_person": "ngo_person",
+    # "n_state": "ngo_place"
+    # }
+    # data = json.dumps(n_info)
+    # return jsonify(data)
 
 
 

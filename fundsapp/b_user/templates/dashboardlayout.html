@@ -5,9 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>startup</title>
+    <title>Dashboard - Funds </title>
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css') }}"/>
-    <script src="{{url_for('static', filename='assets/bootstrap/js/bootstrap.bundle.min.js') }}" defer type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animate.min.css') }}"/>
     <link rel="stylesheet" href="{{url_for('static', filename='fontawesome/css/all.css') }}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" integrity="sha512-ARJR74swou2y0Q2V9k0GbzQ/5vJ2RBSoCWokg4zkfM29Fb3vZEQyv0iWBMW/yvKgyHSR/7D64pFMmU8nYmbRkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -18,7 +17,7 @@
         body{
 	        margin:0;
 	        padding:0;
-	        background-color:rgb(1, 142, 66);
+	        background-color:#0e34a0;
 	        overflow: hidden;
         }
         .logo{
@@ -78,6 +77,14 @@
             font-weight: 700;
             font-size: 2em;
           }
+          .wrapper{
+            border:2px solid #fff;
+            
+          }
+          a{
+            text-decoration:none;
+            color:#B9E3C6;
+          }
           
           
     </style>
@@ -105,48 +112,47 @@
                 <span style="font-size: 30px; cursor: pointer; color: white;" class="nav2">&#9776; Dashboard</span>
             </div>
             <div class="col-div-6">
-                <div class="profile mb-5">
+                <div class="profile">
                     {% block user_profile %}
-                        {% if dp: %}
+                    {% if dp: %}
                             {% if dp != None %}
-                                <img src="{{dp}}"alt="profile" width="32" height="32" class="rounded-circle" class="pro_img">
-                                <p>{{ fname }} {{ lname }} <span>{{ email }}<br><a href="{{url_for("fbuser.signout")}}"> Signout</a>
-                                </span></p>
-                                {% endif %}
-
-                            {% else %}
-                                <img src="{{ fname[0] }} {{ lname[0] }}" alt="Profile">
-                        {% endif %}
+                    <img src="{{dp}}" alt="profile" class="pro_img"/>
+                    {% endif %}
+                    {% else %}
+                    <img src="{{ fname[0] }} {{ lname[0] }}" alt="Profile">
+                    {% endif %}
                     {% endblock %}
+                    <p>{{ fname }} {{ lname }}<span>{{ email }}</span><br>
+                    <a href="{{url_for("fbuser.signout")}}">Signout</a></p><br>
                 </div>
             </div>
         </div>
 
         <div class="col-div-3">
             {% block dashboard_menu %}
-            <div class="box startupdashboard">
-                <p>67<br><span>Startups</span></p>
+            <div class="box">
+                <p>67<br><span>Customers</span></p>
                 <i class="fa fa-users box-icon"></i>
             </div>
         </div>
 
         <div class="col-div-3">
-            <div class="box prestartupdashboard">
-                <p>88<br><span>Pre Startups</span></p>
+            <div class="box">
+                <p>88<br><span>Projects</span></p>
                 <i class="fa fa-list box-icon"></i>
             </div>
         </div>
 
         <div class="col-div-3">
-            <div class="box ngodashboard">
-                <p>99<br><span>NGOs</span></p>
+            <div class="box">
+                <p>99<br><span>Orders</span></p>
                 <i class="fa fa-shopping-bag box-icon"></i>
             </div>
         </div>
 
         <div class="col-div-3">
-            <div class="box funded">
-                <p>78<br><span>Funded</span></p>
+            <div class="box">
+                <p>78<br><span>Tasks</span></p>
                 <i class="fa fa-tasks box-icon"></i>
             </div>
         </div>
@@ -157,54 +163,34 @@
         <div class="col-div-8">
             <div class="box-8">
                 <div class="content_box">{% block title %}
-                   <p id="topic">Top Selling Projects <span>View All</span></p>{% endblock%}
+                   <p>Top Selling Projects <span>View All</span></p>{% endblock%}
                    <br>
-                    
-                   <div class="location">
-                    {% block pre_table%}
-                    <select name="startuplocation d_dd">
-                        <option value="">- Choose Location -</option>
-                        {% for row in state %}
-                        <option value="{{row.state_id}}">{{ row.state_name}}<option>
-                        {% endfor %}
-                    </select>
-                    {% endblock %}
-                </div>
-                
-                   {% block table %}
-                   <table class"table table-responsive table-striped">
+                   {% block table %}<table class="table table-responsive table-hover">
+                    {% block pre_table%} {% endblock %}
                        <tr>
                             <th>Company</th>
-                            <th>Industry</th>
+                            <th>Contact</th>
                             <th>Location</th>
                         </tr>
                         <tr>
-                            <td>Alfreds Fjhfrjyuhi</td>
-                            <td>Alfreds Fjhfrjyuhi</td>
-                            <td>Allen Avenue, Lagos</td>
+                            <td>coy-</td>
+                            <td>name</td>
+                            <td>state</td>
                         </tr>
                         <tr>
                             <td>Alfreds Fjhfrjyuhi</td>
                             <td>Alfreds Fjhfrjyuhi</td>
-                            <td>FCT, Abuja</td>
+                            <td>Alfreds Fjhfrjyuhi</td>
                         </tr>
-    
+                        <tr>
+                            <td>Alfreds</td>
+                            <td>Alfreds</td>
+                            <td>Alfreds</td>
+                        </tr>
                         <tr>
                             <td>Fjhfrjyuhi</td>
                             <td>Fjhfrjyuhi</td>
-                            <td>Ibadan, Lagos</td>
-                        </tr>
-
-                        <tr>
                             <td>Fjhfrjyuhi</td>
-                            <td>Fjhfrjyuhi</td>
-                            <td>Ibadan, Lagos</td>
-                        </tr>
-
-                        <tr>
-                            <td>Fjhfrjyuhi</td>
-                            <td>Fjhfrjyuhi</td>
-                            <td>Ibadan, Lagos</td>
                         </tr>
 
                    </table> {% endblock %}
@@ -215,8 +201,8 @@
 
         <div class="col-div-4">
             <div class="box-4">
-                <div class="content_box">{% block side_content_title%}
-                    <p>Total Sale <span>View All</span></p>{% endblock%}
+                <div class="content_box">
+                    <p>Total Sale <span>View All</span></p>
                    
                    <div class="circle_wrap">
                    <div class="circle">
@@ -236,15 +222,14 @@
         <div class="clearfix"></div>
 
 
-    </div>
 
-    <!--  - Custom JS  -->
-    {% block customJs %}
-    <script src="{{url_for('static', filename='assets/js/jquery.min.js') }}"</script>
-    <script type="text/javascript" src="{{url_for('static', filename='js/jquery.js') }}"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='js/main.js') }}"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='js/glm-ajax') }}"></script>
-    
-    {% endblock %}
+    </div>    
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/glm-ajax.js') }}"></script>
+
+     <!--  - Custom JS  -->
+    {% block customJs %}{% endblock %}
 </body>
 </html>

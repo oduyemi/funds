@@ -14,7 +14,7 @@
     height:480px;
     perspective:1500px;
     position: relative;
-    right:5%
+    right:3%
   }
   input[type=text],
   input[type=password],
@@ -68,7 +68,7 @@
 {% endwith %}
 
       {% block form_fields %}
-      <form method="post" action="{{ url_for('fbuser.signup')}}">
+      <form method="post" action="{{ url_for('fbuser.prestartup_signup')}}">
         {{ form.hidden_tag() }} 
         <legend class="text-center border-bottom mb-3">Sign Up Form</legend>         
         <div class="txt_field form-group">
@@ -148,7 +148,7 @@
         </div>
             
         <div class="formlink">
-          <span class="ms-5">Already Registered? <a href={{url_for("fbuser.login")}}>Login here</a></span>
+          <span class="ms-5">Already Registered? <a href={{url_for("fbuser.prestartup_login")}}>Login here</a></span>
         </div>
 
         </form>

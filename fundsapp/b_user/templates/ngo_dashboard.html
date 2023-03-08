@@ -49,7 +49,7 @@
 <a href="#" class="icon_a"><i class="fa fa-list-alt icons"></i>&nbsp;&nbsp; In Review</a>
 {% endblock %}
 
-{% block pre_table%}
+{% block pre_table %}
                     <select name="startuplocation d_dd">
                         <option value="">- Choose Location -</option>
                         {% for row in state %}
@@ -58,29 +58,56 @@
                     </select>
 {% endblock %}
 
+{% block table %}
+<div>
+<table class="table table-responsive mb-5">
+        <tr>
+            <th>Organization</th>
+            <th>Contact Person</th>
+            <th>Location</th>
+        </tr>
+</table>
+<div id="ngo_info"></div>
+
+
+</table></div> {% endblock %}
+
 
 {% block customJs %}
-<script src="{{url_for('static', filename='assets/js/jquery.min.js') }}"</script>
-<script type="text/javascript" src="{{url_for('static', filename='js/main.js') }}"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" integrity="sha512-ARJR74swou2y0Q2V9k0GbzQ/5vJ2RBSoCWokg4zkfM29Fb3vZEQyv0iWBMW/yvKgyHSR/7D64pFMmU8nYmbRkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script>
+
     $(document).ready(function(){
-        $("#d_dd").selectpicker();
-    
-        function load_data(type, state_id){
-          $.ajax({
-            url:"/ngo_location",
-            method:"POST",
-            data: { type: type, state_id: state_id },
-            dataType: "json",
-            success: function(data){ alert(state_id)
-              var html = "";
-                for (var count = 0; count < data.length; count++){
-                  html +- `<option value= + ${data[count].id} ${data[count].name} + <option>`
-                }
-          })
-        }
+        $("#d_dd").selectpicker; 
     })
 
+    document.getElementById("ngo_info").addEventListener("on", loadNgo);
+
+function loadNgo(){
+    var ngos = new XMLHttpRequest();
+    ngos.open("GET", "/loadngo", true)
+
+    ngos.onload = function(){
+        if (this.status == 200){
+            var ngolist = JSON.parse(this.responseText);
+            alert(this.responseText);
+            /*var output = "";
+            for(var i in users){
+            output+=`<table class="table table-responsive mt-5">
+                <tr>
+                    <td>${ngolist[a].ngoorg}</td>
+                    <td>${ngolist[a].ngoperson}</td>
+                    <td>${ngolist[a].ngoplace}</td>
+                </tr>
+
+            </table>`;
+           
+           }
+           document.getElementById("ngo_info").innerHTML = ngolist;*/
+        }
+  
+    }
+    ngos.send();
+}
+    
 </script>
 {% endblock %}

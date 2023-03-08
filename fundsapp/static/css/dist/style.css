@@ -222,7 +222,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: rgba(76, 46, 5, 0.5);
+  background-color: rgba(10, 33, 15, 0.7);
 }
 
 .sidenav a {
@@ -240,7 +240,7 @@
 }
 
 .main {
-  transition: margin-left .5s;
+  transition: margin-left 0.5s;
   padding: 16px;
   margin-left: 300px;
 }
@@ -293,7 +293,7 @@
 .box {
   width: 85%;
   height: 100px;
-  background-color: #BEE7B8;
+  background-color: #F4F1BB;
   margin-left: 10px;
   padding: 10px;
   cursor: pointer;
@@ -312,14 +312,14 @@
 .box p span {
   font-size: 20px;
   font-weight: 400;
-  color: #4C2E05;
+  color: #779CAB;
 }
 
 .box-icon {
   font-size: 40px !important;
   float: right;
   margin-top: 35px !important;
-  color: #4C2E05;
+  color: #BFACC8;
   padding-right: 10px;
 }
 
@@ -340,20 +340,20 @@
 .content_box p {
   margin: 0;
   font-size: 20px;
-  color: #F24333;
+  color: #FFF;
 }
 
 .content_box p span {
   float: right;
-  background-color: #ddd;
+  background-color: #0e34a0;
   padding: 3px 10px;
   font-size: 15px;
 }
 
 .box-8, .box-4 {
   width: 96.5%;
-  background-color: rgba(14, 52, 160, 0.8);
-  height: 330px;
+  background-color: #B9E3C6;
+  height: 70vh;
 }
 
 .box-8 {
@@ -369,8 +369,8 @@ table {
 td, th {
   text-align: left;
   padding: 15px;
-  color: #EFEFF1;
-  border-bottom: 1px solid #0e34a0;
+  color: #0A210F;
+  border-bottom: 1px solid #B9E3C6;
 }
 
 th {
@@ -379,31 +379,41 @@ th {
 
 .circle_wrap {
   margin: 50px auto;
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   background: #F7F4F3;
   border-radius: 50%;
 }
 
 .circle_wrap .circle .mask, .circle_wrap .circle .fill {
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   position: absolute;
   border-radius: 50%;
 }
 
 .circle_wrap .circle .mask {
-  clip: rect(0px, 150px, 150px, 75px);
+  clip: rect(0px, 180px, 180px, 90px);
 }
 
 .circle_wrap .circle .mask .fill {
-  clip: rect(0px, 75px, 150px, 0px);
+  clip: rect(0px, 90px, 180px, 0px);
   background-color: #0e34a0;
 }
 
 .circle_wrap .circle .mask.full, .circle_wrap.circle .fill {
+  -webkit-animation: fill ease-in-out 3s;
   animation: fill ease-in-out 3s;
   transform: rotate(126deg);
+}
+
+@-webkit-keyframes fill {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(126deg);
+  }
 }
 
 @keyframes fill {

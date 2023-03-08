@@ -104,15 +104,15 @@ $greenbg:#018E42;
 }
 
 ._ctabtn {
-    background-color: $bluebg
+    background-color: $bluebg;
     font-size: medium;
     color: #fff;
 }
 
 .ctabtn_outline {
     font-size: medium;
-    color: $bluebg
-    border-color: $bluebg
+    color: $bluebg;
+    border-color: $bluebg;
 }
 
 .col3 li {
@@ -179,7 +179,7 @@ $greenbg:#018E42;
 
 .footer{
     height:16vh;
-    background-color: $bluebg
+    background-color: $bluebg;
     border: 2px solid;
     position: absolute;
     bottom: 0;

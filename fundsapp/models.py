@@ -28,7 +28,8 @@ class Business(db.Model):
     business_img2 = db.Column(db.String(120))
     business_img3 = db.Column(db.String(120))
     business_status_id = db.Column(db.Integer(),db.ForeignKey('business_status.status_id'))
-    business_datereg = db.Column(db.DateTime(), default=datetime.utcnow()) 
+    business_datereg = db.Column(db.DateTime(), default=datetime.utcnow())
+    business_userid = db.Column(db.Integer(),db.ForeignKey('b_user.b_user_id')) 
 
 
 class B_user(db.Model, UserMixin): 
