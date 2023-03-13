@@ -6,7 +6,8 @@ from wtforms.validators import DataRequired, length, ValidationError, Regexp, Eq
 from sqlalchemy.sql import text
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.exceptions import HTTPException
-from fundsapp.models import db, Industry, investment_option,I_user
+from fundsapp.models import db, Industry, investment_option,D_user,Business,State
+from fundsapp.forms import DonorLoginForm, DonorSignupForm
 
 
 from . import d_userobj
@@ -17,84 +18,12 @@ from . import d_userobj
 
 
 
-
-#  --  VALIDATION CLASSES  --  THESE ARE THE CLASSES FOR USER VALIDATION
-class DonorSignupForm(FlaskForm):
-    fname = StringField("fname",
-        validators=[
-            DataRequired(),
-            length(min=1, max=20, message = "Please provide a valid name"),
-            Regexp(
-                "^[A-Za-z] [A-Za-a0-9.]*", 0, "Your First name must contain only letters"
-                ),
-            ],
-        render_kw={"placeholder": "Enter your first name here"})
-
-    lname = StringField("lname",
-        validators=[
-            DataRequired(),
-            length(min=1, max=20, message = "Please provide a valid name"),
-            Regexp(
-                "^[A-Za-z] [A-Za-a0-9.]*", 0, "Your Last name must contain only letters")],
-        render_kw={"placeholder": "Enter your last name here"})
-
-    email = StringField("email",
-        validators=
-            [DataRequired(),
-            Email()],
-            render_kw={"placeholder": "Enter your email address"})
-    
-    password = PasswordField("password",
-        validators=
-            [DataRequired(),
-            length(min=8, max=20)],
-            render_kw={"placeholder": "Enter your password"})
-    
-    confirm_password = PasswordField("confirm_password",
-        validators=
-            [DataRequired(),
-            length(min=8, max=20)],
-            render_kw={"placeholder": "Confirm your password"})
-    EqualTo("password", message = "The passwords must match! ")
-    submit = SubmitField("Sign Up")
-    
-    def validate_email(self, email):
-        d_user =I_user.query.filter_by(i_user_email = email.data).first()
-        if d_user:
-            raise ValidationError("That email already have an account. Please choose a different one.")
-
-
-
-class DonorLoginForm(FlaskForm):
-    email = StringField("email",
-        validators=
-            [DataRequired(),
-            Email(),
-            length(min=6, max=30)],
-            render_kw={"placeholder": "Enter your email address"})
-    
-    password = PasswordField("password",
-        validators=
-            [DataRequired(),
-            length(min=8, max=20)],
-            render_kw={"placeholder": "Enter your password"})
-    remember = BooleanField("Remember Me")
-    submit = SubmitField("Login")
-
-
-
-
-
-
-
-
-
 #         --  DONORS: SESSION[D_USER] --  THESE ARE THE INVESTOR ROUTES
 @d_userobj.route("/", methods = (["GET", "POST"]), strict_slashes = False)
 def donatehome():
-    fname = db.session.query(I_user).filter(I_user.i_user_fname).first()
-    lname = db.session.query(I_user).filter(I_user.i_user_lname).first()
-    email = db.session.query(I_user).filter(I_user.i_user_email).first()
+    fname = db.session.query(D_user).filter(D_user.d_user_fname).first()
+    lname = db.session.query(D_user).filter(D_user.d_user_lname).first()
+    email = db.session.query(D_user).filter(D_user.d_user_email).first()
     return render_template("donorhome.html", fname =fname, lname = lname, email=email, title = "Homepage - Funds Donation")
 
 
@@ -111,7 +40,7 @@ def donatesignup():
         password=form.password.data
         hashedpwd = generate_password_hash(password)
     if fname !='' and lname != "" and email !='' and password !='':
-        new_donor=I_user(i_user_fname = fname, i_user_lname = lname, i_user_email = email,
+        new_donor=D_user(d_user_fname = fname, d_user_lname = lname, d_user_email = email,
         d_user_password = hashedpwd)
         db.session.add(new_donor)
         db.session.commit()
@@ -126,7 +55,6 @@ def donatesignup():
 
 @d_userobj.route('/login', methods = (["GET", "POST"]), strict_slashes = False)
 def donatelogin():
-    session.permanent = True
     form = DonorLoginForm()
     if request.method=='GET':
         return render_template('donorlogin.html', title="Login", form=form)
@@ -136,12 +64,12 @@ def donatelogin():
             password = form.password.data
             hashed = generate_password_hash(password)
             if email !="" and password !="":
-                donor = db.session.query(I_user).filter(I_user.i_user_email==email).first() 
+                donor = db.session.query(D_user).filter(D_user.d_user_email==email).first() 
                 if donor !=None:
                     pwd =donor.d_user_password
                     chk = check_password_hash(pwd, password)
                     if chk:
-                        userid = donor.i_user_id
+                        userid = donor.d_user_id
                         session['d_user'] = userid
                         db.session.add(donor)
                         db.session.commit() 
@@ -172,23 +100,125 @@ def donatesignout():
 
 #         --  DASHBOARDS  --  THESE ARE THE INVESTMENT DASHBOARD ROUTES
 @d_userobj.route('/dashboardlayout', methods = ("GET", "POST"), strict_slashes = False)
-def donatedashboardlayout():
-    fname = db.session.query(I_user).filter(I_user.i_user_fname).first()
-    lname = db.session.query(I_user).filter(I_user.i_user_lname).first()
-    email = db.session.query(I_user).filter(I_user.i_user_email).first()
-    return render_template("donordashboardlayout.html", fname = fname, lname = lname, email = email,  title = "Dashboard - Funds Donation App")
+def donor_dashboardlayout():
+    fname = db.session.query(D_user).filter(D_user.d_user_fname).first()
+    lname = db.session.query(D_user).filter(D_user.d_user_lname).first()
+    email = db.session.query(D_user).filter(D_user.d_user_email).first()
+    return render_template("donordashboardlayout.html", fname = fname, lname = lname, email = email,  title = "Dashboard - Funds Investment App")
     
 
 
 @d_userobj.route('/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def donationdashboard():
     if session.get("d_user") != None:
-        fname = db.session.query(I_user).filter(I_user.i_user_fname).first()
-        lname = db.session.query(I_user).filter(I_user.i_user_lname).first()
-        email = db.session.query(I_user).filter(I_user.i_user_email).first()
-        query = (f"SELECT * FROM state ORDER BY state_id")
-        result = db.session.execute(text(query))
-        state = result.fetchall()
-        return render_template("donordashboard.html", fname =fname, lname = lname, email=email, state = state,  title = "Dashboard - Funds Donation App")
+        user = db.session.query(D_user).first()
+        industry = db.session.query(Industry).order_by(Industry.industry_id).all()
+        reg1 = db.session.query(Business).filter(Business.business_type==2).all()
+        reg2 = db.session.query(Business).filter(Business.business_type==3).all()
+        pend1 = db.session.query(Business).where(Business.business_type==2, Business.business_status_id==1).all()
+        pend2 = db.session.query(Business).where(Business.business_type==3, Business.business_status_id==1).all()
+        app1 = db.session.query(Business).where(Business.business_type==2, Business.business_status_id==2).all()
+        app2 = db.session.query(Business).where(Business.business_type==3, Business.business_status_id==2).all()
+        #fund = db.session.query(Business_disbursement).filter(Business_disbursement.business_id).all()
+        query = f"SELECT * from business WHERE (business_type=2 or business_type=3) and business_status_id=2"
+        content = db.session.execute(text(query))
+        registered = int(len(reg1) + int(len(reg2)))
+        pending = int(len(pend1)) + int(len(pend2))
+        approved = int(len(app1)) + int(len(app2))
+        #funded = len(fund)
+        return render_template("donordashboard.html", registered=registered, pending=pending, approved=approved,
+        user=user, industry = industry, content=content, title = "Dashboard - Funds App")
     else:
         return redirect(url_for("duser.donatelogin"))
+
+
+@d_userobj.route('/pitch/dashboard', methods = ("GET", "POST"), strict_slashes = False)
+def donatepitch():
+    id=session.get("d_user")
+    if id != None:
+        user = db.session.query(D_user).first()
+        state = db.session.query(State).order_by(State.state_id).all()
+        reg1 = db.session.query(Business).filter(Business.business_type==2).all()
+        reg2 = db.session.query(Business).filter(Business.business_type==3).all()
+        pend1 = db.session.query(Business).where(Business.business_type==2, Business.business_status_id==1).all()
+        pend2 = db.session.query(Business).where(Business.business_type==3, Business.business_status_id==1).all()
+        app1 = db.session.query(Business).where(Business.business_type==2, Business.business_status_id==2).all()
+        app2 = db.session.query(Business).where(Business.business_type==3, Business.business_status_id==2).all()
+        query = f"SELECT * from business WHERE (business_type=2 or business_type=3) and business_status_id=2"
+        content = db.session.execute(text(query))
+        #fund = db.session.query(Business_disbursement).join(Business, Business.business_disbursement_id).order_by(Business_disbursement.business_id).where(Business.Business_type==2).all()
+        registered = int(len(reg1) + int(len(reg2)))
+        pending = int(len(pend1)) + int(len(pend2))
+        approved = int(len(app1)) + int(len(app2))
+        #funded = len(fund)
+        return render_template("donorpitch.html", registered=registered, pending=pending, approved=approved,
+        user=user, content=content, state=state, title = "Dashboard - Funds App")
+    else:
+        return redirect(url_for("duser.donatelogin"))
+
+
+@d_userobj.route('/list/dashboard', methods = ("GET", "POST"), strict_slashes = False)
+def donatelist():
+    id=session.get("d_user")
+    if id != None:
+        state = db.session.query(State).order_by(State.state_id).all()
+        user = db.session.query(D_user).first()
+        reg1 = db.session.query(Business).filter(Business.business_type==2).all()
+        reg2 = db.session.query(Business).filter(Business.business_type==3).all()
+        pend1 = db.session.query(Business).where(Business.business_type==2, Business.business_status_id==1).all()
+        pend2 = db.session.query(Business).where(Business.business_type==3, Business.business_status_id==1).all()
+        app1 = db.session.query(Business).where(Business.business_type==2, Business.business_status_id==2).all()
+        app2 = db.session.query(Business).where(Business.business_type==3, Business.business_status_id==2).all()
+        query = f"SELECT * from business WHERE (business_type=2 or business_type=3) and (business_status_id=1 or business_status_id=2)" 
+        content = db.session.execute(text(query))
+        #fund = db.session.query(Business_disbursement).order_by(Business_disbursement.business_id).where(Business_type==2).all()
+        registered = int(len(reg1) + int(len(reg2)))
+        pending = int(len(pend1)) + int(len(pend2))
+        approved = int(len(app1)) + int(len(app2))
+        #funded = len(fund)
+        return render_template("donorlist.html", registered=registered, pending=pending, approved=approved,
+        user=user, content=content, state=state, title = "Dashboard - Funds App")
+    else:
+        return redirect(url_for("duser.donatelogin"))
+
+@d_userobj.route('/account/dashboard', methods = ("GET", "POST"), strict_slashes = False)
+def donateaccount():
+    id=session.get("d_user")
+    if id != None:
+        user = db.session.query(D_user).first()
+        state = db.session.query(State).order_by(State.state_id).all()
+        reg = db.session.query(Business).filter(Business.business_type==1).all()
+        pend = db.session.query(Business).where(Business.business_type==1, Business.business_status_id==1).all()
+        app = db.session.query(Business).where(Business.business_type==1, Business.business_status_id==2).all()
+        query = f"SELECT business_name, industry_name, business_desc, business_email from business JOIN industry ON business_id WHERE business_type=1 AND business_status_id=2 AND industry_id=business_industryid ORDER BY business_id"
+        content = db.session.execute(text(query))
+        #fund = db.session.query(Business_disbursement).order_by(Business_disbursement.business_id).where(Business_type==1).all()
+        registered = int(len(reg))
+        pending = int(len(pend))
+        approved = int(len(app)) 
+        #funded = len(fund)
+        return render_template("donoraccount.html", registered=registered, pending=pending, approved=approved,
+        user=user, content=content, state=state, title = "Dashboard - Funds App")
+    else:
+        return redirect(url_for("duser.donatelogin"))
+
+
+@d_userobj.route('/donation/dashboard', methods = ("GET", "POST"), strict_slashes = False)
+def donateinvestment():
+    id=session.get("d_user")
+    user = db.session.query(D_user).first()
+    reg1 = db.session.query(Business).filter(Business.business_type==2).all()
+    reg2 = db.session.query(Business).filter(Business.business_type==3).all()
+    pend1 = db.session.query(Business).where(Business.business_type==2, Business.business_status_id==1).all()
+    pend2 = db.session.query(Business).where(Business.business_type==3, Business.business_status_id==1).all()
+    app1 = db.session.query(Business).where(Business.business_type==2, Business.business_status_id==2).all()
+    app2 = db.session.query(Business).where(Business.business_type==3, Business.business_status_id==2).all()
+    registered = int(len(reg1) + int(len(reg2)))
+    pending = int(len(pend1)) + int(len(pend2))
+    approved = int(len(app1)) + int(len(app2))
+    if id != None:
+        return render_template("donorinvest.html", registered=registered, pending=pending, approved=approved,
+        user=user, title = "Dashboard - Funds App")
+    else:
+        return redirect(url_for("duser.donatelogin"))
+

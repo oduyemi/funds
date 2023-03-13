@@ -71,8 +71,6 @@
     cursor: pointer;
     transition: .3s;
   }
-  
-
 
 </style>
 </head>
@@ -82,11 +80,8 @@
     <div class="dressing"> 
       <h1 class="text-center">Registration Form</h1>
       <form method="post" action="" novalidate id="reg">
-      <form method="post" action="{{ url_for('fbuser.register')}}">
         <input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token()}}">
-        
         <div class="txt_field form-group">
-
           {% if form.bname.errors %}
             {{ form.bname (class="is_invalid") }}
               <div class="invalid-feedback">
@@ -163,19 +158,18 @@
           <select class="form-control" id="state">
             <option value="">     -     Choose State     -</option>
             {% for row in states %}
-            <option value="{{row.state_id}}">{{row.state_name}}</option>
+            <option value="{{row.state_name}}">{{row.state_name}}</option>
               {% endfor %}
             <option>{{ form.state }}</option> 
           </select>
           
         </div>
-        <div class="txt_field form-group" id="lga"></div>
 
         <div class="txt_field form-group">
           <select class="form-control" id="type">
             <option value="">   -   Business Type   -  </option>
             {% for row in type %}
-            <option value="{{row.type_id}}">{{ row.type}}</option>
+            <option value="{{row.type_name}}">{{ row.type}}</option>
             {% endfor %}
             <option>{{ form.btype }}</option>
           </select>
@@ -211,23 +205,6 @@
           
         </div>
 
-  
-
-        <div class="txt_field form-group">
-
-          {% if form.regfile.errors %}
-            {{ form.regfile (class="is_invalid") }}
-              <div class="invalid-feedback">
-                {% for error in form.regfile.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-              </div>
-          {% else %}
-              <label class="form-control">Upload evidence of your business registration</label>
-            {{ form.regfile}}  
-          {% endif %}
-        </div>
-
         <div class="txt_field form-group">
           {% if form.tin.errors %}
             {{ form.tin (class="is_invalid") }}
@@ -243,35 +220,6 @@
         </div>
 
         <div class="txt_field form-group">
-          {% if form.taxfile.errors %}
-            {{ form.taxfile (class="is_invalid") }}
-              <div class="invalid-feedback">
-                {% for error in form.taxfile.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-              </div>
-          {% else %}
-          <label class="form-control">Upload your tax certificate or any evidence of tax payment</label>
-            {{ form.taxfile}}
-          {% endif %}
-        </div>
-        <div class="txt_field form-group">
-
-          {% if form.taxfile.errors %}
-            {{ form.planfile (class="is_invalid") }}
-              <div class="invalid-feedback">
-                {% for error in form.planfile.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-              </div>
-          {% else %}
-              <label class="form-control">Upload your business plan</label>
-            {{ form.planfile}}
-          {% endif %}
-        </div>
-
-        <div class="txt_field form-group">
-
           {% if form.pitch.errors %}
             {{ form.pitch (class="is_invalid") }}
               <div class="invalid-feedback">
@@ -284,46 +232,6 @@
             {{ form.pitch }}
           {% endif %}
           
-        </div>
-
- <label class="form-control">Upload 3 images that best represents your business</label>
-        <div class="txt_field form-group">
-          {% if form.img1.errors %}
-            {{ form.img1 (class="is_invalid") }}
-              <div class="invalid-feedback">
-                {% for error in form.img1.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-              </div>
-          {% else %}  
-            {{ form.img1 }}
-          {% endif %}
-        </div>
-
-        <div class="txt_field form-group">
-          {% if form.img2.errors %}
-            {{ form.img2 (class="is_invalid") }}
-              <div class="invalid-feedback">
-                {% for error in form.img2.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-              </div>
-          {% else %}
-            {{ form.img2}}
-          {% endif %}
-        </div>
-
-        <div class="txt_field form-group">
-          {% if form.img3.errors %}
-            {{ form.img3 (class="is_invalid") }}
-              <div class="invalid-feedback">
-                {% for error in form.img3.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-              </div>
-          {% else %}
-            {{ form.img3 }}
-          {% endif %}
         </div>
 
         <div class="form-group text-center">
@@ -359,23 +267,7 @@ function load_lga(){
 }
 }*/
 
-$(document).ready(function(){
-  $('#state').change(function(){
-      var stateid = $(this).val()
-      var csrf = "{{csrf_token}}"
-      $.ajax({
-          url:"/load_lga/"+stateid,
-          
-          type:"GET",
-          success:function(rsp){
-              $('#lga').html(rsp)
-          },
-          error:function(err){
-              console.log(err)
-          }
-      })
-  })
-})
+
   
 
     </script>

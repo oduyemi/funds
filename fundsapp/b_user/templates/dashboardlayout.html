@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animate.min.css') }}"/>
     <link rel="stylesheet" href="{{url_for('static', filename='fontawesome/css/all.css') }}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" integrity="sha512-ARJR74swou2y0Q2V9k0GbzQ/5vJ2RBSoCWokg4zkfM29Fb3vZEQyv0iWBMW/yvKgyHSR/7D64pFMmU8nYmbRkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
    
     
@@ -18,7 +19,7 @@
 	        margin:0;
 	        padding:0;
 	        background-color:#0e34a0;
-	        overflow: hidden;
+	        overflow: auto;
         }
         .logo{
 	        margin:0;
@@ -37,7 +38,7 @@
         }
         .box-8, .box-4 {
             width: 96.5%;
-            height: 58vh !important;
+            height: 100vh !important;
           }
           .circle_wrap {
             margin: 50px auto;
@@ -81,14 +82,14 @@
             border:2px solid #fff;
             
           }
-          a{
+          .profile a{
             text-decoration:none;
             color:#B9E3C6;
+            font-size:smaller;
           }
-          
-          
+          {% block d_style %}
+          {% endblock %}
     </style>
-
 </head>
 
 <body>
@@ -96,12 +97,11 @@
         <img src="../static/images/logo/logo_white.png" alt="site logo" class="logo"/>
         {% block side_menu %}
         <a href="#" class="icon_a"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp;Dashboard</a>
-        <a href="#" class="icon_a"><i class="fa fa-users icons"></i>&nbsp;&nbsp;startups</a>
-        <a href="#" class="icon_a"><i class="fa fa-list icons"></i>&nbsp;&nbsp;Pre-Startups</a>
-        <a href="#" class="icon_a"><i class="fa fa-shopping-bag icons"></i>&nbsp;&nbsp;NGOs</a>
-        <a href="#" class="icon_a"><i class="fa fa-tasks icons"></i>&nbsp;&nbsp;Pitches</a>
-        <a href="#" class="icon_a"><i class="fa fa-users icons"></i>&nbsp;&nbsp;Accounts</a>
-        <a href="#" class="icon_a"><i class="fa fa-list-alt icons"></i>&nbsp;&nbsp;In Review</a>
+        <a href="#" class="icon_a"><i class="fa fa-users icons"></i>&nbsp;&nbsp;List</a>
+        <a href="#" class="icon_a"><i class="fa fa-list icons"></i>&nbsp;&nbsp;Contact</a>
+        <a href="#" class="icon_a"><i class="fa fa-shopping-bag icons"></i>&nbsp;&nbsp;Pitches</a>
+        <a href="#" class="icon_a"><i class="fa fa-tasks icons"></i>&nbsp;&nbsp;Accounts</a>
+        <a href="#" class="icon_a"><i class="fa fa-list-alt icons"></i>&nbsp;&nbsp;Reviews</a>
         {% endblock %}
     </div>
 
@@ -114,17 +114,19 @@
             <div class="col-div-6">
                 <div class="profile">
                     {% block user_profile %}
-                    {% if dp: %}
-                            {% if dp != None %}
-                    <img src="{{dp}}" alt="profile" class="pro_img"/>
+                    {% if user.b_user_pic %}
+                            {% if user.b_user_pic != "" %}
+                    <img src="{{ url_for('static', filename="uploads/"+user.b_user_pic) }}" alt="profile"  width="50" height="50"/>
                     {% endif %}
                     {% else %}
-                    <img src="{{ fname[0] }} {{ lname[0] }}" alt="Profile">
+                    <img src="{{ url_for('static', filename='images/avatar.jpg') }}" alt="Profile" width="50" height="50"/>
                     {% endif %}
                     {% endblock %}
-                    <p>{{ fname }} {{ lname }}<span>{{ email }}</span><br>
-                    <a href="{{url_for("fbuser.signout")}}">Signout</a></p><br>
+
+                    <p>{{ user.b_user_fname + " " + user.b_user_lname }}<span>{{ user.b_user_email }}</span><br>
                 </div>
+                <a href="{{url_for("fbuser.signout")}}">Signout <i class="fa-duotone fa-arrow-up-left-from-circle"></i></a>
+            </p><br>
             </div>
         </div>
 
@@ -158,20 +160,23 @@
         </div>
 
         <div class="clearfix"></div>{% endblock %}
-        <br><br>
+        <br>
 
         <div class="col-div-8">
             <div class="box-8">
                 <div class="content_box">{% block title %}
                    <p>Top Selling Projects <span>View All</span></p>{% endblock%}
                    <br>
-                   {% block table %}<table class="table table-responsive table-hover">
+                   <table class="table table-responsive table-hover">
                     {% block pre_table%} {% endblock %}
                        <tr>
+                        {% block table_hd %}
                             <th>Company</th>
                             <th>Contact</th>
                             <th>Location</th>
+                            {% endblock %}
                         </tr>
+                        {% block innertable %}
                         <tr>
                             <td>coy-</td>
                             <td>name</td>
@@ -191,9 +196,9 @@
                             <td>Fjhfrjyuhi</td>
                             <td>Fjhfrjyuhi</td>
                             <td>Fjhfrjyuhi</td>
-                        </tr>
+                        </tr>{% endblock %}
 
-                   </table> {% endblock %}
+                   </table> 
                 </div>
             </div>
         </div>
@@ -202,8 +207,8 @@
         <div class="col-div-4">
             <div class="box-4">
                 <div class="content_box">
-                    <p>Total Sale <span>View All</span></p>
-                   
+                    {% block totalsale %}<p>Total Sale<span>View All</span></p>{% endblock %} 
+                    {% block list %}
                    <div class="circle_wrap">
                    <div class="circle">
                     <div class="mask full">
@@ -212,7 +217,8 @@
                     <div class="mask half">
                         <div class="fill"></div>
                     </div>
-                    {% block circle %}<div class="inside_circle">70%</div>{% endblock %}
+                    <div class="inside_circle">70%</div>
+                    {% endblock %}
                 </div>
             </div>
                     </div>

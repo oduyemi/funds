@@ -8,38 +8,43 @@ db=SQLAlchemy()
 
 class Business(db.Model): 
     business_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    business_name = db.Column(db.String(50), nullable=True) 
+    business_name = db.Column(db.String(150), nullable=True) 
     business_type = db.Column(db.Integer(),db.ForeignKey('business_type.type_id'))
     business_industryid = db.Column(db.Integer(),db.ForeignKey('industry.industry_id'))
     business_address = db.Column(db.String(255), nullable=True)
-    business_lga_id = db.Column(db.Integer(),db.ForeignKey('lga.lga_id'))
     business_state_id = db.Column(db.Integer(),db.ForeignKey('state.state_id'))
     business_email  = db.Column(db.String(100), unique=True)
     business_phone_number = db.Column(db.String(20),nullable=True)
     business_website = db.Column(db.String(150), nullable=True) 
     business_rcnumber = db.Column(db.String(60), nullable=True)
-    business_reg_file = db.Column(db.String(60), nullable=True)
+    business_reg_file = db.Column(db.String(100), nullable=True)
     business_tin = db.Column(db.String(60), nullable=True)
     business_tin_file = db.Column(db.String(60), nullable=True)
     business_desc = db.Column(db.Text())
     business_pitch = db.Column(db.Text())
     business_plan = db.Column(db.String(120))
     business_img1 = db.Column(db.String(120))
-    business_img2 = db.Column(db.String(120))
-    business_img3 = db.Column(db.String(120))
-    business_status_id = db.Column(db.Integer(),db.ForeignKey('business_status.status_id'))
+    # business_img2 = db.Column(db.String(120))
+    # business_img3 = db.Column(db.String(120))
+    business_userid = db.Column(db.Integer(),db.ForeignKey('b_user.b_user_id'))
     business_datereg = db.Column(db.DateTime(), default=datetime.utcnow())
-    business_userid = db.Column(db.Integer(),db.ForeignKey('b_user.b_user_id')) 
+    business_status_id = db.Column(db.Integer(),db.ForeignKey('business_status.status_id'))
+     
 
+    #set relationships
+    state_ = db.relationship("State", back_populates="state_data")
+    bdeets = db.relationship("B_user", backref="b_userinfo")
+    
 
 class B_user(db.Model, UserMixin): 
     b_user_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    b_user_business  = db.Column(db.Integer(),db.ForeignKey('business.business_id'))
     b_user_fname = db.Column(db.String(20))
     b_user_lname = db.Column(db.String(20))
     b_user_email= db.Column(db.String(20), unique=True)
     b_user_password= db.Column(db.Text(50))
     b_user_pic = db.Column(db.String(120))
+
+    #b_userinfo = db.relationship("Business", backref="bdeets")
 
 
 class I_user(db.Model, UserMixin): 
@@ -144,27 +149,18 @@ class payment(db.Model):
         payment_status = db.Column(db.String(100), nullable=False)
 
 
-# class B_log(db.Model):
-#     b_log_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-#     email = buser  = db.Column(db.String(20),db.ForeignKey('b_user.b_user_email'))
-#     pwd = buser  = db.Column(db.String(50),db.ForeignKey('b_user.b_user_password'))
-  
-
    
 class Business_type(db.Model): 
     type_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    type =db.Column(db.String(100), nullable=False)
+    type = db.Column(db.String(100), nullable=False)
 
 
 class State(db.Model): 
     state_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     state_name = db.Column(db.String(100), nullable=False)
 
-
-class Lga(db.Model):
-    lga_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    lga_name = db.Column(db.String(100), nullable=False)
-    lga_stateid  = db.Column(db.Integer(),db.ForeignKey('state.state_id'))
+    #set relationship
+    state_data = db.relationship("Business", back_populates="state_")
 
 
 class Industry(db.Model): 
@@ -181,5 +177,5 @@ class Business_status(db.Model):
 class Review(db.Model): 
     review_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     review_text = db.Column(db.Text(), nullable=False)
-    review_userid = db.Column(db.Integer(),db.ForeignKey('investor.investor_id'))
+    review_user = db.Column(db.Integer(),db.ForeignKey('investor.investor_id'))
     review_date = db.Column(db.DateTime(), default=datetime.utcnow())

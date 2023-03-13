@@ -2,7 +2,7 @@ from flask import Flask
 from flask import jsonify, render_template, request
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
-from flask_login import login_user, LoginManager, login_required, logout_user, current_user
+from flask_migrate import Migrate
 from fundsapp.admin import adminobj
 from fundsapp.b_user import b_userobj
 from fundsapp.i_user import i_userobj
@@ -20,6 +20,7 @@ def create_app():
     from fundsapp.models import db
     db.init_app(starter) # NOT db
     csrf = CSRFProtect(starter)
+    migrate = Migrate(starter,db)
     @starter.errorhandler(404)
     def page_not_found(e):
         fname = db.session.query(B_user).filter(B_user.b_user_fname).first()

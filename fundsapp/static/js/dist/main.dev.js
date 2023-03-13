@@ -30,6 +30,11 @@ $(document).ready(function () {
       $("#invest_type").hide();
       window.location.href = "/invest";
     }
+
+    if (invest == "donate") {
+      $("#invest_type").hide();
+      window.location.href = "/donation";
+    }
   });
   $("#ctabtn_ctd").click(function () {
     var investType = $("#invest_group").children("option:selected").val();
@@ -50,6 +55,10 @@ $(document).ready(function () {
       window.location.href = "/invest";
     }
 
+    if (investType == "donate") {
+      window.location.href = "/donate";
+    }
+
     if (investType == "") {
       alert("Choose an option");
     }
@@ -59,6 +68,12 @@ $(document).ready(function () {
   });
   $('.signup').click(function () {
     window.location.href = '/signup';
+  });
+  $('.signout').click(function () {
+    window.location.href = '/signout';
+  });
+  $('.pro_pic').click(function () {
+    window.location.href = '/profile/picture';
   });
   $(".nav").click(function () {
     $(".mySidenav").css("width", "70px");
@@ -85,17 +100,74 @@ $(document).ready(function () {
   $('.ngodashboard').click(function () {
     window.location.href = '/ngo/dashboard';
   });
+  $('.ngolist').click(function () {
+    window.location.href = '/ngolist/dashboard';
+  });
+  $('.ngoaccount').click(function () {
+    window.location.href = '/ngoaccount/dashboard';
+  });
+  $('.ngocontact').click(function () {
+    window.location.href = '/ngocontact/dashboard';
+  });
+  $('.ngopitch').click(function () {
+    window.location.href = '/ngopitch/dashboard';
+  });
+  $('.ngoreviews').click(function () {
+    window.location.href = '/ngoreviews/dashboard';
+  });
   $('.startupdashboard').click(function () {
     window.location.href = '/startup/dashboard';
+  });
+  $('.startuplist').click(function () {
+    window.location.href = '/startuplist/dashboard';
+  });
+  $('.startupaccount').click(function () {
+    window.location.href = '/startupaccount/dashboard';
+  });
+  $('.startupcontact').click(function () {
+    window.location.href = '/startupcontact/dashboard';
+  });
+  $('.startuppitch').click(function () {
+    window.location.href = '/startuppitch/dashboard';
+  });
+  $('.startupreviews').click(function () {
+    window.location.href = '/startupreviews/dashboard';
   });
   $('.prestartupdashboard').click(function () {
     window.location.href = '/prestartup/dashboard';
   });
+  $('.prestartuplist').click(function () {
+    window.location.href = '/prestartuplist/dashboard';
+  });
+  $('.prestartupaccount').click(function () {
+    window.location.href = '/prestartupaccount/dashboard';
+  });
+  $('.prestartupcontact').click(function () {
+    window.location.href = '/prestartupcontact/dashboard';
+  });
+  $('.prestartuppitch').click(function () {
+    window.location.href = '/prestartuppitch/dashboard';
+  });
+  $('.prestartupreviews').click(function () {
+    window.location.href = '/prestartupreviews/dashboard';
+  });
   $('.funded').click(function () {
     window.location.href = '/funded';
   });
-  $('.investdashboard').click(function () {
+  $('.i_dashboard').click(function () {
     window.location.href = '/invest/dashboard';
+  });
+  $('.i_invest_dashboard').click(function () {
+    window.location.href = '/invest/investment/dashboard';
+  });
+  $('.i_list_dashboard').click(function () {
+    window.location.href = '/invest/list/dashboard';
+  });
+  $('.i_pitch_dashboard').click(function () {
+    window.location.href = '/invest/pitch/dashboard';
+  });
+  $('.i_account_dashboard').click(function () {
+    window.location.href = '/invest/account/dashboard';
   });
   $('.admindashboard').click(function () {
     window.location.href = '/admin/dashboard';
@@ -103,22 +175,11 @@ $(document).ready(function () {
   $(".base").click(function () {
     window.location.href = "/";
   });
-  $('#state').change(function () {
-    var stateid = $("#state").val();
-    output = {
-      "state_id": stateid
-    };
-    $.ajax({
-      type: "GET",
-      url: "/load_lga/" + stateid,
-      data: output,
-      success: function success(rsp) {
-        $("#lgas").innerHTML = rsp;
-      },
-      cache: false,
-      processData: false,
-      contentType: false
-    });
+  $('.logo').click(function () {
+    window.location.href = '/';
+  });
+  $('.reg').click(function () {
+    window.location.href = '/register';
   });
 });
 //# sourceMappingURL=main.dev.js.map

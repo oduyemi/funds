@@ -100,7 +100,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
              
               <li class="nav-item support">
-                <a class="btn btn-primary" href="">Contact Support</a>
+                <a class="btn btn-primary support" href="">Contact Support</a>
               </li>
               
             </ul>
@@ -112,16 +112,16 @@
 <main>
 
 <div class="container col-xxl-8 px-4 py-5" >
-{% if session.get('user') !=None %}
+{% if session.get('b_user') !=None %}
 <header class="p-3 mb-3 border-bottom">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
        
         <ul class="member nav text-black col-12 col-lg-auto me-lg-auto mb-2 justify-content-start mb-md-0">
-          <li><a href="" class="nav-link px-2 " style="color:#FF5714">Dashboard</a></li>
+          <li><a href="" class="nav-link px-2 " style="color:#FF5714" class="startupdashboard">Dashboard</a></li>
           &emsp; &emsp;
           <li><a href="#" class="nav-link px-2 link-dark">Reviews</a></li> &emsp; &emsp;
-          <li><a href="#" class="nav-link px-2 link-dark">Registration</a></li>
+          <li><a href="#" class="nav-link px-2 link-dark reg">Registration</a></li>
         
         </ul>
 
@@ -129,16 +129,15 @@
          
         <div class="dropdown text-end">
           <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            {% if dp: %}
-              {% if dp != None %}
-                 <img src="{{dp}}" alt="profile" width="32" height="32" class="rounded-circle">
-                 {% else %}
-                 <img src="" alt="mdo" width="32" height="32" class="rounded-circle">
-              {% endif %}
-
-            {% else %}
-            <img src="#" alt="{{fname[0] }} {{ lname[0]}}" width="32" height="32" class="rounded-circle">
-            {% endif %}
+            {% block user_profile %}
+                    {% if user.b_user_pic %}
+                            {% if user.b_user_pic != "" %}
+                    <img src="{{ url_for('static', filename="uploads/"+user.b_user_pic) }}" alt="profile"  width="50" height="50"/>
+                    {% endif %}
+                    {% else %}
+                    <img src="{{ url_for('static', filename='images/avatar.jpg') }}" alt="Profile" width="50" height="50"/>
+                    {% endif %}
+                    {% endblock %}
           </a>
           <ul class="dropdown-menu text-small">
             <li><a class="dropdown-item" href="#">Profile</a></li>
@@ -146,7 +145,7 @@
             <li><a class="dropdown-item" href="#">Settings</a></li>
             
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
+            <li><a class="dropdown-item signout" href="#">Sign out</a></li>
           </ul>
         </div>
       </div>

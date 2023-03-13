@@ -5,6 +5,7 @@
   <h3>Update Your Profile Picture</h3>
 
   <form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token()}}">
     <div class="form-group row">
         <label for="" class="col-md-2">Select File</label>
         <input type="file" name="pix" class="col-md-6">

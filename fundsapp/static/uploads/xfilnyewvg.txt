@@ -1,0 +1,87 @@
+$('#btncomment').click(function(){
+var msg = $("comment").val()
+var userid ="{{session.get('user')}}"
+var topic = "{{ blog_deets.topic_id}}"
+var data2send = "message=" + "&userid=" + "&topicid=" + topic;
+//alert(data2send)
+//make an AJAX call $.ajax({key:"value", key:"value"})
+$.ajax({
+url:"/sendcomment",
+data:"message="+msg,
+type:"GET",
+dataType:"text",
+success:function(response){
+$('.comment').append(response)
+$('#comment').val('')
+var current_count = parseInt($(#counter).text()) + 1
+$("#counter").text(current_count)
+$("#comment").val("")
+},
+error:function(errmessage){
+	console.log(errmessage)
+}
+})
+})
+})
+
+
+-- Insert --
+inside (route)
+
+
+
+def sendcomment():
+	usermessage = request.args.get("message")
+	user = request.args.get("userid")
+	topic = request.args.get("topicid")
+	comment = Comments(comments_text=usermessage, comment_userid = user, comment_topicid = topic)
+	db.session.add(comment)
+	db.session.commit()
+	by = comment.commentby.user_fullname
+	dateposted = comment.comment_date
+	sendback = f"{usermessage}<br>by{by} on {dateposted}"
+	return sendback
+else:
+	return "Your message was not posted. You need to login first" 
+	
+	#create a route, let's call it /check_username maybe function check_username
+	#let this route return a message that says "Email address already registered"
+	#if the email exits in the database
+	#otherwise, let it return "Email available"
+	
+@app.route('/check_username')
+def check_username():
+	return "Email address already registered"
+	
+	
+	
+	
+$(document).ready(function(){
+	$("#username").change(function(){
+	var input_email = $(this).val()
+	var csrf = "{{csrf_token()}}"
+	data2send = {"email":input_email, "csrf_token":csrf}
+	
+	$.ajax({
+		url:"/check_username",
+		data:data2send,
+		type:"POST",
+		success:function(rsp){
+			$("#small").html(rsp)
+		},
+		error:function(e){
+			console.log(e)
+		}
+	})
+	}
+})
+	
+	
+	
+	
+@app.route ('/load_lga/<stateid>')
+def load_lga(stateid):
+	#stateid = request.args.get('stateid')
+	lgas = db.session.query(Lga).filter(Lga.lga_state_id == stateid).all()
+	data2send = "<select>"
+	return 'done'

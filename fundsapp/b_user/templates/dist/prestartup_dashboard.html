@@ -2,28 +2,28 @@
 
 {% block dashboard_menu%}
 <div class="box prestartupdashboard">
-    <p>67<br><span>Pre Startups</span></p>
+    <p>{{registered}}<br><span>Registered</span></p>
     <i class="fa fa-users box-icon"></i>
 </div>
 </div>
 
 <div class="col-div-3">
 <div class="box startupdashboard">
-    <p>88<br><span>Startups</span></p>
+    <p>{{pending}}<br><span>Pending</span></p>
     <i class="fa fa-list box-icon"></i>
 </div>
 </div>
 
 <div class="col-div-3">
 <div class="box ngodashboard">
-    <p>99<br><span>NGOs</span></p>
+    <p>{{approved}}<br><span>Approved</span></p>
     <i class="fa fa-shopping-bag box-icon"></i>
 </div>
 </div>
 
 <div class="col-div-3">
 <div class="box funded">
-    <p>78<br><span>Funded</span></p>
+    <p>{{funded}}<br><span>Funded</span></p>
     <i class="fa fa-tasks box-icon"></i>
 </div>
 </div>
@@ -42,22 +42,41 @@
 
 
 {% block side_menu %}
-<a href="#" class="icon_a"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp; Dashboard</a>
-<a href="#" class="icon_a"><i class="fa fa-users icons"></i>&nbsp;&nbsp; List</a>
-<a href="#" class="icon_a"><i class="fa fa-list icons"></i>&nbsp;&nbsp; Entrepreneurs</a>
-<a href="#" class="icon_a"><i class="fa fa-tasks icons"></i>&nbsp;&nbsp; Pitches</a>
-<a href="#" class="icon_a"><i class="fa fa-users icons"></i>&nbsp;&nbsp; Accounts</a>
-<a href="#" class="icon_a"><i class="fa fa-list-alt icons"></i>&nbsp;&nbsp; In Review</a>
+<a href="#" class="icon_a prestartupdashboard"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp; Dashboard</a>
+<a href="#" class="icon_a reg"><i class="fa fa-list-alt icons"></i>&nbsp;&nbsp; Register</a>
+<a href="#" class="icon_a prestartuplist"><i class="fa fa-users icons"></i>&nbsp;&nbsp; List</a>
+<a href="#" class="icon_a prestartupcontact"><i class="fa fa-list icons"></i>&nbsp;&nbsp; Contact</a>
+<a href="#" class="icon_a prestartuppitch"><i class="fa fa-tasks icons"></i>&nbsp;&nbsp; Pitches</a>
+<a href="#" class="icon_a prestartupaccount "><i class="fa fa-users icons"></i>&nbsp;&nbsp; Accounts</a>
 {% endblock %}
 
 {% block pre_table %}
 <select name="industry p_dd">
-    <option value="">- Choose Location -</option>
+    <option value="">- Choose Industry -</option>
     {% for row in industry %}
     <option value="{{row.industry_id}}">{{ row.industry_name}}<option>
     {% endfor %}
 </select>
 {% endblock%}
+
+{% block table_hd %}
+
+{% endblock %}
+
+{% block innertable %}
+    {% for c in content %}
+    <tr>
+        <tr>
+            <td class="text-small text-blue"><strong>{{ c.business_name }}</strong></td>
+            <td class="text-small">{{ c.business_industryid }}</td>
+            <td class="text-small">{{ c.business_desc }}</td>
+            <td>{{ c.business_state_id}}</td>
+            <td><img src='{{ url_for('static', filename="uploads/"+c.business_img1) }}' width="80%"</td>
+        </tr>
+    </tr>
+    {% endfor %}
+{% endblock %}
+
 
 
 {% block customJs %}

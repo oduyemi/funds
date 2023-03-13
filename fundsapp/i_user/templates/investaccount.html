@@ -1,0 +1,85 @@
+{% extends 'investdashboardlayout.html' %}
+
+{% block dashboard_menu%}
+<div class="box startupdashboard">
+    <p>{{registered}}<br><span>Registered</span></p>
+    <i class="fa fa-users box-icon"></i>
+</div>
+</div>
+
+<div class="col-div-3">
+<div class="box prestartupdashboard">
+    <p>{{pending}}<br><span>Pending</span></p>
+    <i class="fa fa-list box-icon"></i>
+</div>
+</div>
+
+<div class="col-div-3">
+<div class="box ngodashboard">
+    <p>{{approved}}<br><span>Approved</span></p>
+    <i class="fa fa-shopping-bag box-icon"></i>
+</div>
+</div>
+
+<div class="col-div-3">
+<div class="box funded">
+    <p>{{funded}}<br><span>Funded</span></p>
+    <i class="fa fa-tasks box-icon"></i>
+</div>
+</div>
+
+<div class="clearfix"></div>
+{% endblock %}
+
+{% block side_menu %}
+<a href="#" class="icon_a i_dashboard"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp;Dashboard</a>
+<a href="#" class="icon_a i_invest_dashboard"><i class="fa fa-list-alt icons"></i>&nbsp;&nbsp;Investments</a>
+<a href="#" class="icon_a i_list_dashboard"><i class="fa fa-users icons"></i>&nbsp;&nbsp;List</a>
+<a href="#" class="icon_a i_pitch_dashboard"><i class="fa fa-shopping-bag icons"></i>&nbsp;&nbsp;Pitches</a>
+<a href="#" class="icon_a i_account_dashboard"><i class="fa fa-tasks icons"></i>&nbsp;&nbsp;Accounts</a>
+{% endblock %}
+
+{% block table_hd %}
+
+{% endblock %}
+
+{% block innertable %}
+    {% for b in content %}
+        <tr>
+            <td class="text-small"><strong>{{ b.business_name}}</strong></td>
+            <td>{{b.industry_name}}</td>
+            <td>{{b.business_desc}}</td>
+            <td>{{b.business_email}}</td>
+            {% endfor %}
+        </tr>       
+{% endblock %}
+
+{% block totalsale %}
+<p>Approved Pitches</p>
+{% endblock %}
+
+
+{% block list %}
+{% if content %}
+    {% for c in content %}
+    <div>
+        <ul>
+            <li>{{c.business_name}}</li>  
+        </ul>
+    </div>
+    {% endfor %}
+    {%endif%}
+{% endblock %}
+
+
+
+
+{% block customJs %}
+<script>
+
+    $(document).ready(function(){
+        $("#d_dd").selectpicker; 
+    })
+
+</script>
+{% endblock %}

@@ -1,17 +1,116 @@
-{% extends 'dashboard.html' %}
+{% extends "home.html" %}
+{% block pagetitle %}<title>Profile - Funds</title>{% endblock %}
 
-{% block user_profile %}
-    <img src="{{dp}}" alt="profile" class="pro_img">
-    <p>{{ fname }} {{ lname }} <span>{{ email }}<br><a href="{{url_for("fbuser.signout")}}"> Signout</a>
-    </span></p>
+{% block content %}
+<div class="content" style="background-color: white;padding:1.2em">
+  <h3>Business Account</h3>
+
+{% block home_style %}
+<style>
+label{
+  position: relative;
+  top:-20% !important;
+  font-weight: 600 !important;
+  color: #10349A !important;
+  font-size:12px !important;
+}
+.spbtn{
+  position: relative !important;
+  left: -16%;
+  width: 20%;
+  padding: 7px;
+  color: #fff;
+  background: #10349A;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 4px;
+  outline: none;
+  border-radius: none;
+  cursor: pointer;
+  transition: .3s;
+}
+._input{
+  font-size:smaller;
+}
+.mail{
+  color:rgb(1, 142, 66);
+}
+
+.dp_container{
+  width:50%;
+  height: 15vh;
+  margin:none;
+  position:relative;
+  left:150%;
+}
+</style>
 {% endblock %}
+  <div class="row">
+    <div class="col-6">
+    <label for="floatingInput"></label>
+    <div class="field dp_container">
+      {% if deets %}
+      <img src="{{ url_for('static', filename="uploads/"+contact.business_img1) }}" width="100%"/>
+      {% else %}
+      <img src="{{ url_for('static', filename='images/avatar.jpg') }}" width="80%"/>
+      {% endif%}
 
-{% block title %}
-<p>Entrepreneurs <span>View All</span></p>
-{% endblock %}
+    </div></div></div>
+<div class="row">
+    <div class="col-2">
+        <div class="mb-2 fields">
+            <label for="fname">Business  name</label>
+            <div class="_input"><h6>{{ contact.business_name }}</h6></div>
+          </div></div>
+          <div class="col-2">
+          <div class="fields" >
+            <label for="lname">Address</label>
+            <div class="mb-2 _input"><h6>{{ contact.business_address }}</h6></div>
+          </div></div>
+          
+          <div class="col-2">
+          <div class="fields">
+            <label for="lname">State</label>
+            <div class="mb-2 _input"><h6>{{ deets.state_name }}</h6></div>
+          </div></div>
+        
+          <div class="col-2">
+          <div class="fields">
+            <label for="lname">Phone Number</label>
+            <div class="mb-2 _input"><h6>{{ contact.business_phone_number }}</h6></div>
+          </div>
+        </div></div>  
 
-{% block side_content_title %}
-<p>Account Information <span>View All</span></p>
+        <div class="col-2">
+        <div class="fields">
+            <label for="mail">Email Address</label>
+            <div class="mb-2 _input"><h6>{{ contact.business_email }}</h6></div>
+          </div></div>
+          
+          <div class="col-2">
+          <div class="fields">
+          <label for="business">Website</label>
+          <div class="mb-2 _input"><h6>{{ contact.business_website }}</h6></div>
+          </div></div>
+
+  
+
+    {% with m=get_flashed_messages()%}
+    {%if m%}
+          {%for msg in m%}
+            {{msg |safe}}
+          {%endfor%}
+        {%endif%}
+  {%endwith%}
+
+  {% if deets.b_user_id == userid %}
+    <div class="form-floating text-center" align="center">
+        <button class="spbtn pro_pic" type="submit">Update Image</button>
+    </div>
+  {% endif %}
+  
+ </div>
+
 {% endblock %}
 
 

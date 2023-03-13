@@ -1,0 +1,124 @@
+{% extends 'dashboardlayout.html' %}
+
+{% block dashboard_menu%}
+<div class="box ngodashboard">
+    <p>{{registered}}<br><span>Registered</span></p>
+    <i class="fa fa-users box-icon"></i>
+</div>
+</div>
+
+<div class="col-div-3">
+<div class="box startupdashboard">
+    <p>{{pending}}<br><span>Pending</span></p>
+    <i class="fa fa-list box-icon"></i>
+</div>
+</div>
+
+<div class="col-div-3">
+<div class="box prestartupdashboard">
+    <p>{{approved}}<br><span>Approved</span></p>
+    <i class="fa fa-shopping-bag box-icon"></i>
+</div>
+</div>
+
+<div class="col-div-3">
+<div class="box funded">
+    <p>{{funded}}<br><span>Funded</span></p>
+    <i class="fa fa-tasks box-icon"></i>
+</div>
+</div>
+
+<div class="clearfix"></div>
+{% endblock%}
+
+{% block title %}
+<p>Verified NGOs <span>View All</span></p>
+{% endblock %}
+
+{% block side_content_title %}
+<p>&emsp; Seeking Funds <span>View All</span></p>
+{% endblock %}
+
+
+{% block side_menu %}
+<a href="#" class="icon_a ngodashboard"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp; Dashboard</a>
+<a href="#" class="icon_a reg"><i class="fa fa-list-alt icons"></i>&nbsp;&nbsp; Register</a>
+<a href="#" class="icon_a ngolist"><i class="fa fa-users icons"></i>&nbsp;&nbsp; List</a>
+<a href="#" class="icon_a ngocontact"><i class="fa fa-list icons"></i>&nbsp;&nbsp; Contact</a>
+<a href="#" class="icon_a ngopitch"><i class="fa fa-tasks icons"></i>&nbsp;&nbsp; Pitches</a>
+<a href="#" class="icon_a ngoaccount "><i class="fa fa-users icons"></i>&nbsp;&nbsp; Accounts</a>
+{% endblock %}
+
+
+{% block table_hd %}
+
+{% endblock %}
+
+{% block innertable %}
+{% if content %}
+    {% for c in content %}
+
+    <tr>
+        <td class="text-small"><strong>{{ c.business_name }}</strong><br>{{c.business_pitch}}</td>
+        <td><img src='{{ url_for('static', filename="uploads/"+c.business_img1) }}' width="200" height="200" class="img-thumbnail"></td>
+    </tr>
+    {% endfor %}
+    {%endif%}
+{% endblock %}
+
+{% block totalsale %}
+<p>Approved Pitches</p>
+{% endblock %}
+{% block list %}
+{% if content %}
+    {% for c in content %}
+    <div>
+        <ul>
+            <li>{{c.business_name}}</li>  
+        </ul>
+    </div>
+    {% endfor %}
+    {%endif%}
+{% endblock %}
+
+
+
+
+{% block customJs %}
+<script>
+
+    $(document).ready(function(){
+        $("#d_dd").selectpicker; 
+    })
+
+    document.getElementById("ngo_info").addEventListener("on", loadNgo);
+
+function loadNgo(){
+    var ngos = new XMLHttpRequest();
+    ngos.open("GET", "/loadngo", true)
+
+    ngos.onload = function(){
+        if (this.status == 200){
+            var ngolist = JSON.parse(this.responseText);
+            alert(this.responseText);
+            /*var output = "";
+            for(var i in users){
+            output+=`<table class="table table-responsive mt-5">
+                <tr>
+                    <td>${ngolist[a].ngoorg}</td>
+                    <td>${ngolist[a].ngoperson}</td>
+                    <td>${ngolist[a].ngoplace}</td>
+                </tr>
+
+            </table>`;
+           
+           }
+           document.getElementById("ngo_info").innerHTML = ngolist;*/
+        }
+  
+    }
+    ngos.send();
+}
+    
+</script>
+{% endblock %}
