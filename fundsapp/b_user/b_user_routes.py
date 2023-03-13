@@ -326,7 +326,7 @@ def reg2():
             result = db.session.execute(text(buzz))
             db.session.commit()
             flash('Business registration successfully completed')
-            return redirect(url_for('fbuser.user_profile'))
+            return redirect('/profile/id')
 
 
 
@@ -388,6 +388,7 @@ def ngolist():
         reg = db.session.query(Business).where(Business.business_type==1).all()
         pend =  db.session.query(Business).where(Business.business_type==1, Business.business_status_id==1).all()
         app = db.session.query(Business).where(Business.business_type==1, Business.business_status_id==2).all()
+        ind=db.session.query(Industry).order_by(Industry.industry_id).all()
         fund = db.session.query(Business_disbursement).order_by(Business_disbursement.business_id).where(Business_type==3).all()
         query = f"SELECT * from business WHERE business_type=1 and (business_status_id=1 or business_status_id=2)"
         content = db.session.execute(text(query))
@@ -396,7 +397,7 @@ def ngolist():
         approved = len(app)
         funded = len(fund)
         return render_template("ngolist.html", registered=registered, pending=pending, approved=approved,
-        funded=funded, user=user, content=content, state=state, title = "Dashboard - Funds App")
+        funded=funded, user=user, content=content, ind=ind, state=state, title = "Dashboard - Funds App")
     else:
         return redirect(url_for("fbuser.ngo_login"))
 
@@ -517,6 +518,7 @@ def startuplist():
         reg = db.session.query(Business).where(Business.business_type==2).all()
         pend =  db.session.query(Business).where(Business.business_type==2, Business.business_status_id==1).all()
         app = db.session.query(Business).where(Business.business_type==2, Business.business_status_id==2).all()
+        ind=db.session.query(Industry).order_by(Industry.industry_id).all()
         query = f"SELECT * from business WHERE business_type=2 and (business_status_id=1 or business_status_id=2)"
         content = db.session.execute(text(query))
         fund = db.session.query(Business_disbursement).order_by(Business_disbursement.business_id).where(Business_type==2).all()
@@ -524,7 +526,7 @@ def startuplist():
         pending = len(pend)
         approved = len(app)
         funded = len(fund)
-        return render_template("startuplist.html", registered=registered, pending=pending, approved=approved,
+        return render_template("startuplist.html", registered=registered, pending=pending, approved=approved,ind=ind,
         funded=funded, user=user, content=content, state=state, title = "Dashboard - Funds App")
     else:
         return redirect(url_for("fbuser.ngo_login"))
@@ -626,6 +628,7 @@ def prestartuplist():
         reg = db.session.query(Business).where(Business.business_type==3).all()
         pend =  db.session.query(Business).where(Business.business_type==3, Business.business_status_id==1).all()
         app = db.session.query(Business).where(Business.business_type==3, Business.business_status_id==2).all()
+        ind=db.session.query(Industry).order_by(Industry.industry_id).all()
         query = f"SELECT * from business WHERE business_type=3 and (business_status_id=1 or business_status_id=2)"
         content = db.session.execute(text(query))
         fund = db.session.query(Business_disbursement).order_by(Business_disbursement.business_id).where(Business_type==2).all()
@@ -634,7 +637,7 @@ def prestartuplist():
         approved = len(app)
         funded = len(fund)
         return render_template("prestartuplist.html", registered=registered, pending=pending, approved=approved,
-        funded=funded, user=user, content=content, state=state, title = "Dashboard - Funds App")
+        funded=funded, user=user, content=content,ind=ind, state=state, title = "Dashboard - Funds App")
     else:
         return redirect(url_for("fbuser.ngo_login"))
 
@@ -714,6 +717,12 @@ def startup():
 def b_account(id):
     business_deets= Business.query.get_or_404(id)
     return render_template("b_account.html", business_deets=business_deets)
+
+@b_userobj.route("/howitworks",strict_slashes=False)
+def b_how():
+    user = db.session.query(B_user).first()
+           
+    return render_template("howitworks.html",user=user)
 
 
 
@@ -797,15 +806,7 @@ def b_profile(bid):
 
 
 
-@b_userobj.route('/donate', methods = ("GET", "POST"), strict_slashes = False)
-def donate():
-    return render_template('donate.html')
 
-
-
-@b_userobj.route('/dashboard/donation', strict_slashes = False)
-def dashboard_donation():
-    return render_template('donation.html')
 
 
 

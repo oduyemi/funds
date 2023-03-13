@@ -13,7 +13,7 @@ class SignupForm(FlaskForm):
             DataRequired(),
             length(min=1, max=20, message = "Please provide a valid name"),
             Regexp(
-                "^[A-Za-z] [A-Za-a0-9.]*", 0, "Your First name must contain only letters"
+                "^[A-Za-z]x*", 0, "Your First name must contain only letters"
                 ),
             ],
         render_kw={"placeholder": "Enter your first name here"})
@@ -49,7 +49,7 @@ class SignupForm(FlaskForm):
     def validate_email(self, email):
         b_user = B_user.query.filter_by(b_user_email = email.data).first()
         if b_user:
-            raise ValidationError("That email already have an account. Please choose a different one.")
+            raise ValidationError("That email already has an account. Please choose a different one.")
 
 
 
@@ -115,15 +115,15 @@ class RegistrationForm(FlaskForm):
             length(min=1, max=120, message = "Please provide a valid address")],
         render_kw={"placeholder": "Enter your Address"})
     
-    state = SelectField("state",
+    state = StringField("state",
         validators=[
             DataRequired()]),
     
-    btype = SelectField("btype",
+    btype = StringField("btype",
             validators=[
             DataRequired()]),
 
-    b_industry = SelectField("b_industry",
+    b_industry = StringField("b_industry",
         validators=[
             DataRequired()]),       
 

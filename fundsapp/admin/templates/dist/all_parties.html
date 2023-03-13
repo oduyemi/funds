@@ -5,12 +5,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="css/index.css">
-    <link href="fontawesome/css/all.css" rel="stylesheet" type="text/css">
-    
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">    
     <link rel="stylesheet" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{url_for('static',filename='assets/dist/js/bootstrap.bundle.min.js')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/admin.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='fontawesome/css/all.css')}}">
     <script type="text/javascript" defer src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <title>Admin Dashboard</title>
@@ -21,31 +18,11 @@
         
         <div class="bg-white" id="sidebar-wrapper">
             <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom" style="color: #008753;">
-                <img src="images/42c92cb8-fc29-42c7-b1e2-38971e84f946-removebg-preview.png" alt="">
-                <!-- Using the username saved in the session -->
-                MEMBER
+                <img src="../static/images/logo/logo_white.png" alt="site logo"width="140" height="220" class="logo"/>
             </div>
 
-            <div class="list-group list-group-flush my-3">
-                <a href="/admin/dashboard" class="list-group-item list-group-item-action bg-transparent second-text active">
-                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
-
-                   
-                    <a href="/admin/party" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                        <i class="fa-solid fa-file"></i>  Add Parties</a>
-    
-                    <a href="/admin/parties" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                        <i class="fa-sharp fa-solid fa-eye"></i> View Parties</a>
-
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                    <i class="fa-sharp fa-solid fa-comments"></i> Comments</a>
-
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                    <i class="fa-solid fa-share-from-square"></i> Shares</a>
-
-                <a href="/admin/logout" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
-                    <i class="fa-sharp fa-solid fa-power-off"></i> Logout</a>
-            </div>
+           {% include "menu.html"%}
+          
         </div>
 
 
@@ -57,39 +34,52 @@
                     <h2 class="fs-2 m-0" style="color: #008753;">Dashboard</h2>
                 </div>
             </nav>
-        </div>
 
             <div class="container-fluid px-4">
                 <div class="row g-3 my-2" style="color: #008753;">
                     <div class="col-md-12">
-                        <table class="table table-striped">
-                            <tr>
-                                <th>S/N</th>
-                                <th>Party</th>
-                                <th>Code</th>
-                                <th>Contact</th>
-                                <th>Action</th>
-                            </tr>
-                            <!-- adding the data from the database to our page  -->
-                            {% for p in data %}
-                            <tr>
-                                <td>{{loop.index}}</td>
-                                <td>{{ p.party_name }}</td>
-                                <td>{{ p.party_shortcode }}</td>
-                                <td>{{ p.party_contact }}</td>
-                                <td>Edit</td>
-                            </tr>
-                            {% endfor %}
-                        </table>      
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-5">Registered</h3>
+                                <table class="table table-responsive table-striped">
+                                    <tr>
+                                    <th>S/N</th>
+                                    <th>Business Name</th>
+                                    <th>Description</th>
+                                    </tr>
+                                    {% for b  in bdeets %}
+        <tr>
+            <td class="text-small text-blue"><strong>{{ b.business_name }}</strong></td>
+            <td class="text-small">{{ b.business_desc }}</td>
+            <td class="text-small">{{ b.business_pitch }}</td>
+            <td><img src='{{ url_for('static', filename="uploads/"+b.business_img1) }}' width="24%"</td>
+        {% if b.business_status_id == 1 %}
+        <td class="text-small"><i>{{"Pending" }}</i></td>
+        {% elif b.business_status_id == 2 %}
+        <td class="text-small"><i>{{ "Approved" }}</i></td>
+        {% elif b.business_status_id == 3 %}
+        <td class="text-small"><i>{{ "Declined" }}</i></td>
+    {% endif %}
+    {% endfor %} 
+</tr>
+   
+                                </table>
+                            </div>
+                           
+                        </div>
                     </div>
-                </div>
-            </div>            
+
+                    
+            
+        </div>
     </div>
-    
     
    
 
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/glm-ajax.js') }}"></script>
     <script>
         var el = document.getElementById("wrapper");
         var toggleButton = document.getElementById("menu-toggle");

@@ -5,14 +5,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap/css/bootstrap.css')}}">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
-    <link href="fontawesome/css/all.css" rel="stylesheet" type="text/css">
-    
-    <link rel="stylesheet" href="{{url_for('static',filename='assets/dist/js/bootstrap.bundle.min.js')}}">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">    
+    <link rel="stylesheet" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='css/admin.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='fontawesome/css/all.css')}}">
-    <script type="text/javascript" defer src="{{url_for('static',filename='bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script type="text/javascript" defer src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <title>Admin Dashboard</title>
 </head>
 
@@ -24,7 +21,7 @@
                 <img src="../static/images/logo/logo_white.png" alt="site logo"width="140" height="220" class="logo"/>
             </div>
 
-           {% include "admin/menu.html"%}
+           {% include "menu.html"%}
           
         </div>
 
@@ -42,37 +39,40 @@
                 <div class="row g-3 my-2" style="color: #008753;">
                     <div class="col-md-12">
                         <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
-                            <div class="alert alert-success">
-                                {#{{m=get_flashed_messages}}#}
-
+                            <div>
+                                <h3 class="fs-5">Approved</h3>
+                                <table class="table table-responsive table-striped">
+                                    <tr>
+                                    <th>S/N</th>
+                                    <th>Business Name</th>
+                                    <th>Description</th>
+                                    </tr>
+                                    {% for b  in bdeets %}
+        <tr>
+            <td class="text-small text-blue"><strong>{{ b.business_name }}</strong></td>
+            <td class="text-small">{{ b.business_desc }}</td>
+            <td class="text-small">{{ b.business_pitch }}</td>
+            <td><img src='{{ url_for('static', filename="uploads/"+b.business_img1) }}' width="24%"</td>
+    {% endfor %} 
+</tr>
+   
+                                </table>
                             </div>
-                            <p>Topic: {{topic_deets.topic_title}}</p>
-                            <p>User: {{topic_deets.userdeets.user_fullname}}</p>
-                            <p>Date: {{topic_deets.topic_date}}</p> 
-                            
-                            <form method="post" action="/admin/update_topic">
-                            <input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}">
-
-                                <input type="hidden" name="topicid" id="" value="{{topic_deets.topic_id}}">
-                                <select name="status" id="">
-                                    <option value="1">Publish</option>
-                                    <option value="0">Unpublish</option>
-                                </select>
-                                <p><button class="btn btn-success">Submit</button></p>
-                            </form>
+                           
                         </div>
-
                     </div>
-                </div>
-            </div>
 
+                    
             
         </div>
     </div>
     
    
 
-    <script src="{{url_for('static',filename='bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/glm-ajax.js') }}"></script>
     <script>
         var el = document.getElementById("wrapper");
         var toggleButton = document.getElementById("menu-toggle");

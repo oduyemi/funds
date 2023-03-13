@@ -1,0 +1,20 @@
+{% extends "donorhome.html" %}
+{% block pagetitle %}<title>How It Works - Funds</title>{% endblock %}
+{% block content %}
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5" >
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="{{ url_for('static',filename='images/home1.jpg')}}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold lh-1 mb-3" style="color: #018E42">Check Our Database of vetted buinesses to invest in</h1>
+        <p class="lead" style="font-size:smaller">
+            Check our array of small business to invest in.<br>
+            View the details of choice companies and invest<br>
+        </p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <a href="{{url_for("duser.donationdashboard")}}" type="button" class="btn btn-success px-4 me-md-2">Go To Dashboard</a>
+        </div>
+      </div>
+    </div>
+  
+{% endblock %}

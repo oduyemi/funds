@@ -173,9 +173,14 @@ class Business_status(db.Model):
     status =db.Column(db.String(100), nullable=False)
 
 
+class Admin(db.Model):
+    admin_id=db.Column(db.Integer, autoincrement=True,primary_key=True)
+    admin_username=db.Column(db.String(20),nullable=True)
+    admin_pwd=db.Column(db.String(200),nullable=True)
 
-class Review(db.Model): 
-    review_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    review_text = db.Column(db.Text(), nullable=False)
-    review_user = db.Column(db.Integer(),db.ForeignKey('investor.investor_id'))
-    review_date = db.Column(db.DateTime(), default=datetime.utcnow())
+class Contact(db.Model):
+    __tablename__ = 'messages'
+    msg_id=db.Column(db.Integer, autoincrement=True,primary_key=True)    
+    msg_email=db.Column(db.String(20),nullable=False)
+    msg_content=db.Column(db.String(200),nullable=False)
+    msg_date = db.Column(db.DateTime(), default=datetime.utcnow)

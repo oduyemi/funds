@@ -219,3 +219,10 @@ def invest_investment():
     else:
         return redirect(url_for("iuser.invest_login"))
 
+@i_userobj.route("/howitworks",strict_slashes=False)
+def b_how():
+    user = db.session.query(I_user).first()
+           
+    return render_template("howitworks.html",user=user)
+
+

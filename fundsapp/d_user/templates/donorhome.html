@@ -116,12 +116,7 @@
             <img src="{{url_for('static',filename='images/h2.jpg')}}" alt="mdo" width="32" height="32" class="rounded-circle">
             {% endif %}
           </a>
-          <ul class="dropdown-menu text-small">
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Profile picture</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            
-            <li><hr class="dropdown-divider"></li>
+
             <li><a class="dropdown-item" href="#">Sign out</a></li>
           </ul>
         </div>
@@ -141,8 +136,8 @@
           Restrictions apply to who is allowed to fund a new business and how much they are allowed to contribute.
         </p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-          <button type="button" class="btn btn-success d_dashboard px-4 me-md-2">Go To Dashboard</button>
-          <a href="{{url_for('duser.donatelogin')}}" class="btn btn-outline-success px-4">How It Works</a>
+          <a href="{{url_for("donatedashboard")}}" type="button" class="btn btn-success d_dashboard px-4 me-md-2">Go To Dashboard</button>
+          <a href="{{url_for(d_user.d_how)}}" class="btn btn-outline-success px-4">How It Works</a>
         </div>
       </div>
     </div>

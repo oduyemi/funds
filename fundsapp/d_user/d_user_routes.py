@@ -222,3 +222,11 @@ def donateinvestment():
     else:
         return redirect(url_for("duser.donatelogin"))
 
+
+@d_userobj.route("/howitworks",strict_slashes=False)
+def d_how():
+    user = db.session.query(D_user).first()
+           
+    return render_template("dhowitworks.html",user=user)
+
+

@@ -18,7 +18,7 @@
         
         <div class="bg-white" id="sidebar-wrapper">
             <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom" style="color: #008753;">
-                <img src="../static/images/logo/logo_white.png" alt="site logo"width="140" height="220" class="admindashboard"/>
+                <img src="../static/images/logo/logo_white.png" alt="site logo"width="140" height="220" class="logo"/>
             </div>
 
            {% include "menu.html"%}
@@ -40,9 +40,9 @@
                     <div class="col-md-12">
                         <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                             <div>
-                                <h3 class="fs-5">Pending</h3>
+                                {%if bdeets%}
+                                <h3 class="fs-5">Registered</h3>
                                 <table class="table table-responsive table-striped">
-                                    {%if bdeets%}
                                     <tr>
                                     <th>S/N</th>
                                     <th>Business Name</th>
@@ -54,8 +54,13 @@
             <td class="text-small">{{ b.business_desc }}</td>
             <td class="text-small">{{ b.business_pitch }}</td>
             <td><img src='{{ url_for('static', filename="uploads/"+b.business_img1) }}' width="24%"</td>
-            <td><button class="btn btn-success">Approve</button></td>
-            <td><button class="btn btn-outline-success">Approve</button></td>
+        {% if b.business_status_id == 1 %}
+        <td class="text-small"><i>{{"Pending" }}</i></td>
+        {% elif b.business_status_id == 2 %}
+        <td class="text-small"><i>{{ "Approved" }}</i></td>
+        {% elif b.business_status_id == 3 %}
+        <td class="text-small"><i>{{ "Declined" }}</i></td>
+    {% endif %}
     {% endfor %} 
     {% else %}
     <div >

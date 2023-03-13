@@ -57,20 +57,23 @@
 {% block innertable %}
 {% if content %}
 {% for c in content %}
+{%for i in ind%}
+    {% if i.industry_id == c.business_industryid%}
     <tr>
         <td class="text-small text-blue"><strong>{{ c.business_name }}</strong></td>
-        <td class="text-small">{{ c.business_industryid }}</td>
+        <td class="text-small">{{ i.industry_name }}</td>
         <td class="text-small">{{ c.business_desc }}</td>
-        <td><img src='{{ url_for('static', filename="uploads/"+c.business_img1) }}' width="80%"</td>
+        <td><img src='{{ url_for('static', filename="uploads/"+c.business_img1) }}' width="50%"</td>
         {% if c.business_status_id == 1 %}
             <td class="text-small"><i>{{"Pending" }}</i></td>
             {% elif c.business_status_id == 2 %}
             <td class="text-small"><i>{{ "Approved" }}</i></td>
-        {% endif %}
-    </tr>
-{% endfor %}
-    {%endif%}
-{% endblock %}
+            {% endif %}
+        </tr>{% endif %}
+        {% endfor %}
+    {% endfor %}
+        {%endif%}
+    {% endblock %}
 
 
 {% block totalsale %}
