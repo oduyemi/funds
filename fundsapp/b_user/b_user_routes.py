@@ -33,6 +33,7 @@ def indexpage():
 #         --  FORM AUTHENTICATION  --  THESE ARE THE USER FORM ROUTES AND AUTHENITCATION
 @b_userobj.route('/startup/signup', methods = ["GET", "POST"], strict_slashes = False)
 def startup_signup():
+    
     form = SignupForm()
     if request.method == "GET":
         return render_template('startup_signup.html', title="Sign Up", form = form)
@@ -344,7 +345,7 @@ def signout():
 @b_userobj.route('/dashboardlayout', methods = ("GET", "POST"), strict_slashes = False)
 def dashboard():
     id=session.get("b_user")
-    user = db.session.query(B_user).first()
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     state = db.session.query(State).order_by(State.state_id).all()
     reg = db.session.query(Business).where(Business.business_type==1).all()
     pend =  db.session.query(Business).where(Business.business_type==1, Business.business_status_id==1).all()
@@ -362,8 +363,8 @@ def dashboard():
 @b_userobj.route('/ngo/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def ngodashboard():
     id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         state = db.session.query(State).order_by(State.state_id).all()
         reg = db.session.query(Business).where(Business.business_type==1).all()
         pend =  db.session.query(Business).where(Business.business_type==1, Business.business_status_id==1).all()
@@ -382,15 +383,15 @@ def ngodashboard():
 @b_userobj.route('/ngolist/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def ngolist():
     id = session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         state = db.session.query(State).order_by(State.state_id).all()
         reg = db.session.query(Business).where(Business.business_type==1).all()
         pend =  db.session.query(Business).where(Business.business_type==1, Business.business_status_id==1).all()
         app = db.session.query(Business).where(Business.business_type==1, Business.business_status_id==2).all()
         ind=db.session.query(Industry).order_by(Industry.industry_id).all()
         fund = db.session.query(Business_disbursement).order_by(Business_disbursement.business_id).where(Business_type==3).all()
-        query = f"SELECT * from business WHERE business_type=1 and (business_status_id=1 or business_status_id=2)"
+        query = "SELECT * from business WHERE business_type=1 and (business_status_id=1 or business_status_id=2)"
         content = db.session.execute(text(query))
         registered = len(reg)
         pending = len(pend)
@@ -404,14 +405,14 @@ def ngolist():
 @b_userobj.route('/ngocontact/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def ngocontact():
     id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         state = db.session.query(State).order_by(State.state_id).all()
         reg = db.session.query(Business).where(Business.business_type==3).all()
         pend =  db.session.query(Business).where(Business.business_type==3, Business.business_status_id==1).all()
         app = db.session.query(Business).where(Business.business_type==3, Business.business_status_id==2).all()
         fund = db.session.query(Business_disbursement).order_by(Business_disbursement.business_id).where(Business_type==3).all()
-        query = f"SELECT * from b_user join business WHERE business_status_id=1"
+        query = f"SELECT * from b_user join business WHERE (business_type=1 and business_status_id=1)"
         content = db.session.execute(text(query))
         registered = len(reg)
         pending = len(pend)
@@ -425,8 +426,8 @@ def ngocontact():
 @b_userobj.route('/ngoaccount/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def ngoaccount():
     id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         state = db.session.query(State).order_by(State.state_id).all()
         app = db.session.query(Business).where(Business.business_type==1, Business.business_status_id==2).all()
         pend =  db.session.query(Business).where(Business.business_type==1, Business.business_status_id==1).all()
@@ -446,8 +447,8 @@ def ngoaccount():
 @b_userobj.route('/ngopitch/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def ngopitch():
     id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         state = db.session.query(State).order_by(State.state_id).all()
         reg = db.session.query(Business).where(Business.business_type==1).all()
         pend =  db.session.query(Business).where(Business.business_type==1, Business.business_status_id==1).all()
@@ -470,8 +471,8 @@ def ngopitch():
 @b_userobj.route('/startup/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def startupdashboard():
     id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         industry = db.session.query(Industry).order_by(Industry.industry_id).all()
         reg = db.session.query(Business).where(Business.business_type==2).all()
         pend =  db.session.query(Business).where(Business.business_type==2, Business.business_status_id==1).all()
@@ -491,8 +492,8 @@ def startupdashboard():
 @b_userobj.route('/startuppitch/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def startuppitch():
     id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         state = db.session.query(State).order_by(State.state_id).all()
         reg = db.session.query(Business).where(Business.business_type==2).all()
         pend =  db.session.query(Business).where(Business.business_type==2, Business.business_status_id==1).all()
@@ -512,9 +513,9 @@ def startuppitch():
 @b_userobj.route('/startuplist/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def startuplist():
     id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
         state = db.session.query(State).order_by(State.state_id).all()
-        user = db.session.query(B_user).first()
         reg = db.session.query(Business).where(Business.business_type==2).all()
         pend =  db.session.query(Business).where(Business.business_type==2, Business.business_status_id==1).all()
         app = db.session.query(Business).where(Business.business_type==2, Business.business_status_id==2).all()
@@ -534,8 +535,8 @@ def startuplist():
 @b_userobj.route('/startupcontact/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def startupcontact():
     id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         userid = db.session.query(B_user).filter(B_user.b_user_id).all()
         state = db.session.query(State).order_by(State.state_id).all()
         reg = db.session.query(Business).where(Business.business_type==2).all()
@@ -556,8 +557,8 @@ def startupcontact():
 @b_userobj.route('/startupaccount/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def startupaccount():
     id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         state = db.session.query(State).order_by(State.state_id).all()
         reg = db.session.query(Business).where(Business.business_type==2).all()
         pend =  db.session.query(Business).where(Business.business_type==2, Business.business_status_id==1).all()
@@ -580,8 +581,8 @@ def startupaccount():
 @b_userobj.route('/prestartup/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def prestartupdashboard():
     id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         industry = db.session.query(Industry).order_by(Industry.industry_id).all()
         reg = db.session.query(Business).where(Business.business_type==3).all()
         pend =  db.session.query(Business).where(Business.business_type==3, Business.business_status_id==1).all()
@@ -601,8 +602,8 @@ def prestartupdashboard():
 @b_userobj.route('/prestartuppitch/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def prestartuppitch():
     id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         state = db.session.query(State).order_by(State.state_id).all()
         reg = db.session.query(Business).where(Business.business_type==3).all()
         pend =  db.session.query(Business).where(Business.business_type==3, Business.business_status_id==1).all()
@@ -621,9 +622,9 @@ def prestartuppitch():
 
 @b_userobj.route('/prestartuplist/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def prestartuplist():
-    session.get("b_user")
+    id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         state = db.session.query(State).order_by(State.state_id).all()
         reg = db.session.query(Business).where(Business.business_type==3).all()
         pend =  db.session.query(Business).where(Business.business_type==3, Business.business_status_id==1).all()
@@ -644,8 +645,8 @@ def prestartuplist():
 @b_userobj.route('/prestartupcontact/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def prestartupcontact():
     id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         state = db.session.query(State).order_by(State.state_id).all()
         reg = db.session.query(Business).where(Business.business_type==3).all()
         pend =  db.session.query(Business).where(Business.business_type==3, Business.business_status_id==1).all()
@@ -665,8 +666,8 @@ def prestartupcontact():
 @b_userobj.route('/prestartupaccount/dashboard', methods = ("GET", "POST"), strict_slashes = False)
 def prestartupaccount():
     id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id != None:
-        user = db.session.query(B_user).first()
         state = db.session.query(State).order_by(State.state_id).all()
         reg = db.session.query(Business).where(Business.business_type==3).all()
         pend =  db.session.query(Business).where(Business.business_type==3, Business.business_status_id==1).all()
@@ -689,18 +690,25 @@ def prestartupaccount():
 
 
 #         --  HOMEPAGES  --  THESE ARE THE USER HOMEPAGE ROUTES
+@b_userobj.route('/homelayout', methods = ("GET", "POST"), strict_slashes = False)
+def home():
+    id=session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
+    return render_template('home.html',  user=user)
+
+
 @b_userobj.route('/ngo', methods = ("GET", "POST"), strict_slashes = False)
 def ngo():
     id=session.get("b_user")
-    user = db.session.query(B_user).first()
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     return render_template('ngo.html',  user=user)
 
 
 
 @b_userobj.route('/prestartup', methods = ("GET", "POST"), strict_slashes = False)
 def prestartup():
-    id=session.get("b_user")
-    user = db.session.query(B_user).first()
+    id = session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     return render_template('prestartup.html',  user=user)
 
 
@@ -708,7 +716,7 @@ def prestartup():
 @b_userobj.route('/startup', methods = ("GET", "POST"), strict_slashes = False)
 def startup():
     id=session.get("b_user")
-    user = db.session.query(B_user).first()
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     return render_template('startup.html',  user=user)
 
 
@@ -746,14 +754,14 @@ def b_how():
 @b_userobj.route('/profile/<cid>', methods=["POST","GET"], strict_slashes = False)
 def user_profile(cid):
     id = session.get('b_user')
-    user = db.session.query(B_user).first()
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     deets = db.session.query(B_user).filter(B_user.b_user_id==cid).first()
     contact = db.session.query(Business).join(B_user, Business.bdeets).where(Business.business_userid==cid).first()
     if id ==None:
         return redirect(url_for('fbuser.indexpage'))
     else:
         if request.method =="GET":
-            return render_template('profile.html', deets=deets, userid=id, contact=contact, user=user)
+            return render_template('profile.html', deets=deets, userid=id, contact=contact, user=user,id=id)
         else: #form was submitted
             userobj = db.session.query(B_user).get(id)
             db.session.commit()
@@ -762,11 +770,12 @@ def user_profile(cid):
 @b_userobj.route('/profile/picture', methods=["POST","GET"])
 def profile_picture():
     id= session.get("b_user")
+    user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
     if id == None:
         return redirect(url_for('fbuser.startup_login'))
     else:
         if request.method == 'GET':
-            return render_template('profile_picture.html')
+            return render_template('profile_picture.html', user=user)
         else:
             file = request.files['pix']
             filename = file.filename 

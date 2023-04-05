@@ -37,6 +37,7 @@
 <a href="#" class="icon_a i_list_dashboard"><i class="fa fa-users icons"></i>&nbsp;&nbsp;List</a>
 <a href="#" class="icon_a i_pitch_dashboard"><i class="fa fa-shopping-bag icons"></i>&nbsp;&nbsp;Pitches</a>
 <a href="#" class="icon_a i_account_dashboard"><i class="fa fa-tasks icons"></i>&nbsp;&nbsp;Accounts</a>
+<a href="{{ url_for("iuser.invest_signout")}}" class="icon_a">&nbsp;&nbsp;Logout</a>
 {% endblock %}
 
 
@@ -92,13 +93,3 @@
 
 
 
-{% block customJs %}
-<script>
-
-    $(document).ready(function(){
-        $("#d_dd").selectpicker; 
-    })
-
-    
-</script>
-{% endblock %}

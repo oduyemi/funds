@@ -97,11 +97,14 @@ class Donor_donation(db.Model):
 
 class Investment(db.Model): 
         investment_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-        investor_option_id  = db.Column(db.Integer(),db.ForeignKey('investment_option.investment_option_id'))
+        investment_option_id  = db.Column(db.Integer(),db.ForeignKey('investment_option.investment_option_id'))
+        investor_investment_id  = db.Column(db.Integer(),db.ForeignKey('investor_investment.investor_investment_id'))
         investment_industry = db.Column(db.Integer(),db.ForeignKey('industry.industry_id'))
         investment_amount = db.Column(db.Float(), nullable=False)
         investment_date = db.Column(db.DateTime(), default=datetime.utcnow()) 
         investment_roi_id = db.Column(db.Integer(),db.ForeignKey('roi.roi_id'))
+
+        investordeets = db.relationship("Investor_investment", backref="invest_info")
 
 
 class Donation(db.Model): 
@@ -113,10 +116,14 @@ class Donation(db.Model):
 class Investor_investment(db.Model): 
         investor_investment_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
         investor_id  = db.Column(db.Integer(),db.ForeignKey('investor.investor_id'))
+        investment_business = db.Column(db.Integer(),db.ForeignKey('business.business_id'))
         investment_startdate = db.Column(db.Integer(),db.ForeignKey('industry.industry_id'))
         investment_enddate = db.Column(db.DateTime(), default=datetime.utcnow()) 
         investment_date = db.Column(db.DateTime(), default=datetime.utcnow()) 
         investor_roi_id = db.Column(db.Integer(),db.ForeignKey('roi.roi_id'))
+
+        # investordeets = db.relationship("Investor", backref="investor_info")
+        investor_businessdeets = db.relationship("Business", backref="businessinfo")
 
 class Investor_disbursement(db.Model): 
         investor_disbursement_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
@@ -139,7 +146,9 @@ class roi(db.Model):
         
 class investment_option(db.Model):
     investment_option_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    investment_option = db.Column(db.String(100), nullable=False)
+    investment_option = db.Column(db.Float(), nullable=False)
+
+    #RELATIONSHIP
 class payment(db.Model): 
         payment_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
         investor_investment_id  = db.Column(db.Integer(),db.ForeignKey('investor_investment.investor_investment_id'))

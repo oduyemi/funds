@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}"/>
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css') }}"/>
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" type="text/css">
-    <script src="{{url_for('static', filename='js/jquery.min.js') }}" defer type="text/javascript"></script>
-    <script type="text/javascript" language="javascript" src="{{url_for('static', filename='js/script.js') }}" defer></script>
-    <script src="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" defer type="text/javascript"></script>
+    
     
     {% block spbtn %}
     <style>
@@ -98,13 +96,9 @@
       </form>
     </div>
 
-
+    <script src="{{url_for('static', filename='js/jquery.min.js') }}" defer type="text/javascript"></script>
+    <script type="text/javascript" language="javascript" src="{{url_for('static', filename='js/script.js') }}" defer></script>
+    <script src="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" defer type="text/javascript"></script>
 
 </body>
-<script>
-  $(document).ready(function(){
-    $(".spbtn").click();
-    alert("I was clicked");
-</script>
-
 </html>

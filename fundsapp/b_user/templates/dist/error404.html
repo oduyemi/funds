@@ -1,10 +1,6 @@
 {% extends 'home.html' %}
 {% block pagetitle %}<title>Not Found - Funds</title>{% endblock %}
-{% block user_profile %}
-    <img src="{{dp}}" alt="profile" class="pro_img">
-    <p>{{ fname }} {{ lname }} <span>{{ email }}<br><a href="{{url_for("fbuser.signout")}}"> Signout</a>
-    </span></p>
-{% endblock %}
+
 
 {% block content %}
 <div class="row flex-lg-row-reverse align-items-center g-5 py-5" >
@@ -22,3 +18,4 @@
   </div>
 
 {% endblock %}
+{% block footer%} {% endblock %}

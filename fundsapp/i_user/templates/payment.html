@@ -1,0 +1,209 @@
+{% extends "investhome.html" %}
+{% block pagetitle %}<title>Profile - Funds</title>{% endblock %}
+
+{% block content %}
+<div class="content" style="background-color: white;padding:1.2em">
+  <h3>Profile</h3>
+
+{% block i_home_style %}
+<style>
+  .footer{
+    background-color: #018E42;
+  }
+  .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+  }
+
+  @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+      }
+  }
+  .comment{
+      color: blue;
+      font-family: cursive;
+  }
+  .b-example-divider {
+      height: 3rem;
+      background-color: rgba(0, 0, 0, .1);
+      border: solid rgba(0, 0, 0, .15);
+      border-width: 1px 0;
+      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+  }
+
+  .b-example-vr {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 100vh;
+  }
+
+  .bi {
+      vertical-align: -.125em;
+      fill: currentColor;
+  }
+
+  .nav-scroller {
+      position: relative;
+      z-index: 2;
+      height: 2.75rem;
+      overflow-y: hidden;
+  }
+
+  .nav-scroller .nav {
+      display: flex;
+      flex-wrap: nowrap;
+      padding-bottom: 1rem;
+      margin-top: -1px;
+      overflow-x: auto;
+      text-align: center;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+  }
+  #i_support{
+    float:right;
+  }
+
+  label{
+    position: relative;
+    right:10%;
+    font-weight: 600 !important;
+    color: #018E42 !important;
+    
+  }
+
+  .spbtn{
+    position: relative !important;
+    left: 15%;
+    width: 20%;
+    padding: 7px;
+    color: #fff;
+    background: #018E42;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 4px;
+    outline: none;
+    border-radius: none;
+    cursor: pointer;
+    transition: .3s;
+  }
+  a{
+    text-decoration:none
+  }
+  
+  #preference{
+    font-size:small;
+    font-weight:600
+}
+.form{
+    font-size:medium;
+}
+.form-bt{
+    text-align:center
+}
+#form-width{
+    width: 52%;
+}
+{% endblock %}
+
+</style>
+</head>
+<body>
+ 
+  <nav class="navbar navbar-expand-md fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ url_for("iuser.invest_home")}}">
+        <img src="{{ url_for('static',filename='images/logo/sitelogo.png')}}" height="70" class="logo">
+      </a>
+  </nav>
+     
+<main>
+
+<div class="container col-xxl-8 px-4 py-5" >
+{% if session.get('i_user') !=None %}
+<header class="p-3 mb-3 border-bottom">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+     
+      <ul class="member nav text-black col-12 col-lg-auto me-lg-auto mb-2 justify-content-start mb-md-0">
+        <li><a href="{{url_for('iuser.invest_home')}}" class="nav-link px-2 " style="color:#FF5714">Home</a></li>
+        <li><a href="{{ url_for("iuser.invest_profile", cid=id)}}" class="nav-link px-2 link-dark">Profile</a></li>
+        <li><a href="{{ url_for("iuser.investmentdashboard")}}" class="nav-link px-2 link-dark">Dashboard</a></li>
+      
+      </ul>
+
+       
+      <div class="dropdown text-end">
+        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            
+        </a>
+        <ul class="dropdown-menu text-small">
+          <li><a class="dropdown-item" href="{{ url_for("iuser.invest_profile", cid=id)}}">Profile</a></li>
+          
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="{{ url_for("iuser.invest_signout")}}">Sign out</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+{%endif%}
+
+    <div class="row body_box mx-auto">
+    <div class="col-md-5 body_box1">
+        <h3>Account Details</h3>
+        <label class="col-md-2 mt-4 ms-4">Bank:</label><span>GTBank</span><br>
+        <label class="col-md-2 ms-4">Account Number:</label><span>0123456789</span><br>
+        <label class="col-md-2 ms-4">Account Name:</label><span>Funds Wallet</span>
+    </div>
+    <div class="col-md-5 body_box1">
+        <h3>Make Payment</h3>
+    <form action="" method="POST" action="">
+        <input type="hidden" name="csrf_token" value="csrf_token()"/>
+       
+
+        <div class="mb-3 form-group row mt-4">
+            <label for="fullname" class="col-md-2">Full Name:</label>
+            <div class="col-md-6">
+                <input type="text" name="fullname" placeholder="Full name" class="form-control border-success">
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label class="col-md-2">Business:</label>
+            <div class="col-md-5">
+        <select name="business">
+        <option value="" class="text-center"> - Business - </option>
+        {% for r in buzz %}
+        <option value="{{r.business_id}}">{{ r.business_name}}</option>
+        {% endfor %}
+        </select>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group row">
+            <label class="col-md-2">Amount:</label>
+            <div class="col-md-5">
+        <select name="amt">
+        <option value="" class="text-center"> - Choose Amount - </option>
+        {% for o in ifeeds %}
+        <option value="{{o.investment_option_id}}">{{ o.investment_option }}</option>
+        {% endfor %}
+        </select>
+            </div>
+        </div>
+
+       
+            <div class="col-md-10">
+                <a href="{{ url_for("payment") }}" class="spbtn">Yes, I have made payment</a>
+                </div>
+    </form>
+</div>
+<form id="paymentForm">     
+</div>
+
+
+{% endblock %}

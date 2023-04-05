@@ -33,10 +33,12 @@
 
 {% block side_menu %}
 <a href="#" class="icon_a i_dashboard"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp;Dashboard</a>
+<a href="{{ url_for("iuser.invest_profile", cid=user.i_user_id)}}" class="icon_a">&nbsp;&nbsp;Profile</a>
 <a href="#" class="icon_a i_invest_dashboard"><i class="fa fa-list-alt icons"></i>&nbsp;&nbsp;Investments</a>
 <a href="#" class="icon_a i_list_dashboard"><i class="fa fa-users icons"></i>&nbsp;&nbsp;List</a>
 <a href="#" class="icon_a i_pitch_dashboard"><i class="fa fa-shopping-bag icons"></i>&nbsp;&nbsp;Pitches</a>
 <a href="#" class="icon_a i_account_dashboard"><i class="fa fa-tasks icons"></i>&nbsp;&nbsp;Accounts</a>
+<a href="{{ url_for("iuser.invest_signout")}}" class="icon_a">&nbsp;&nbsp;Logout</a>
 {% endblock %}
 
 {% block pre_table %}
@@ -61,6 +63,7 @@
             <td class="text-small">{{ b.business_desc }}</td>
             <td>{{ b.state_name}}</td>
             <td><img src='{{ url_for('static', filename="uploads/"+b.business_img1) }}' width="80%"</td>
+            <td><a href="" class="btn btn-success">Invest</a></td>
         </tr>
     </tr>
     {% endfor %}
@@ -71,13 +74,3 @@
 
 
 
-
-{% block customJs %}
-<script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.6.1.min.js') }}"></script>
-<script type="text/javascript" src="{{url_for('static', filename='js/main.js') }}"></script>
-<script>
-    window.onload=function(){
-        document.getElementById("status").s
-    }
-</script>
-{% endblock %}

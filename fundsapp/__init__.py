@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import jsonify, render_template, request
+from flask import jsonify, render_template, request, session
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
@@ -23,10 +23,12 @@ def create_app():
     migrate = Migrate(starter,db)
     @starter.errorhandler(404)
     def page_not_found(e):
+        id=session.get("b_user")
+        user = db.session.query(B_user).filter(B_user.b_user_id==id).first()
         fname = db.session.query(B_user).filter(B_user.b_user_fname).first()
         lname = db.session.query(B_user).filter(B_user.b_user_lname).first()
         email = db.session.query(B_user).filter(B_user.b_user_email).first()
-        return render_template("error404.html", fname=fname, lname=lname, email=email), 404
+        return render_template("error404.html", fname=fname, lname=lname, email=email, user=user), 404
 
     @starter.errorhandler(500)
     def internal_server_error(e):

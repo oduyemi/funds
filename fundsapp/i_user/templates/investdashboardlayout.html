@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap/css/bootstrap.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animate.min.css') }}"/>
     <link rel="stylesheet" href="{{url_for('static', filename='fontawesome/css/all.css') }}"/>
-    <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.6.1.min.js') }}" defer></script>
-    <script type="text/javascript" src="{{url_for('static', filename='js/main.js') }}" defer></script>
+
 
     <style type="text/css">
         body{
@@ -48,7 +47,7 @@
 
 <body>
     <div class="mySidernav sidenav">
-        <img src="/static/images/logo/logo_white.png" alt="site logo" class="logo">
+        <a href="{{url_for("iuser.invest_home")}}"><img src="/static/images/logo/logo_white.png" alt="site logo" class="logo"></a>
         {% block side_menu %}
         <a href="#" class="icon_a"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp;Dashboard</a>
         <a href="#" class="icon_a"><i class="fa fa-users icons"></i>&nbsp;&nbsp;Customers</a>
@@ -73,10 +72,8 @@
                        
                         {% endblock %}
     
-                        <p>{{ user.i_user_fname + " " + user.i_user_lname }}<span>{{ user.i_user_email }}</span><br>
+                        <p>{{ user.i_user_fname + " " + user.i_user_lname }}<span>{{ user.i_user_email }}</span><br></p>
                     </div>
-                    <a href="{{url_for("fbuser.signout")}}">Signout <i class="fa-duotone fa-arrow-up-left-from-circle"></i></a>
-                </p><br>
                 </div>
             </div>
 
@@ -182,6 +179,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/glm-ajax.js') }}"></script>
+    
 
     
      <!--  - Custom JS  -->

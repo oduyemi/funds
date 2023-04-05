@@ -1,11 +1,11 @@
-{% extends "home.html" %}
+{% extends "investhome.html" %}
 {% block pagetitle %}<title>Profile - Funds</title>{% endblock %}
 
 {% block content %}
 <div class="content" style="background-color: white;padding:1.2em">
   <h3>Profile</h3>
 
-{% block home_style %}
+{% block i_home_style %}
 <style>
 label{
   position: relative;
@@ -54,31 +54,27 @@ left:28%;
   <div>
     <label for="floatingInput"></label>
     <div class="field dp_container">
-      {% if deets.b_user_pic %}
-      <img src="{{ url_for('static', filename="uploads/"+deets.b_user_pic) }}" width="80%"/>
-      {% else %}
-      <img src="{{ url_for('static', filename='images/avatar.jpg') }}" width="80%"/>
-      {% endif%}
+      
     </div>
   </div>
       <div class="mb-2 fields">
         <label for="fname">First name</label>
-        <div class="_input"><h6>{{ deets.b_user_fname }}</h6></div>
+        <div class="_input"><h6>{{ deets.i_user_fname }}</h6></div>
       </div>
 
       <div class="fields">
         <label for="lname">Last name</label>
-        <div class="mb-2 _input"><h6>{{ deets.b_user_lname }}</h6></div>
+        <div class="mb-2 _input"><h6>{{ deets.i_user_lname }}</h6></div>
       </div>
 
     <div class="fields">
         <label for="mail">Email address</label>
-        <div class="mb-2 _input"><h6>{{ deets.b_user_email }}</h6></div>
+        <div class="mb-2 _input"><h6>{{ deets.i_user_email }}</h6></div>
     </div>
 
     <div class="fields">
       <label for="business">Business</label>
-      <div class="mb-2 _input"><h6>{{ contact.business_name }}</h6></div>
+      <div class="mb-2 _input"><h6>{{ contact.investor_name }}</h6></div>
   </div>
 
     {% with m=get_flashed_messages()%}
@@ -89,7 +85,7 @@ left:28%;
         {%endif%}
   {%endwith%}
 
-  {% if deets.b_user_id == userid %}
+  {% if deets.i_user_id == userid %}
     <div class="form-floating text-center" align="center">
         <button class="spbtn pro_pic" type="submit">Update Picture</button>
     </div>

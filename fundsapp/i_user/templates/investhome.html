@@ -9,12 +9,11 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap/css/bootstrap.css') }}"/>
         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animate.min.css') }}"/>
         <link rel="stylesheet" href="{{url_for('static', filename='fontawesome/css/all.css') }}"/>
-        <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.6.1.min.js') }}" defer></script>
-        <script type="text/javascript" src="{{url_for('static', filename='js/main.js') }}" defer></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
 
+        {% block i_home_style%}
         <style>
         .footer{
           background-color: #018E42;
@@ -76,13 +75,14 @@
           float:right;
         }
         </style>
+        {% endblock %}
 
   </head>
   <body>
    
     <nav class="navbar navbar-expand-md fixed-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ url_for("iuser.invest_home")}}">
           <img src="{{ url_for('static',filename='images/logo/sitelogo.png')}}" height="70" class="logo">
         </a>
     </nav>
@@ -90,39 +90,28 @@
 <main>
 
 <div class="container col-xxl-8 px-4 py-5" >
-{% if session.get('businessloggedin') !=None %}
+{% if session.get('i_user') !=None %}
 <header class="p-3 mb-3 border-bottom">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
        
         <ul class="member nav text-black col-12 col-lg-auto me-lg-auto mb-2 justify-content-start mb-md-0">
-          <li><a href="{{url_for('invest_dashboard')}}" class="nav-link px-2 " style="color:#FF5714">Dashboard</a></li>
-          <li><a href="#" class="nav-link px-2 link-dark">Conversations</a></li>
-          <li><a href="#" class="nav-link px-2 link-dark">Shop</a></li>
+          <li><a href="{{url_for('iuser.invest_home')}}" class="nav-link px-2 " style="color:#FF5714">Home</a></li>
+          <li><a href="{{ url_for("iuser.invest_profile", cid=id)}}" class="nav-link px-2 link-dark">Profile</a></li>
+          <li><a href="{{ url_for("iuser.investmentdashboard")}}" class="nav-link px-2 link-dark">Dashboard</a></li>
         
         </ul>
 
          
         <div class="dropdown text-end">
           <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            {% if deets: %}
-              {% if deets.user_pix != None%}
-                 <img src="{{url_for('static',filename='uploads/'+deets.user_pix)}}" alt="mdo" width="32" height="32" class="rounded-circle">
-                 {% else %}
-                 <img src="" alt="mdo" width="32" height="32" class="rounded-circle">
-              {% endif %}
-
-            {% else %}
-            <img src="{{url_for('static',filename='images/h2.jpg')}}" alt="mdo" width="32" height="32" class="rounded-circle">
-            {% endif %}
+              
           </a>
           <ul class="dropdown-menu text-small">
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Profile picture</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="{{ url_for("iuser.invest_profile", cid=id)}}">Profile</a></li>
             
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
+            <li><a class="dropdown-item" href="{{ url_for("iuser.invest_signout")}}">Sign out</a></li>
           </ul>
         </div>
       </div>
@@ -141,17 +130,17 @@
           Restrictions apply to who is allowed to fund a new business and how much they are allowed to contribute.
         </p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-          <button type="button" class="btn btn-success i_dashboard px-4 me-md-2">Go To Dashboard</button>
-          <a href="{{url_for('iuser.invest_login')}}" class="btn btn-outline-success px-4">How It Works</a>
+          <a href="{{ url_for("iuser.investmentdashboard")}}"  class="btn btn-success px-4 me-md-2">Go To Dashboard</a>
+          <a href="" class="btn btn-outline-success px-4">How It Works</a>
         </div>
       </div>
     </div>
-{% endblock content %}
+{% endblock %}
   </div>
 
 {% block more_content %}
-<!--The home page can populate this for other contents like partner hotel-->
-{% endblock more_content %}
+
+{% endblock %}
   
 <!-- FOOTER -->
 <div class="footer text-center">
@@ -177,5 +166,7 @@
 
 
     <script src="{{url_for('static',filename='assets/dist/js/bootstrap.bundle.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.6.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/main.js') }}" defer></script>
   </body>
 </html>

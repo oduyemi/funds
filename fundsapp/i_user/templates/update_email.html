@@ -1,6 +1,6 @@
-{% extends "home.html"%}
+{% extends "investhome.html"%}
 
-{% block home_style %}
+{% block i_home_style %}
 <style>
 .spbtn{
   position: relative !important;
@@ -8,7 +8,7 @@
   width: 20%;
   padding: 7px;
   color: #fff;
-  background: #10349A;
+  background: #018E42;
   text-align: center;
   font-size: 18px;
   border-radius: 4px;
@@ -17,20 +17,22 @@
   cursor: pointer;
   transition: .3s;
 }
-
+.footer{
+  background-color: #018E42;
+}
 </style>
 {% endblock %}
   
 {% block content %}
 <div class="content" style="background-color: white;padding:1.5em">
-  <h3>Update Your Profile Picture</h3>
+  <h3>Update Your Email Address</h3>
 
   <form method="post" enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token()}}">
     <div class="form-group row my-5">
-        <label for="" class="col-md-2">Select File</label>
-        <input type="file" name="pix" class="col-md-6">
-        <input type="submit" value="Upload" class="spbtn col-md-3">
+        <label for="" class="col-md-2">New Emaill Address</label>
+        <input type="text" name="mail" class="col-md-6">
+        <input type="submit" value="Update" class="spbtn col-md-3">
     </div>
   </form>
  </div>

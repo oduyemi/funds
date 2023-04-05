@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animate.min.css') }}"/>
     <link rel="stylesheet" href="{{url_for('static', filename='fontawesome/css/all.css') }}"/>
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" integrity="sha512-ARJR74swou2y0Q2V9k0GbzQ/5vJ2RBSoCWokg4zkfM29Fb3vZEQyv0iWBMW/yvKgyHSR/7D64pFMmU8nYmbRkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
    
     
 
@@ -123,10 +122,8 @@
                     {% endif %}
                     {% endblock %}
 
-                    <p>{{ user.b_user_fname + " " + user.b_user_lname }}<span>{{ user.b_user_email }}</span><br>
+                    <p><span><a href="{{ url_for("fbuser.user_profile", cid=user.b_user_id)}}"{{ user.b_user_fname + " " + user.b_user_lname }}<span>{{ user.b_user_email }}</a></p><br><br>
                 </div>
-                <a href="{{url_for("fbuser.signout")}}">Signout <i class="fa-duotone fa-arrow-up-left-from-circle"></i></a>
-            </p><br>
             </div>
         </div>
 
@@ -233,7 +230,6 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/glm-ajax.js') }}"></script>
 
      <!--  - Custom JS  -->
     {% block customJs %}{% endblock %}

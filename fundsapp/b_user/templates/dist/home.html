@@ -9,13 +9,12 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap/css/bootstrap.css') }}"/>
         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animate.min.css') }}"/>
         <link rel="stylesheet" href="{{url_for('static', filename='fontawesome/css/all.css') }}"/>
-        <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.6.1.min.js') }}" defer></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" integrity="sha512-ARJR74swou2y0Q2V9k0GbzQ/5vJ2RBSoCWokg4zkfM29Fb3vZEQyv0iWBMW/yvKgyHSR/7D64pFMmU8nYmbRkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-{% block home_style %}
+        
+        {% block home_style %}
         <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -118,10 +117,10 @@
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
        
         <ul class="member nav text-black col-12 col-lg-auto me-lg-auto mb-2 justify-content-start mb-md-0">
-          <li><a href="" class="nav-link px-2 " style="color:#FF5714" class="startupdashboard">Dashboard</a></li>
+          <li><a href="/" class="nav-link px-2 " style="color:#FF5714">Home</a></li>
           &emsp; &emsp;
-          <li><a href="#" class="nav-link px-2 link-dark">Reviews</a></li> &emsp; &emsp;
-          <li><a href="#" class="nav-link px-2 link-dark reg">Registration</a></li>
+          <li><a href="{{ url_for("fbuser.user_profile", cid=user.b_user_id) }}" class="nav-link px-2 link-dark">Profile</a></li> &emsp; &emsp;
+          <li><a href="/register" class="nav-link px-2 link-dark reg">Registration</a></li>
         
         </ul>
 
@@ -130,24 +129,20 @@
         <div class="dropdown text-end">
           <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             {% block user_profile %}
-                    {% if user.b_user_pic %}
-                            {% if user.b_user_pic != "" %}
+                    {% if user.b_user_pic != None %}
                     <img src="{{ url_for('static', filename="uploads/"+user.b_user_pic) }}" alt="profile"  width="50" height="50"/>
-                    {% endif %}
                     {% else %}
                     <img src="{{ url_for('static', filename='images/avatar.jpg') }}" alt="Profile" width="50" height="50"/>
                     {% endif %}
                     {% endblock %}
           </a>
           <ul class="dropdown-menu text-small">
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Profile picture</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="{{url_for('fbuser.user_profile', cid=user.b_user_id)}}">Profile</a></li>
             
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item signout" href="#">Sign out</a></li>
+            <li><a class="dropdown-item signout" href="{{ url_for ('fbuser.signout') }}">Sign out</a></li>
           </ul>
-        </div>
+        </div>  
       </div>
     </div>
 </header>
@@ -176,6 +171,7 @@
 {% endblock %}
   
 <!-- FOOTER -->
+{% block footer%}
 <div class="footer text-center">
     <ul class="mt-4">
         <li><a href="/">Privacy Policy</a></li>&emsp; &emsp; &nbsp;
@@ -187,16 +183,17 @@
     <p class="mb-2">Funds Africa&copy; &emsp;&#45;&emsp;All Rights Reserved.</p>
 </div>
 
+{% endblock %}
+
 
 </main>
 </div>
-{% block customjs %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" integrity="sha512-ARJR74swou2y0Q2V9k0GbzQ/5vJ2RBSoCWokg4zkfM29Fb3vZEQyv0iWBMW/yvKgyHSR/7D64pFMmU8nYmbRkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <script src="{{url_for('static', filename='js/jquery.min.js') }}"</script>
 <script type="text/javascript" src="{{url_for('static', filename='js/glm-ajax.js') }}"></script>
 <script type="text/javascript" language="javascript" src="{{url_for('static', filename='js/main.js') }}" defer></script>
-
-
+<script type="text/javascript" language="javascript" src="{{url_for('static', filename='js/bootstrap.bundle.min.js') }}" defer></script>
+{% block customjs %}
 {% endblock %}
 
   </body>

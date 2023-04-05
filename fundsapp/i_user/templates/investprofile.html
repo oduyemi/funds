@@ -1,0 +1,140 @@
+{% extends "investhome.html" %}
+{% block pagetitle %}<title>Profile - Funds</title>{% endblock %}
+
+{% block content %}
+<div class="content" style="background-color: white;padding:1.2em">
+  <h3>Profile</h3>
+
+{% block i_home_style %}
+<style>
+  .footer{
+    background-color: #018E42;
+  }
+  .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+  }
+
+  @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+      }
+  }
+  .comment{
+      color: blue;
+      font-family: cursive;
+  }
+  .b-example-divider {
+      height: 3rem;
+      background-color: rgba(0, 0, 0, .1);
+      border: solid rgba(0, 0, 0, .15);
+      border-width: 1px 0;
+      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+  }
+
+  .b-example-vr {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 100vh;
+  }
+
+  .bi {
+      vertical-align: -.125em;
+      fill: currentColor;
+  }
+
+  .nav-scroller {
+      position: relative;
+      z-index: 2;
+      height: 2.75rem;
+      overflow-y: hidden;
+  }
+
+  .nav-scroller .nav {
+      display: flex;
+      flex-wrap: nowrap;
+      padding-bottom: 1rem;
+      margin-top: -1px;
+      overflow-x: auto;
+      text-align: center;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+  }
+  #i_support{
+    float:right;
+  }
+
+  label{
+    position: relative;
+    top:-10% !important;
+    font-weight: 600 !important;
+    color: #018E42 !important;
+    font-size:12px !important;
+  }
+
+  .spbtn{
+    position: relative !important;
+    right: 44%;
+    width: 20%;
+    padding: 7px;
+    color: #fff;
+    background: #018E42;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 4px;
+    outline: none;
+    border-radius: none;
+    cursor: pointer;
+    transition: .3s;
+  }
+  a{
+    text-decoration:none
+  }
+</style>
+{% endblock %}
+  <div>
+    <label for="floatingInput"></label>
+    <div class="field dp_container">
+      
+    </div>
+  </div>
+      <div class="mb-2 fields">
+        <label for="fname">First name</label>
+        <div class="_input"><h6>{{ deets.i_user_fname }}</h6></div>
+      </div>
+
+      <div class="fields">
+        <label for="lname">Last name</label>
+        <div class="mb-2 _input"><h6>{{ deets.i_user_lname }}</h6></div>
+      </div>
+
+    <div class="fields">
+        <label for="mail">Email address</label>
+        <div class="mb-2 _input"><h6>{{ deets.i_user_email }}</h6></div>
+    </div>
+
+    <div class="fields">
+      <label for="invest">Investments</label>
+      
+  </div>
+
+    {% with m=get_flashed_messages()%}
+    {%if m%}
+          {%for msg in m%}
+            {{msg |safe}}
+          {%endfor%}
+        {%endif%}
+  {%endwith%}
+
+  {% if deets.i_user_id == userid %}
+    <div class="form-floating text-center mt-3" align="center">
+        <a href="{{ url_for("iuser.update_email") }}" class="spbtn pro_pic" type="submit">Update Email</a>
+    </div>
+  {% endif %}
+  
+ </div>
+{% endblock %}
+{% block footer%} {% endblock %}
